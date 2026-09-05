@@ -388,6 +388,14 @@ body {
   gap: 0.75rem;
 }
 
+.mobile-menu-btn {
+  display: none !important;
+}
+
+.mobile-menu {
+  display: none !important;
+}
+
 /* ---- Buttons ---- */
 .btn {
   display: inline-flex;
@@ -2756,20 +2764,50 @@ body {
     font-size: 0.78rem;
   }
 
+  .nav-links {
+    display: none !important;
+  }
+
   .mobile-menu-btn {
-    display: flex;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
   }
 
   .mobile-menu {
-    display: flex;
+    display: flex !important;
+    flex-direction: column;
+    gap: 0.5rem;
     position: fixed;
     top: 98px;
     left: 0; right: 0;
     z-index: 1050;
     background: #ffffff;
-    border-bottom: 2px solid #f7c400;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    border-bottom: 3px solid #0c831f;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
     padding: 1rem 1.25rem 1.25rem;
+  }
+
+  .mobile-menu a {
+    text-decoration: none;
+    color: #1f2937;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all var(--transition);
+    background: #f9fafb;
+    border: 1px solid #f3f4f6;
+  }
+
+  .mobile-menu a:hover,
+  .mobile-menu a.active {
+    background: #0c831f !important;
+    color: #ffffff !important;
+    border-color: #0c831f !important;
   }
 
   .govt-ticker-bar {

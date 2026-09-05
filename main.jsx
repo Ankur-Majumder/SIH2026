@@ -274,11 +274,35 @@ function Navbar({ onNav, activeView, lang, setLang }) {
         </div>
         {menuOpen && (
           <div className="mobile-menu">
-            <a href="#" onClick={(e) => handleNavClick(e, "services")}>🔧 {lang === "hi" ? "सेवाएँ एवं प्रदाता" : "Services & Providers"}</a>
-            <a href="#" onClick={(e) => handleNavClick(e, "how")}>📋 {lang === "hi" ? "प्रक्रिया" : "How It Works"}</a>
-            <a href="#" onClick={(e) => handleNavClick(e, "cooperative")}>🤝 {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}</a>
-            <a href="#" onClick={(e) => handleNavClick(e, "impact")}>📊 {lang === "hi" ? "प्रभाव" : "Impact"}</a>
-            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
+            <a 
+              href="#" 
+              className={activeView === "services" || activeView === "providers" ? "active" : ""} 
+              onClick={(e) => handleNavClick(e, "services")}
+            >
+              🔧 {lang === "hi" ? "सेवाएँ एवं प्रदाता" : "Services & Providers"}
+            </a>
+            <a 
+              href="#" 
+              className={activeView === "how" ? "active" : ""} 
+              onClick={(e) => handleNavClick(e, "how")}
+            >
+              📋 {lang === "hi" ? "प्रक्रिया" : "How It Works"}
+            </a>
+            <a 
+              href="#" 
+              className={activeView === "cooperative" ? "active" : ""} 
+              onClick={(e) => handleNavClick(e, "cooperative")}
+            >
+              🤝 {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}
+            </a>
+            <a 
+              href="#" 
+              className={activeView === "impact" ? "active" : ""} 
+              onClick={(e) => handleNavClick(e, "impact")}
+            >
+              📊 {lang === "hi" ? "प्रभाव" : "Impact"}
+            </a>
+            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem", paddingTop: "0.75rem", borderTop: "1px solid #e5e7eb" }}>
               <button className="btn btn-ghost" style={{ flex: 1, justifyContent: "center" }} onClick={() => { setModalOpen("login"); setMenuOpen(false); }}>
                 {lang === "hi" ? "लॉग इन" : "Log in"}
               </button>
