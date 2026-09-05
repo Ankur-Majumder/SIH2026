@@ -202,11 +202,15 @@ function Navbar({ onNav, activeView, lang, setLang }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleNavClick = (e, targetView) => {
+  const handleNavClick = (e, sectionId) => {
     e.preventDefault();
-    onNav(targetView);
+    onNav(sectionId);
     setMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (sectionId === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -221,16 +225,25 @@ function Navbar({ onNav, activeView, lang, setLang }) {
           <ul className="nav-links">
             <li>
               <a 
-                href="#" 
-                className={activeView === "services" || activeView === "providers" ? "active nav-item-active" : ""}
+                href="#services" 
+                className={activeView === "services" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "services")}
               >
-                {lang === "hi" ? "सेवाएँ एवं प्रदाता" : "Services & Providers"}
+                {lang === "hi" ? "सेवाएँ" : "Services"}
               </a>
             </li>
             <li>
               <a 
-                href="#" 
+                href="#providers" 
+                className={activeView === "providers" ? "active nav-item-active" : ""}
+                onClick={(e) => handleNavClick(e, "providers")}
+              >
+                {lang === "hi" ? "सेवा प्रदाता" : "Providers"}
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#how" 
                 className={activeView === "how" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "how")}
               >
@@ -239,7 +252,7 @@ function Navbar({ onNav, activeView, lang, setLang }) {
             </li>
             <li>
               <a 
-                href="#" 
+                href="#cooperative" 
                 className={activeView === "cooperative" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "cooperative")}
               >
@@ -248,7 +261,7 @@ function Navbar({ onNav, activeView, lang, setLang }) {
             </li>
             <li>
               <a 
-                href="#" 
+                href="#impact" 
                 className={activeView === "impact" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "impact")}
               >
@@ -274,11 +287,11 @@ function Navbar({ onNav, activeView, lang, setLang }) {
         </div>
         {menuOpen && (
           <div className="mobile-menu">
-            <a href="#" onClick={(e) => handleNavClick(e, "services")}>🔧 {lang === "hi" ? "सेवाएँ" : "Services"}</a>
-            <a href="#" onClick={(e) => handleNavClick(e, "how")}>📋 {lang === "hi" ? "प्रक्रिया" : "How It Works"}</a>
-            <a href="#" onClick={(e) => handleNavClick(e, "cooperative")}>🤝 {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}</a>
-            <a href="#" onClick={(e) => handleNavClick(e, "providers")}>👥 {lang === "hi" ? "सेवा प्रदाता" : "Providers"}</a>
-            <a href="#" onClick={(e) => handleNavClick(e, "impact")}>📊 {lang === "hi" ? "प्रभाव" : "Impact"}</a>
+            <a href="#services" onClick={(e) => handleNavClick(e, "services")}>🔧 {lang === "hi" ? "सेवाएँ" : "Services"}</a>
+            <a href="#providers" onClick={(e) => handleNavClick(e, "providers")}>👥 {lang === "hi" ? "सेवा प्रदाता" : "Providers"}</a>
+            <a href="#how" onClick={(e) => handleNavClick(e, "how")}>📋 {lang === "hi" ? "प्रक्रिया" : "How It Works"}</a>
+            <a href="#cooperative" onClick={(e) => handleNavClick(e, "cooperative")}>🤝 {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}</a>
+            <a href="#impact" onClick={(e) => handleNavClick(e, "impact")}>📊 {lang === "hi" ? "प्रभाव" : "Impact"}</a>
             <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
               <button className="btn btn-ghost" style={{ flex: 1, justifyContent: "center" }} onClick={() => { setModalOpen("login"); setMenuOpen(false); }}>
                 {lang === "hi" ? "लॉग इन" : "Log in"}
@@ -1427,17 +1440,39 @@ function App() {
 
   const handleNav = useCallback((targetView) => {
     setView(targetView);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (targetView === "home" || targetView === "dashboard") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      document.getElementById(targetView)?.scrollIntoView({ behavior: "smooth" });
+    }
   }, []);
 
   const handleSelectService = useCallback((service) => {
     setSelectedCategoryId(service.id);
     showNotice(`${service.emoji} Showing verified ${service.title} near you.`);
-    handleNav("services");
-    setTimeout(() => {
-      document.getElementById("providers-section")?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
-  }, [showNotice, handleNav]);
+    document.getElementById("providers")?.scrollIntoView({ behavior: "smooth" });
+  }, [showNotice]);
+
+  useEffect(() => {
+    if (view === "dashboard") return;
+    const handleScroll = () => {
+      const sections = ["services", "providers", "how", "cooperative", "impact"];
+      const scrollPos = window.scrollY + 220;
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setView(sectionId);
+            break;
+          }
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [view]);
 
   if (view === "dashboard") {
     return (
@@ -1447,60 +1482,6 @@ function App() {
     );
   }
 
-  const renderPageContent = () => {
-    switch (view) {
-      case "services":
-      case "providers":
-        return (
-          <>
-            <GovtTickerBar lang={lang} />
-            <ServicesPage 
-              onBook={handleBook} 
-              selectedCategoryId={selectedCategoryId}
-              onSelectCategory={(catId) => setSelectedCategoryId(catId)}
-            />
-            <CtaSection />
-          </>
-        );
-      case "how":
-        return (
-          <>
-            <GovtTickerBar lang={lang} />
-            <HowItWorksPage onNav={handleNav} />
-            <CtaSection />
-          </>
-        );
-      case "cooperative":
-        return (
-          <>
-            <GovtTickerBar lang={lang} />
-            <CooperativePage onNav={handleNav} />
-            <CtaSection />
-          </>
-        );
-      case "impact":
-        return (
-          <>
-            <GovtTickerBar lang={lang} />
-            <ImpactPage onNav={handleNav} />
-            <CtaSection />
-          </>
-        );
-      case "home":
-      default:
-        return (
-          <>
-            <GovtTickerBar lang={lang} />
-            <HomePage 
-              onBook={handleBook} 
-              onNav={handleNav} 
-              onSelectService={handleSelectService} 
-            />
-          </>
-        );
-    }
-  };
-
   return (
     <div className="app">
       <Navbar onNav={handleNav} activeView={view} lang={lang} setLang={setLang} />
@@ -1509,7 +1490,18 @@ function App() {
       {bookingProvider && <BookingModal provider={bookingProvider} onClose={() => { setBookingProvider(null); showNotice(`✅ Booking confirmed with ${bookingProvider.name}! 92% goes to them.`); }} />}
 
       <main>
-        {renderPageContent()}
+        <GovtTickerBar lang={lang} />
+        <HomePage 
+          onBook={handleBook} 
+          onNav={handleNav} 
+          onSelectService={handleSelectService} 
+        />
+        <HowItWorks />
+        <CooperativeSection />
+        <ImpactSection />
+        <GovernanceSection />
+        <TestimonialsSection />
+        <CtaSection />
       </main>
 
       <Footer />
