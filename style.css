@@ -2757,11 +2757,10 @@ body {
     gap: 0.4rem;
   }
   .nav-actions .btn-ghost:not(.btn-icon) {
-    display: none; /* Hide desktop login button, available in mobile menu */
+    display: none !important;
   }
   .nav-actions .btn-primary {
-    padding: 6px 14px;
-    font-size: 0.78rem;
+    display: none !important;
   }
 
   .nav-links {
@@ -2772,6 +2771,13 @@ body {
     display: flex !important;
     align-items: center;
     justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #f0fdf4 !important;
+    border: 1.5px solid #0c831f !important;
+    color: #0c831f !important;
+    border-radius: var(--radius-sm) !important;
+    font-size: 1.3rem;
   }
 
   .mobile-menu {
