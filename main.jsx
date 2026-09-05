@@ -726,23 +726,22 @@ function HowItWorks() {
 function ProvidersSection({ onBook, selectedCategoryId, onSelectCategory }) {
   const [filter, setFilter] = useState("all");
 
-  const CATEGORY_TABS = [
-    { id: "all", emoji: "👥", label: "All Members" },
-    { id: "plumber", emoji: "🔧", label: "Plumbers" },
-    { id: "electrician", emoji: "⚡", label: "Electricians" },
-    { id: "tutor", emoji: "📚", label: "Tutors" },
-    { id: "caregiver", emoji: "❤️", label: "Caregivers" },
-    { id: "cleaning", emoji: "🧹", label: "Home Cleaning" },
-    { id: "tech", emoji: "💻", label: "Tech Support" },
-    { id: "carpenter", emoji: "🪚", label: "Carpenters" },
-    { id: "painter", emoji: "🖌️", label: "Painters" },
-    { id: "driver", emoji: "🚗", label: "Local Drivers" },
-  ];
+  const CATEGORY_NAMES = {
+    plumber: { emoji: "🔧", label: "Plumbers" },
+    electrician: { emoji: "⚡", label: "Electricians" },
+    tutor: { emoji: "📚", label: "Tutors" },
+    caregiver: { emoji: "❤️", label: "Caregivers" },
+    cleaning: { emoji: "🧹", label: "Home Cleaning Specialists" },
+    tech: { emoji: "💻", label: "Tech Support" },
+    carpenter: { emoji: "🪚", label: "Carpenters" },
+    painter: { emoji: "🖌️", label: "Painters" },
+    driver: { emoji: "🚗", label: "Local Drivers" },
+  };
 
   const currentCatId = selectedCategoryId || "all";
 
   const filtered = PROVIDERS.filter(p => {
-    // 1. Exact Category Filter
+    // 1. Category Filter (clicking service card at top sets currentCatId)
     if (currentCatId !== "all") {
       if (p.category !== currentCatId) return false;
     }
@@ -752,68 +751,30 @@ function ProvidersSection({ onBook, selectedCategoryId, onSelectCategory }) {
     return true;
   });
 
-  const activeCategoryObj = CATEGORY_TABS.find(c => c.id === currentCatId);
+  const activeCategoryObj = CATEGORY_NAMES[currentCatId];
 
   return (
     <section className="section" id="providers">
       <div className="section-inner">
         <div className="section-header">
           <div>
-            <div className="section-label">Verified Service Providers</div>
+            <div className="section-label">Featured Members</div>
             <div className="section-title">
               {currentCatId !== "all" && activeCategoryObj
-                ? `${activeCategoryObj.emoji} ${activeCategoryObj.label} Only`
+                ? `${activeCategoryObj.emoji} ${activeCategoryObj.label}`
                 : "Meet your community providers"}
             </div>
             <div className="section-desc">
               {currentCatId !== "all"
-                ? `Showing verified ${activeCategoryObj?.label} in your area.`
+                ? `Showing verified ${activeCategoryObj?.label} available near you.`
                 : "Every professional is a co-op member with verified ID, skills & background check."}
             </div>
           </div>
           {currentCatId !== "all" && (
             <button className="btn btn-outline" onClick={() => onSelectCategory("all")}>
-              Show All Categories ✕
+              Show All Providers ✕
             </button>
           )}
-        </div>
-
-        {/* Category Pills Row (Uber / UrbanCompany style) */}
-        <div style={{
-          display: "flex",
-          gap: "0.6rem",
-          overflowX: "auto",
-          paddingBottom: "0.75rem",
-          marginBottom: "1.25rem",
-          scrollbarWidth: "thin"
-        }}>
-          {CATEGORY_TABS.map(cat => {
-            const isActive = currentCatId === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => onSelectCategory(cat.id)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  padding: "8px 16px",
-                  borderRadius: "20px",
-                  border: isActive ? "2px solid #0c831f" : "1px solid var(--border)",
-                  background: isActive ? "#0c831f" : "var(--bg-card)",
-                  color: isActive ? "#ffffff" : "var(--slate-200)",
-                  fontWeight: isActive ? 700 : 500,
-                  fontSize: "0.85rem",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  transition: "all 0.2s ease"
-                }}
-              >
-                <span>{cat.emoji}</span>
-                <span>{cat.label}</span>
-              </button>
-            );
-          })}
         </div>
 
         {/* Status filters: All, Online, Top Rated */}
