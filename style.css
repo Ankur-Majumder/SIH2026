@@ -370,9 +370,16 @@ body {
   transition: all var(--transition);
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-links a:hover {
   color: var(--blinkit-green);
   background: #f0fdf4;
+}
+
+.nav-links a.active, .nav-item-active {
+  color: #ffffff !important;
+  background: #0c831f !important;
+  font-weight: 700 !important;
+  box-shadow: 0 3px 12px rgba(12, 131, 31, 0.3) !important;
 }
 
 .nav-actions {

@@ -222,16 +222,16 @@ function Navbar({ onNav, activeView, lang, setLang }) {
             <li>
               <a 
                 href="#" 
-                style={{ color: activeView === "services" ? "#0c831f" : undefined, fontWeight: activeView === "services" ? 700 : undefined }}
+                className={activeView === "services" || activeView === "providers" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "services")}
               >
-                {lang === "hi" ? "सेवाएँ" : "Services"}
+                {lang === "hi" ? "सेवाएँ एवं प्रदाता" : "Services & Providers"}
               </a>
             </li>
             <li>
               <a 
                 href="#" 
-                style={{ color: activeView === "how" ? "#0c831f" : undefined, fontWeight: activeView === "how" ? 700 : undefined }}
+                className={activeView === "how" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "how")}
               >
                 {lang === "hi" ? "प्रक्रिया" : "How it works"}
@@ -240,7 +240,7 @@ function Navbar({ onNav, activeView, lang, setLang }) {
             <li>
               <a 
                 href="#" 
-                style={{ color: activeView === "cooperative" ? "#0c831f" : undefined, fontWeight: activeView === "cooperative" ? 700 : undefined }}
+                className={activeView === "cooperative" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "cooperative")}
               >
                 {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}
@@ -249,16 +249,7 @@ function Navbar({ onNav, activeView, lang, setLang }) {
             <li>
               <a 
                 href="#" 
-                style={{ color: activeView === "providers" ? "#0c831f" : undefined, fontWeight: activeView === "providers" ? 700 : undefined }}
-                onClick={(e) => handleNavClick(e, "providers")}
-              >
-                {lang === "hi" ? "सेवा प्रदाता" : "Providers"}
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#" 
-                style={{ color: activeView === "impact" ? "#0c831f" : undefined, fontWeight: activeView === "impact" ? 700 : undefined }}
+                className={activeView === "impact" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "impact")}
               >
                 {lang === "hi" ? "प्रभाव" : "Impact"}
@@ -1442,7 +1433,10 @@ function App() {
   const handleSelectService = useCallback((service) => {
     setSelectedCategoryId(service.id);
     showNotice(`${service.emoji} Showing verified ${service.title} near you.`);
-    handleNav("providers");
+    handleNav("services");
+    setTimeout(() => {
+      document.getElementById("providers-section")?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   }, [showNotice, handleNav]);
 
   if (view === "dashboard") {
@@ -1456,10 +1450,15 @@ function App() {
   const renderPageContent = () => {
     switch (view) {
       case "services":
+      case "providers":
         return (
           <>
             <GovtTickerBar lang={lang} />
-            <ServicesPage onSelectService={handleSelectService} onNav={handleNav} />
+            <ServicesPage 
+              onBook={handleBook} 
+              selectedCategoryId={selectedCategoryId}
+              onSelectCategory={(catId) => setSelectedCategoryId(catId)}
+            />
             <CtaSection />
           </>
         );
@@ -1476,18 +1475,6 @@ function App() {
           <>
             <GovtTickerBar lang={lang} />
             <CooperativePage onNav={handleNav} />
-            <CtaSection />
-          </>
-        );
-      case "providers":
-        return (
-          <>
-            <GovtTickerBar lang={lang} />
-            <ProvidersPage 
-              onBook={handleBook} 
-              selectedCategoryId={selectedCategoryId}
-            />
-            <TestimonialsSection />
             <CtaSection />
           </>
         );
