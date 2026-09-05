@@ -24,6 +24,15 @@ const PROVIDERS = [
   { id: 4, name: "Sunita Devi", initials: "SD", role: "Caregiver & Cook", location: "Rohini, Delhi", distance: "5.2 km", rating: 5.0, reviews: 67, jobs: 150, price: "₹320/hr", avatar: "avatar-pink", tags: ["Elderly Care", "Cooking", "Child Care"], online: true },
   { id: 5, name: "Arjun Meena", initials: "AM", role: "Carpenter", location: "Dwarka, Delhi", distance: "6.1 km", rating: 4.6, reviews: 54, jobs: 180, price: "₹420/hr", avatar: "avatar-teal", tags: ["Furniture", "Modular", "Repair"], online: false },
   { id: 6, name: "Kavitha Rajan", initials: "KR", role: "Tech Support", location: "Saket, Delhi", distance: "3.8 km", rating: 4.8, reviews: 71, jobs: 130, price: "₹300/hr", avatar: "avatar-green", tags: ["WiFi", "Laptop", "Smart TV"], online: true },
+  { id: 7, name: "Vikram Malhotra", initials: "VM", role: "Master Electrician", location: "Connaught Place, Delhi", distance: "1.8 km", rating: 4.9, reviews: 112, jobs: 410, price: "₹390/hr", avatar: "avatar-orange", tags: ["Inverter Repair", "Short Circuit", "AC Wiring"], online: true },
+  { id: 8, name: "Deepak Verma", initials: "DV", role: "Plumber & Sanitary Specialist", location: "Paharganj, Delhi", distance: "3.5 km", rating: 4.7, reviews: 64, jobs: 195, price: "₹340/hr", avatar: "avatar-green", tags: ["Water Tank", "Tap Replacement", "Drainage"], online: true },
+  { id: 9, name: "Meena Kumari", initials: "MK", role: "Home Cleaning Specialist", location: "Mayur Vihar, Delhi", distance: "4.5 km", rating: 4.9, reviews: 130, jobs: 310, price: "₹290/hr", avatar: "avatar-pink", tags: ["Deep Cleaning", "Kitchen Sanitization", "Sofa Care"], online: true },
+  { id: 10, name: "Ramesh Chand", initials: "RC", role: "Interior Painter", location: "Janakpuri, Delhi", distance: "5.0 km", rating: 4.8, reviews: 79, jobs: 220, price: "₹400/hr", avatar: "avatar-purple", tags: ["Wall Painting", "Texture", "Waterproofing"], online: true },
+  { id: 11, name: "Sanjay Yadav", initials: "SY", role: "Local Driver & Chauffeur", location: "Vasant Kunj, Delhi", distance: "2.9 km", rating: 4.8, reviews: 105, jobs: 290, price: "₹300/hr", avatar: "avatar-teal", tags: ["Outstation", "City Transfer", "Automatic/Manual"], online: true },
+  { id: 12, name: "Amitabh Banerjee", initials: "AB", role: "Physics & Chemistry Tutor", location: "CR Park, Delhi", distance: "4.9 km", rating: 4.9, reviews: 94, jobs: 240, price: "₹450/hr", avatar: "avatar-blue", tags: ["JEE Prep", "Class 11-12", "CBSE/ICSE"], online: true },
+  { id: 13, name: "Ritu Saxena", initials: "RS", role: "Senior Caregiver & Nurse", location: "Pitampura, Delhi", distance: "4.2 km", rating: 5.0, reviews: 82, jobs: 175, price: "₹380/hr", avatar: "avatar-pink", tags: ["Post-Op Care", "BP & Sugar Check", "Palliative"], online: true },
+  { id: 14, name: "Harpreet Singh", initials: "HS", role: "Custom Carpenter", location: "Tilak Nagar, Delhi", distance: "5.5 km", rating: 4.7, reviews: 49, jobs: 160, price: "₹450/hr", avatar: "avatar-orange", tags: ["Wardrobes", "Door Fitting", "Polishing"], online: true },
+  { id: 15, name: "Alok Gupta", initials: "AG", role: "IT & Network Tech Support", location: "Noida Sec 18, NCR", distance: "6.8 km", rating: 4.9, reviews: 115, jobs: 320, price: "₹350/hr", avatar: "avatar-green", tags: ["Router Setup", "OS Install", "Printer Repair"], online: true },
 ];
 
 const VOTES = [
@@ -691,10 +700,31 @@ function HowItWorks() {
   );
 }
 
-function ProvidersSection({ onBook }) {
+function ProvidersSection({ onBook, selectedCategory, onClearCategory }) {
   const [filter, setFilter] = useState("all");
   const filters = ["all", "online", "top"];
+  
   const filtered = PROVIDERS.filter(p => {
+    if (selectedCategory) {
+      const catLower = selectedCategory.toLowerCase();
+      const categoryKeywords = {
+        "plumbers": ["plumb"],
+        "tutors": ["tutor", "maths", "science", "physics", "chemistry", "teach"],
+        "caregivers": ["caregiver", "cook", "elderly", "nurse"],
+        "electricians": ["electric", "wiring"],
+        "home cleaning": ["clean", "housekeeper"],
+        "tech support": ["tech", "wifi", "laptop", "it"],
+        "carpenters": ["carpent", "wood"],
+        "painters": ["paint"],
+        "local drivers": ["driver", "chauffeur"]
+      };
+      const keywords = categoryKeywords[catLower] || [catLower];
+      const matchesCategory = keywords.some(kw =>
+        p.role.toLowerCase().includes(kw) ||
+        p.tags.some(t => t.toLowerCase().includes(kw))
+      );
+      if (!matchesCategory) return false;
+    }
     if (filter === "online") return p.online;
     if (filter === "top") return p.rating >= 4.8;
     return true;
@@ -706,11 +736,50 @@ function ProvidersSection({ onBook }) {
         <div className="section-header">
           <div>
             <div className="section-label">Featured Members</div>
-            <div className="section-title">Meet your community providers</div>
+            <div className="section-title">
+              {selectedCategory ? `${selectedCategory} Near You` : "Meet your community providers"}
+            </div>
             <div className="section-desc">Every one of these professionals is a co-op member with verified ID, skills & background check.</div>
           </div>
-          <button className="btn btn-outline">View all 2,400+ →</button>
+          {selectedCategory && (
+            <button className="btn btn-outline" onClick={onClearCategory}>Show All Providers ✕</button>
+          )}
         </div>
+
+        {selectedCategory && (
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            background: "rgba(12, 131, 31, 0.08)",
+            border: "1.5px solid #0c831f",
+            padding: "0.75rem 1.25rem",
+            borderRadius: "var(--radius)",
+            marginBottom: "1.5rem"
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{ fontSize: "1.2rem" }}>🔍</span>
+              <span style={{ fontWeight: 600, color: "var(--slate-100)" }}>
+                Showing verified <strong>{selectedCategory}</strong> ({filtered.length} available)
+              </span>
+            </div>
+            <button 
+              onClick={onClearCategory}
+              style={{
+                background: "#0c831f",
+                color: "#ffffff",
+                border: "none",
+                padding: "6px 14px",
+                borderRadius: "var(--radius-sm)",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontSize: "0.82rem"
+              }}
+            >
+              Show All ✕
+            </button>
+          </div>
+        )}
 
         <div className="filter-tabs">
           {[["all","All Providers"],["online","🟢 Online Now"],["top","⭐ Top Rated"]].map(([key, label]) => (
@@ -720,53 +789,62 @@ function ProvidersSection({ onBook }) {
           ))}
         </div>
 
-        <div className="providers-grid">
-          {filtered.map((p) => (
-            <div className="provider-card" key={p.id} id={`provider-${p.id}`}>
-              <div className="provider-card-header">
-                <div style={{ position: "relative", flexShrink: 0 }}>
-                  <div className={`provider-avatar-lg ${p.avatar}`}>
-                    {p.initials}
-                    <div className="pcard-verified">✓</div>
+        {filtered.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "3rem 1rem", background: "var(--bg-card)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
+            <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🔎</div>
+            <div style={{ fontWeight: 700, fontSize: "1.1rem" }}>No providers found matching this criteria</div>
+            <div style={{ color: "var(--slate-400)", fontSize: "0.85rem", marginTop: "0.25rem" }}>Try resetting your filter to view all verified community members.</div>
+            <button className="btn btn-primary" style={{ marginTop: "1rem" }} onClick={onClearCategory}>Show All Providers</button>
+          </div>
+        ) : (
+          <div className="providers-grid">
+            {filtered.map((p) => (
+              <div className="provider-card" key={p.id} id={`provider-${p.id}`}>
+                <div className="provider-card-header">
+                  <div style={{ position: "relative", flexShrink: 0 }}>
+                    <div className={`provider-avatar-lg ${p.avatar}`}>
+                      {p.initials}
+                      <div className="pcard-verified">✓</div>
+                    </div>
+                    {p.online && <div className="online-dot" title="Online Now" />}
                   </div>
-                  {p.online && <div className="online-dot" title="Online Now" />}
+                  <div>
+                    <div className="pcard-name">{p.name}</div>
+                    <div className="pcard-role">{p.role}</div>
+                    <div className="pcard-location">📍 {p.location} · {p.distance}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="pcard-name">{p.name}</div>
-                  <div className="pcard-role">{p.role}</div>
-                  <div className="pcard-location">📍 {p.location} · {p.distance}</div>
+                <div className="provider-card-body">
+                  <div className="pcard-stats">
+                    <div className="pcard-stat">
+                      <span className="pcard-stat-val">⭐ {p.rating}</span>
+                      <span className="pcard-stat-key">Rating</span>
+                    </div>
+                    <div className="pcard-stat">
+                      <span className="pcard-stat-val">{p.reviews}</span>
+                      <span className="pcard-stat-key">Reviews</span>
+                    </div>
+                    <div className="pcard-stat">
+                      <span className="pcard-stat-val">{p.jobs}</span>
+                      <span className="pcard-stat-key">Jobs done</span>
+                    </div>
+                  </div>
+                  <div className="pcard-tags">
+                    {p.tags.map(t => <span className="tag" key={t}>{t}</span>)}
+                  </div>
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <div style={{ flex: 1, textAlign: "center", padding: "6px 0", borderRadius: "var(--radius-sm)", background: "var(--bg-card)", fontSize: "0.8rem", fontWeight: 700, color: "var(--emerald-400)" }}>
+                      {p.price}
+                    </div>
+                    <button className="btn btn-primary" style={{ flex: 2, justifyContent: "center", padding: "8px 16px", borderRadius: "var(--radius-sm)", fontSize: "0.82rem" }} onClick={() => onBook(p)}>
+                      Book Now →
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="provider-card-body">
-                <div className="pcard-stats">
-                  <div className="pcard-stat">
-                    <span className="pcard-stat-val">⭐ {p.rating}</span>
-                    <span className="pcard-stat-key">Rating</span>
-                  </div>
-                  <div className="pcard-stat">
-                    <span className="pcard-stat-val">{p.reviews}</span>
-                    <span className="pcard-stat-key">Reviews</span>
-                  </div>
-                  <div className="pcard-stat">
-                    <span className="pcard-stat-val">{p.jobs}</span>
-                    <span className="pcard-stat-key">Jobs done</span>
-                  </div>
-                </div>
-                <div className="pcard-tags">
-                  {p.tags.map(t => <span className="tag" key={t}>{t}</span>)}
-                </div>
-                <div style={{ display: "flex", gap: "0.5rem" }}>
-                  <div style={{ flex: 1, textAlign: "center", padding: "6px 0", borderRadius: "var(--radius-sm)", background: "var(--bg-card)", fontSize: "0.8rem", fontWeight: 700, color: "var(--emerald-400)" }}>
-                    {p.price}
-                  </div>
-                  <button className="btn btn-primary" style={{ flex: 2, justifyContent: "center", padding: "8px 16px", borderRadius: "var(--radius-sm)", fontSize: "0.82rem" }} onClick={() => onBook(p)}>
-                    Book Now →
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -1320,6 +1398,7 @@ function App() {
   const [view, setView] = useState("home"); // home | dashboard
   const [notice, setNotice] = useState("");
   const [bookingProvider, setBookingProvider] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [lang, setLang] = useState("en"); // en | hi
 
   const showNotice = useCallback((msg) => {
@@ -1332,6 +1411,7 @@ function App() {
   }, []);
 
   const handleSelectService = useCallback((service) => {
+    setSelectedCategory(service.title);
     showNotice(`${service.emoji} ${service.title} selected — showing verified members near you.`);
     document.getElementById("providers")?.scrollIntoView({ behavior: "smooth" });
   }, [showNotice]);
@@ -1357,7 +1437,11 @@ function App() {
         <StatsStrip />
         <ServicesSection onSelectService={handleSelectService} />
         <HowItWorks />
-        <ProvidersSection onBook={handleBook} />
+        <ProvidersSection 
+          onBook={handleBook} 
+          selectedCategory={selectedCategory}
+          onClearCategory={() => setSelectedCategory(null)}
+        />
         <CooperativeSection />
         <ImpactSection />
         <GovernanceSection />
