@@ -18,21 +18,44 @@ const SERVICES = [
 ];
 
 const PROVIDERS = [
-  { id: 1, name: "Rajesh Kumar", initials: "RK", role: "Master Plumber", location: "Karol Bagh, Delhi", distance: "2.1 km", rating: 4.9, reviews: 142, jobs: 340, price: "₹380/hr", avatar: "avatar-blue", tags: ["Emergency", "Pipe Fitting", "Bathroom"], online: true },
-  { id: 2, name: "Priya Sharma", initials: "PS", role: "Home Tutor", location: "Lajpat Nagar, Delhi", distance: "3.4 km", rating: 4.8, reviews: 88, jobs: 210, price: "₹350/hr", avatar: "avatar-purple", tags: ["Maths", "Science", "Class 9–12"], online: true },
-  { id: 3, name: "Mohammed Salim", initials: "MS", role: "Electrician", location: "Chandni Chowk, Delhi", distance: "4.0 km", rating: 4.7, reviews: 96, jobs: 280, price: "₹360/hr", avatar: "avatar-orange", tags: ["Wiring", "MCB", "CCTV"], online: false },
-  { id: 4, name: "Sunita Devi", initials: "SD", role: "Caregiver & Cook", location: "Rohini, Delhi", distance: "5.2 km", rating: 5.0, reviews: 67, jobs: 150, price: "₹320/hr", avatar: "avatar-pink", tags: ["Elderly Care", "Cooking", "Child Care"], online: true },
-  { id: 5, name: "Arjun Meena", initials: "AM", role: "Carpenter", location: "Dwarka, Delhi", distance: "6.1 km", rating: 4.6, reviews: 54, jobs: 180, price: "₹420/hr", avatar: "avatar-teal", tags: ["Furniture", "Modular", "Repair"], online: false },
-  { id: 6, name: "Kavitha Rajan", initials: "KR", role: "Tech Support", location: "Saket, Delhi", distance: "3.8 km", rating: 4.8, reviews: 71, jobs: 130, price: "₹300/hr", avatar: "avatar-green", tags: ["WiFi", "Laptop", "Smart TV"], online: true },
-  { id: 7, name: "Vikram Malhotra", initials: "VM", role: "Master Electrician", location: "Connaught Place, Delhi", distance: "1.8 km", rating: 4.9, reviews: 112, jobs: 410, price: "₹390/hr", avatar: "avatar-orange", tags: ["Inverter Repair", "Short Circuit", "AC Wiring"], online: true },
-  { id: 8, name: "Deepak Verma", initials: "DV", role: "Plumber & Sanitary Specialist", location: "Paharganj, Delhi", distance: "3.5 km", rating: 4.7, reviews: 64, jobs: 195, price: "₹340/hr", avatar: "avatar-green", tags: ["Water Tank", "Tap Replacement", "Drainage"], online: true },
-  { id: 9, name: "Meena Kumari", initials: "MK", role: "Home Cleaning Specialist", location: "Mayur Vihar, Delhi", distance: "4.5 km", rating: 4.9, reviews: 130, jobs: 310, price: "₹290/hr", avatar: "avatar-pink", tags: ["Deep Cleaning", "Kitchen Sanitization", "Sofa Care"], online: true },
-  { id: 10, name: "Ramesh Chand", initials: "RC", role: "Interior Painter", location: "Janakpuri, Delhi", distance: "5.0 km", rating: 4.8, reviews: 79, jobs: 220, price: "₹400/hr", avatar: "avatar-purple", tags: ["Wall Painting", "Texture", "Waterproofing"], online: true },
-  { id: 11, name: "Sanjay Yadav", initials: "SY", role: "Local Driver & Chauffeur", location: "Vasant Kunj, Delhi", distance: "2.9 km", rating: 4.8, reviews: 105, jobs: 290, price: "₹300/hr", avatar: "avatar-teal", tags: ["Outstation", "City Transfer", "Automatic/Manual"], online: true },
-  { id: 12, name: "Amitabh Banerjee", initials: "AB", role: "Physics & Chemistry Tutor", location: "CR Park, Delhi", distance: "4.9 km", rating: 4.9, reviews: 94, jobs: 240, price: "₹450/hr", avatar: "avatar-blue", tags: ["JEE Prep", "Class 11-12", "CBSE/ICSE"], online: true },
-  { id: 13, name: "Ritu Saxena", initials: "RS", role: "Senior Caregiver & Nurse", location: "Pitampura, Delhi", distance: "4.2 km", rating: 5.0, reviews: 82, jobs: 175, price: "₹380/hr", avatar: "avatar-pink", tags: ["Post-Op Care", "BP & Sugar Check", "Palliative"], online: true },
-  { id: 14, name: "Harpreet Singh", initials: "HS", role: "Custom Carpenter", location: "Tilak Nagar, Delhi", distance: "5.5 km", rating: 4.7, reviews: 49, jobs: 160, price: "₹450/hr", avatar: "avatar-orange", tags: ["Wardrobes", "Door Fitting", "Polishing"], online: true },
-  { id: 15, name: "Alok Gupta", initials: "AG", role: "IT & Network Tech Support", location: "Noida Sec 18, NCR", distance: "6.8 km", rating: 4.9, reviews: 115, jobs: 320, price: "₹350/hr", avatar: "avatar-green", tags: ["Router Setup", "OS Install", "Printer Repair"], online: true },
+  // Plumbers
+  { id: 1, category: "plumber", name: "Rajesh Kumar", initials: "RK", role: "Master Plumber", location: "Karol Bagh, Delhi", distance: "2.1 km", rating: 4.9, reviews: 142, jobs: 340, price: "₹380/hr", avatar: "avatar-blue", tags: ["Emergency", "Pipe Fitting", "Bathroom"], online: true },
+  { id: 8, category: "plumber", name: "Deepak Verma", initials: "DV", role: "Plumber & Sanitary Specialist", location: "Paharganj, Delhi", distance: "3.5 km", rating: 4.7, reviews: 64, jobs: 195, price: "₹340/hr", avatar: "avatar-green", tags: ["Water Tank", "Tap Replacement", "Drainage"], online: true },
+  { id: 16, category: "plumber", name: "Suresh Patel", initials: "SP", role: "Emergency Plumber", location: "Rohini, Delhi", distance: "4.1 km", rating: 4.8, reviews: 89, jobs: 210, price: "₹360/hr", avatar: "avatar-teal", tags: ["Leakage", "Pipeline", "Fitting"], online: true },
+
+  // Tutors
+  { id: 2, category: "tutor", name: "Priya Sharma", initials: "PS", role: "Home Tutor", location: "Lajpat Nagar, Delhi", distance: "3.4 km", rating: 4.8, reviews: 88, jobs: 210, price: "₹350/hr", avatar: "avatar-purple", tags: ["Maths", "Science", "Class 9–12"], online: true },
+  { id: 12, category: "tutor", name: "Amitabh Banerjee", initials: "AB", role: "Physics & Chemistry Tutor", location: "CR Park, Delhi", distance: "4.9 km", rating: 4.9, reviews: 94, jobs: 240, price: "₹450/hr", avatar: "avatar-blue", tags: ["JEE Prep", "Class 11-12", "CBSE/ICSE"], online: true },
+  { id: 17, category: "tutor", name: "Neha Gupta", initials: "NG", role: "English & Primary Tutor", location: "Dwarka, Delhi", distance: "2.8 km", rating: 4.9, reviews: 110, jobs: 290, price: "₹300/hr", avatar: "avatar-pink", tags: ["Primary School", "Spoken English", "All Subjects"], online: true },
+
+  // Electricians
+  { id: 3, category: "electrician", name: "Mohammed Salim", initials: "MS", role: "Electrician", location: "Chandni Chowk, Delhi", distance: "4.0 km", rating: 4.7, reviews: 96, jobs: 280, price: "₹360/hr", avatar: "avatar-orange", tags: ["Wiring", "MCB", "CCTV"], online: false },
+  { id: 7, category: "electrician", name: "Vikram Malhotra", initials: "VM", role: "Master Electrician", location: "Connaught Place, Delhi", distance: "1.8 km", rating: 4.9, reviews: 112, jobs: 410, price: "₹390/hr", avatar: "avatar-orange", tags: ["Inverter Repair", "Short Circuit", "AC Wiring"], online: true },
+  { id: 18, category: "electrician", name: "Rakesh Sharma", initials: "RS", role: "Commercial & Home Electrician", location: "Preet Vihar, Delhi", distance: "3.2 km", rating: 4.8, reviews: 74, jobs: 180, price: "₹350/hr", avatar: "avatar-yellow", tags: ["Fan Installation", "Panel Board", "LED Lights"], online: true },
+
+  // Caregivers
+  { id: 4, category: "caregiver", name: "Sunita Devi", initials: "SD", role: "Caregiver & Cook", location: "Rohini, Delhi", distance: "5.2 km", rating: 5.0, reviews: 67, jobs: 150, price: "₹320/hr", avatar: "avatar-pink", tags: ["Elderly Care", "Cooking", "Child Care"], online: true },
+  { id: 13, category: "caregiver", name: "Ritu Saxena", initials: "RS", role: "Senior Caregiver & Nurse", location: "Pitampura, Delhi", distance: "4.2 km", rating: 5.0, reviews: 82, jobs: 175, price: "₹380/hr", avatar: "avatar-pink", tags: ["Post-Op Care", "BP & Sugar Check", "Palliative"], online: true },
+
+  // Cleaning
+  { id: 9, category: "cleaning", name: "Meena Kumari", initials: "MK", role: "Home Cleaning Specialist", location: "Mayur Vihar, Delhi", distance: "4.5 km", rating: 4.9, reviews: 130, jobs: 310, price: "₹290/hr", avatar: "avatar-pink", tags: ["Deep Cleaning", "Kitchen Sanitization", "Sofa Care"], online: true },
+  { id: 19, category: "cleaning", name: "Asha Rani", initials: "AR", role: "Housekeeping & Deep Cleaner", location: "Saket, Delhi", distance: "3.1 km", rating: 4.8, reviews: 92, jobs: 260, price: "₹280/hr", avatar: "avatar-green", tags: ["Full House", "Bathroom Scrubbing", "Balcony"], online: true },
+
+  // Tech Support
+  { id: 6, category: "tech", name: "Kavitha Rajan", initials: "KR", role: "Tech Support", location: "Saket, Delhi", distance: "3.8 km", rating: 4.8, reviews: 71, jobs: 130, price: "₹300/hr", avatar: "avatar-green", tags: ["WiFi", "Laptop", "Smart TV"], online: true },
+  { id: 15, category: "tech", name: "Alok Gupta", initials: "AG", role: "IT & Network Tech Support", location: "Noida Sec 18, NCR", distance: "6.8 km", rating: 4.9, reviews: 115, jobs: 320, price: "₹350/hr", avatar: "avatar-green", tags: ["Router Setup", "OS Install", "Printer Repair"], online: true },
+
+  // Carpenters
+  { id: 5, category: "carpenter", name: "Arjun Meena", initials: "AM", role: "Carpenter", location: "Dwarka, Delhi", distance: "6.1 km", rating: 4.6, reviews: 54, jobs: 180, price: "₹420/hr", avatar: "avatar-teal", tags: ["Furniture", "Modular", "Repair"], online: false },
+  { id: 14, category: "carpenter", name: "Harpreet Singh", initials: "HS", role: "Custom Carpenter", location: "Tilak Nagar, Delhi", distance: "5.5 km", rating: 4.7, reviews: 49, jobs: 160, price: "₹450/hr", avatar: "avatar-orange", tags: ["Wardrobes", "Door Fitting", "Polishing"], online: true },
+
+  // Painters
+  { id: 10, category: "painter", name: "Ramesh Chand", initials: "RC", role: "Interior Painter", location: "Janakpuri, Delhi", distance: "5.0 km", rating: 4.8, reviews: 79, jobs: 220, price: "₹400/hr", avatar: "avatar-purple", tags: ["Wall Painting", "Texture", "Waterproofing"], online: true },
+  { id: 20, category: "painter", name: "Anil Paswan", initials: "AP", role: "Exterior & Waterproof Painter", location: "Uttam Nagar, Delhi", distance: "4.7 km", rating: 4.7, reviews: 63, jobs: 140, price: "₹370/hr", avatar: "avatar-blue", tags: ["Exterior", "Primer", "Putty Finish"], online: true },
+
+  // Drivers
+  { id: 11, category: "driver", name: "Sanjay Yadav", initials: "SY", role: "Local Driver & Chauffeur", location: "Vasant Kunj, Delhi", distance: "2.9 km", rating: 4.8, reviews: 105, jobs: 290, price: "₹300/hr", avatar: "avatar-teal", tags: ["Outstation", "City Transfer", "Automatic/Manual"], online: true },
+  { id: 21, category: "driver", name: "Gurdeep Singh", initials: "GS", role: "Personal & Commercial Driver", location: "Rajouri Garden, Delhi", distance: "3.8 km", rating: 4.9, reviews: 128, jobs: 350, price: "₹320/hr", avatar: "avatar-orange", tags: ["SUV Specialist", "Airport Drop", "Hourly Hire"], online: true },
 ];
 
 const VOTES = [
@@ -700,89 +723,102 @@ function HowItWorks() {
   );
 }
 
-function ProvidersSection({ onBook, selectedCategory, onClearCategory }) {
+function ProvidersSection({ onBook, selectedCategoryId, onSelectCategory }) {
   const [filter, setFilter] = useState("all");
-  const filters = ["all", "online", "top"];
-  
+
+  const CATEGORY_TABS = [
+    { id: "all", emoji: "👥", label: "All Members" },
+    { id: "plumber", emoji: "🔧", label: "Plumbers" },
+    { id: "electrician", emoji: "⚡", label: "Electricians" },
+    { id: "tutor", emoji: "📚", label: "Tutors" },
+    { id: "caregiver", emoji: "❤️", label: "Caregivers" },
+    { id: "cleaning", emoji: "🧹", label: "Home Cleaning" },
+    { id: "tech", emoji: "💻", label: "Tech Support" },
+    { id: "carpenter", emoji: "🪚", label: "Carpenters" },
+    { id: "painter", emoji: "🖌️", label: "Painters" },
+    { id: "driver", emoji: "🚗", label: "Local Drivers" },
+  ];
+
+  const currentCatId = selectedCategoryId || "all";
+
   const filtered = PROVIDERS.filter(p => {
-    if (selectedCategory) {
-      const catLower = selectedCategory.toLowerCase();
-      const categoryKeywords = {
-        "plumbers": ["plumb"],
-        "tutors": ["tutor", "maths", "science", "physics", "chemistry", "teach"],
-        "caregivers": ["caregiver", "cook", "elderly", "nurse"],
-        "electricians": ["electric", "wiring"],
-        "home cleaning": ["clean", "housekeeper"],
-        "tech support": ["tech", "wifi", "laptop", "it"],
-        "carpenters": ["carpent", "wood"],
-        "painters": ["paint"],
-        "local drivers": ["driver", "chauffeur"]
-      };
-      const keywords = categoryKeywords[catLower] || [catLower];
-      const matchesCategory = keywords.some(kw =>
-        p.role.toLowerCase().includes(kw) ||
-        p.tags.some(t => t.toLowerCase().includes(kw))
-      );
-      if (!matchesCategory) return false;
+    // 1. Exact Category Filter
+    if (currentCatId !== "all") {
+      if (p.category !== currentCatId) return false;
     }
+    // 2. Status Filter
     if (filter === "online") return p.online;
     if (filter === "top") return p.rating >= 4.8;
     return true;
   });
+
+  const activeCategoryObj = CATEGORY_TABS.find(c => c.id === currentCatId);
 
   return (
     <section className="section" id="providers">
       <div className="section-inner">
         <div className="section-header">
           <div>
-            <div className="section-label">Featured Members</div>
+            <div className="section-label">Verified Service Providers</div>
             <div className="section-title">
-              {selectedCategory ? `${selectedCategory} Near You` : "Meet your community providers"}
+              {currentCatId !== "all" && activeCategoryObj
+                ? `${activeCategoryObj.emoji} ${activeCategoryObj.label} Only`
+                : "Meet your community providers"}
             </div>
-            <div className="section-desc">Every one of these professionals is a co-op member with verified ID, skills & background check.</div>
+            <div className="section-desc">
+              {currentCatId !== "all"
+                ? `Showing verified ${activeCategoryObj?.label} in your area.`
+                : "Every professional is a co-op member with verified ID, skills & background check."}
+            </div>
           </div>
-          {selectedCategory && (
-            <button className="btn btn-outline" onClick={onClearCategory}>Show All Providers ✕</button>
+          {currentCatId !== "all" && (
+            <button className="btn btn-outline" onClick={() => onSelectCategory("all")}>
+              Show All Categories ✕
+            </button>
           )}
         </div>
 
-        {selectedCategory && (
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            background: "rgba(12, 131, 31, 0.08)",
-            border: "1.5px solid #0c831f",
-            padding: "0.75rem 1.25rem",
-            borderRadius: "var(--radius)",
-            marginBottom: "1.5rem"
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ fontSize: "1.2rem" }}>🔍</span>
-              <span style={{ fontWeight: 600, color: "var(--slate-100)" }}>
-                Showing verified <strong>{selectedCategory}</strong> ({filtered.length} available)
-              </span>
-            </div>
-            <button 
-              onClick={onClearCategory}
-              style={{
-                background: "#0c831f",
-                color: "#ffffff",
-                border: "none",
-                padding: "6px 14px",
-                borderRadius: "var(--radius-sm)",
-                fontWeight: 700,
-                cursor: "pointer",
-                fontSize: "0.82rem"
-              }}
-            >
-              Show All ✕
-            </button>
-          </div>
-        )}
+        {/* Category Pills Row (Uber / UrbanCompany style) */}
+        <div style={{
+          display: "flex",
+          gap: "0.6rem",
+          overflowX: "auto",
+          paddingBottom: "0.75rem",
+          marginBottom: "1.25rem",
+          scrollbarWidth: "thin"
+        }}>
+          {CATEGORY_TABS.map(cat => {
+            const isActive = currentCatId === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => onSelectCategory(cat.id)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  border: isActive ? "2px solid #0c831f" : "1px solid var(--border)",
+                  background: isActive ? "#0c831f" : "var(--bg-card)",
+                  color: isActive ? "#ffffff" : "var(--slate-200)",
+                  fontWeight: isActive ? 700 : 500,
+                  fontSize: "0.85rem",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                <span>{cat.emoji}</span>
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
+        </div>
 
-        <div className="filter-tabs">
-          {[["all","All Providers"],["online","🟢 Online Now"],["top","⭐ Top Rated"]].map(([key, label]) => (
+        {/* Status filters: All, Online, Top Rated */}
+        <div className="filter-tabs" style={{ marginBottom: "1.5rem" }}>
+          {[["all","All Statuses"],["online","🟢 Online Now"],["top","⭐ Top Rated (4.8+)"]].map(([key, label]) => (
             <button key={key} className={`filter-tab${filter === key ? " active" : ""}`} onClick={() => setFilter(key)}>
               {label}
             </button>
@@ -792,9 +828,9 @@ function ProvidersSection({ onBook, selectedCategory, onClearCategory }) {
         {filtered.length === 0 ? (
           <div style={{ textAlign: "center", padding: "3rem 1rem", background: "var(--bg-card)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
             <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🔎</div>
-            <div style={{ fontWeight: 700, fontSize: "1.1rem" }}>No providers found matching this criteria</div>
-            <div style={{ color: "var(--slate-400)", fontSize: "0.85rem", marginTop: "0.25rem" }}>Try resetting your filter to view all verified community members.</div>
-            <button className="btn btn-primary" style={{ marginTop: "1rem" }} onClick={onClearCategory}>Show All Providers</button>
+            <div style={{ fontWeight: 700, fontSize: "1.1rem" }}>No providers found in this category</div>
+            <div style={{ color: "var(--slate-400)", fontSize: "0.85rem", marginTop: "0.25rem" }}>Try resetting your category filter to view all verified members.</div>
+            <button className="btn btn-primary" style={{ marginTop: "1rem" }} onClick={() => onSelectCategory("all")}>Show All Categories</button>
           </div>
         ) : (
           <div className="providers-grid">
@@ -1398,7 +1434,7 @@ function App() {
   const [view, setView] = useState("home"); // home | dashboard
   const [notice, setNotice] = useState("");
   const [bookingProvider, setBookingProvider] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState("all");
   const [lang, setLang] = useState("en"); // en | hi
 
   const showNotice = useCallback((msg) => {
@@ -1411,8 +1447,8 @@ function App() {
   }, []);
 
   const handleSelectService = useCallback((service) => {
-    setSelectedCategory(service.title);
-    showNotice(`${service.emoji} ${service.title} selected — showing verified members near you.`);
+    setSelectedCategoryId(service.id);
+    showNotice(`${service.emoji} Showing verified ${service.title} near you.`);
     document.getElementById("providers")?.scrollIntoView({ behavior: "smooth" });
   }, [showNotice]);
 
@@ -1439,8 +1475,8 @@ function App() {
         <HowItWorks />
         <ProvidersSection 
           onBook={handleBook} 
-          selectedCategory={selectedCategory}
-          onClearCategory={() => setSelectedCategory(null)}
+          selectedCategoryId={selectedCategoryId}
+          onSelectCategory={(catId) => setSelectedCategoryId(catId)}
         />
         <CooperativeSection />
         <ImpactSection />
