@@ -2781,6 +2781,8 @@ body {
     position: fixed;
     top: 98px;
     left: 0; right: 0;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
     z-index: 1050;
     background: #ffffff;
     border-bottom: 3px solid #0c831f;

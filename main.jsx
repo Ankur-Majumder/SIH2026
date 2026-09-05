@@ -276,6 +276,13 @@ function Navbar({ onNav, activeView, lang, setLang }) {
           <div className="mobile-menu">
             <a 
               href="#" 
+              className={activeView === "home" ? "active" : ""} 
+              onClick={(e) => handleNavClick(e, "home")}
+            >
+              🏠 {lang === "hi" ? "मुख्य पृष्ठ" : "Home"}
+            </a>
+            <a 
+              href="#" 
               className={activeView === "services" || activeView === "providers" ? "active" : ""} 
               onClick={(e) => handleNavClick(e, "services")}
             >
@@ -302,7 +309,28 @@ function Navbar({ onNav, activeView, lang, setLang }) {
             >
               📊 {lang === "hi" ? "प्रभाव" : "Impact"}
             </a>
-            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem", paddingTop: "0.75rem", borderTop: "1px solid #e5e7eb" }}>
+            <a 
+              href="#" 
+              className={activeView === "dashboard" ? "active" : ""} 
+              onClick={(e) => handleNavClick(e, "dashboard")}
+            >
+              ⊞ {lang === "hi" ? "डैशबोर्ड" : "Member Dashboard"}
+            </a>
+
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem", marginTop: "0.5rem", paddingTop: "0.75rem", borderTop: "1px solid #e5e7eb" }}>
+              <button 
+                className="btn btn-outline" 
+                style={{ flex: 1, justifyContent: "center", padding: "8px 12px", fontSize: "0.8rem" }}
+                onClick={() => setLang(lang === "hi" ? "en" : "hi")}
+              >
+                🌐 {lang === "hi" ? "English" : "हिंदी"}
+              </button>
+              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0c831f", background: "#f0fdf4", padding: "6px 12px", borderRadius: "var(--radius-full)", border: "1px solid #bbf7d0" }}>
+                📞 Helpline: 1800-11-2025
+              </div>
+            </div>
+
+            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.25rem" }}>
               <button className="btn btn-ghost" style={{ flex: 1, justifyContent: "center" }} onClick={() => { setModalOpen("login"); setMenuOpen(false); }}>
                 {lang === "hi" ? "लॉग इन" : "Log in"}
               </button>
