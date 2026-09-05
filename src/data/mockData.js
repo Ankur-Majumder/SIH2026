@@ -1,0 +1,75 @@
+// =============================================
+// SAHAYOGSEVA MOCK DATA
+// =============================================
+
+export const SERVICES = [
+  { id: "plumber", emoji: "🔧", title: "Plumbers", text: "Leaks, fittings & emergency repairs", count: "340+ members", color: "#3b82f6" },
+  { id: "tutor", emoji: "📚", title: "Tutors", text: "School, college & competitive exams", count: "520+ members", color: "#8b5cf6" },
+  { id: "caregiver", emoji: "❤️", title: "Caregivers", text: "Trusted care for elders & children", count: "280+ members", color: "#ec4899" },
+  { id: "electrician", emoji: "⚡", title: "Electricians", text: "Safe wiring, fans & installations", count: "290+ members", color: "#f59e0b" },
+  { id: "cleaning", emoji: "🧹", title: "Home Cleaning", text: "Daily help, deep cleaning & laundry", count: "410+ members", color: "#10b981" },
+  { id: "tech", emoji: "💻", title: "Tech Support", text: "Devices, WiFi setup & app help", count: "190+ members", color: "#06b6d4" },
+  { id: "carpenter", emoji: "🪚", title: "Carpenters", text: "Furniture, repairs & woodwork", count: "160+ members", color: "#f97316" },
+  { id: "painter", emoji: "🖌️", title: "Painters", text: "Interior, exterior & waterproofing", count: "130+ members", color: "#a855f7" },
+  { id: "driver", emoji: "🚗", title: "Local Drivers", text: "School runs, errands & outstation", count: "220+ members", color: "#14b8a6" },
+];
+
+export const PROVIDERS = [
+  // Plumbers
+  { id: 1, category: "plumber", name: "Rajesh Kumar", initials: "RK", role: "Master Plumber", location: "Karol Bagh, Delhi", distance: "2.1 km", rating: 4.9, reviews: 142, jobs: 340, price: "₹380/hr", avatar: "avatar-blue", tags: ["Emergency", "Pipe Fitting", "Bathroom"], online: true },
+  { id: 8, category: "plumber", name: "Deepak Verma", initials: "DV", role: "Plumber & Sanitary Specialist", location: "Paharganj, Delhi", distance: "3.5 km", rating: 4.7, reviews: 64, jobs: 195, price: "₹340/hr", avatar: "avatar-green", tags: ["Water Tank", "Tap Replacement", "Drainage"], online: true },
+  { id: 16, category: "plumber", name: "Suresh Patel", initials: "SP", role: "Emergency Plumber", location: "Rohini, Delhi", distance: "4.1 km", rating: 4.8, reviews: 89, jobs: 210, price: "₹360/hr", avatar: "avatar-teal", tags: ["Leakage", "Pipeline", "Fitting"], online: true },
+
+  // Tutors
+  { id: 2, category: "tutor", name: "Priya Sharma", initials: "PS", role: "Home Tutor", location: "Lajpat Nagar, Delhi", distance: "3.4 km", rating: 4.8, reviews: 88, jobs: 210, price: "₹350/hr", avatar: "avatar-purple", tags: ["Maths", "Science", "Class 9–12"], online: true },
+  { id: 12, category: "tutor", name: "Amitabh Banerjee", initials: "AB", role: "Physics & Chemistry Tutor", location: "CR Park, Delhi", distance: "4.9 km", rating: 4.9, reviews: 94, jobs: 240, price: "₹450/hr", avatar: "avatar-blue", tags: ["JEE Prep", "Class 11-12", "CBSE/ICSE"], online: true },
+  { id: 17, category: "tutor", name: "Neha Gupta", initials: "NG", role: "English & Primary Tutor", location: "Dwarka, Delhi", distance: "2.8 km", rating: 4.9, reviews: 110, jobs: 290, price: "₹300/hr", avatar: "avatar-pink", tags: ["Primary School", "Spoken English", "All Subjects"], online: true },
+
+  // Electricians
+  { id: 3, category: "electrician", name: "Mohammed Salim", initials: "MS", role: "Electrician", location: "Chandni Chowk, Delhi", distance: "4.0 km", rating: 4.7, reviews: 96, jobs: 280, price: "₹360/hr", avatar: "avatar-orange", tags: ["Wiring", "MCB", "CCTV"], online: false },
+  { id: 7, category: "electrician", name: "Vikram Malhotra", initials: "VM", role: "Master Electrician", location: "Connaught Place, Delhi", distance: "1.8 km", rating: 4.9, reviews: 112, jobs: 410, price: "₹390/hr", avatar: "avatar-orange", tags: ["Inverter Repair", "Short Circuit", "AC Wiring"], online: true },
+  { id: 18, category: "electrician", name: "Rakesh Sharma", initials: "RS", role: "Commercial & Home Electrician", location: "Preet Vihar, Delhi", distance: "3.2 km", rating: 4.8, reviews: 74, jobs: 180, price: "₹350/hr", avatar: "avatar-yellow", tags: ["Fan Installation", "Panel Board", "LED Lights"], online: true },
+
+  // Caregivers
+  { id: 4, category: "caregiver", name: "Sunita Devi", initials: "SD", role: "Caregiver & Cook", location: "Rohini, Delhi", distance: "5.2 km", rating: 5.0, reviews: 67, jobs: 150, price: "₹320/hr", avatar: "avatar-pink", tags: ["Elderly Care", "Cooking", "Child Care"], online: true },
+  { id: 13, category: "caregiver", name: "Ritu Saxena", initials: "RS", role: "Senior Caregiver & Nurse", location: "Pitampura, Delhi", distance: "4.2 km", rating: 5.0, reviews: 82, jobs: 175, price: "₹380/hr", avatar: "avatar-pink", tags: ["Post-Op Care", "BP & Sugar Check", "Palliative"], online: true },
+
+  // Cleaning
+  { id: 9, category: "cleaning", name: "Meena Kumari", initials: "MK", role: "Home Cleaning Specialist", location: "Mayur Vihar, Delhi", distance: "4.5 km", rating: 4.9, reviews: 130, jobs: 310, price: "₹290/hr", avatar: "avatar-pink", tags: ["Deep Cleaning", "Kitchen Sanitization", "Sofa Care"], online: true },
+  { id: 19, category: "cleaning", name: "Asha Rani", initials: "AR", role: "Housekeeping & Deep Cleaner", location: "Saket, Delhi", distance: "3.1 km", rating: 4.8, reviews: 92, jobs: 260, price: "₹280/hr", avatar: "avatar-green", tags: ["Full House", "Bathroom Scrubbing", "Balcony"], online: true },
+
+  // Tech Support
+  { id: 6, category: "tech", name: "Kavitha Rajan", initials: "KR", role: "Tech Support", location: "Saket, Delhi", distance: "3.8 km", rating: 4.8, reviews: 71, jobs: 130, price: "₹300/hr", avatar: "avatar-green", tags: ["WiFi", "Laptop", "Smart TV"], online: true },
+  { id: 15, category: "tech", name: "Alok Gupta", initials: "AG", role: "IT & Network Tech Support", location: "Noida Sec 18, NCR", distance: "6.8 km", rating: 4.9, reviews: 115, jobs: 320, price: "₹350/hr", avatar: "avatar-green", tags: ["Router Setup", "OS Install", "Printer Repair"], online: true },
+
+  // Carpenters
+  { id: 5, category: "carpenter", name: "Arjun Meena", initials: "AM", role: "Carpenter", location: "Dwarka, Delhi", distance: "6.1 km", rating: 4.6, reviews: 54, jobs: 180, price: "₹420/hr", avatar: "avatar-teal", tags: ["Furniture", "Modular", "Repair"], online: false },
+  { id: 14, category: "carpenter", name: "Harpreet Singh", initials: "HS", role: "Custom Carpenter", location: "Tilak Nagar, Delhi", distance: "5.5 km", rating: 4.7, reviews: 49, jobs: 160, price: "₹450/hr", avatar: "avatar-orange", tags: ["Wardrobes", "Door Fitting", "Polishing"], online: true },
+
+  // Painters
+  { id: 10, category: "painter", name: "Ramesh Chand", initials: "RC", role: "Interior Painter", location: "Janakpuri, Delhi", distance: "5.0 km", rating: 4.8, reviews: 79, jobs: 220, price: "₹400/hr", avatar: "avatar-purple", tags: ["Wall Painting", "Texture", "Waterproofing"], online: true },
+  { id: 20, category: "painter", name: "Anil Paswan", initials: "AP", role: "Exterior & Waterproof Painter", location: "Uttam Nagar, Delhi", distance: "4.7 km", rating: 4.7, reviews: 63, jobs: 140, price: "₹370/hr", avatar: "avatar-blue", tags: ["Exterior", "Primer", "Putty Finish"], online: true },
+
+  // Drivers
+  { id: 11, category: "driver", name: "Sanjay Yadav", initials: "SY", role: "Local Driver & Chauffeur", location: "Vasant Kunj, Delhi", distance: "2.9 km", rating: 4.8, reviews: 105, jobs: 290, price: "₹300/hr", avatar: "avatar-teal", tags: ["Outstation", "City Transfer", "Automatic/Manual"], online: true },
+  { id: 21, category: "driver", name: "Gurdeep Singh", initials: "GS", role: "Personal & Commercial Driver", location: "Rajouri Garden, Delhi", distance: "3.8 km", rating: 4.9, reviews: 128, jobs: 350, price: "₹320/hr", avatar: "avatar-orange", tags: ["SUV Specialist", "Airport Drop", "Hourly Hire"], online: true },
+];
+
+export const VOTES = [
+  { id: 1, title: "Increase worker welfare fund by 1%", desc: "Proposal to raise cooperative fee by 1% and allocate entirely to health insurance pool.", yes: 68, no: 32, status: "active", ends: "3 days left" },
+  { id: 2, title: "Launch SahayogSeva in Tier-3 cities", desc: "Expand platform to 50 new districts in UP, Bihar & Rajasthan by Q1 2026.", yes: 84, no: 16, status: "active", ends: "7 days left" },
+  { id: 3, title: "Add Mental Health Counselling category", desc: "Onboard licensed counsellors as cooperative members to serve community mental health needs.", yes: 91, no: 9, status: "passed", ends: "Passed" },
+];
+
+export const TESTIMONIALS = [
+  { quote: "As a widowed mother, I was scared to hire strangers. SahayogSeva gave me trust — the plumber was co-op verified and so respectful. I felt safe.", name: "Geeta Nair", role: "Homemaker, Thiruvananthapuram", initials: "GN", avatar: "avatar-pink" },
+  { quote: "I earned 92% of every booking — that's never happened in 10 years of gig work. The cooperative model actually puts workers first!", name: "Suresh Patel", role: "Electrician & Co-op Member", initials: "SP", avatar: "avatar-orange" },
+  { quote: "The Ministry of Cooperation's backing means this isn't just another app. It genuinely empowers local communities. Brilliant initiative.", name: "Dr. Ananya Singh", role: "Social Economist, JNU", initials: "AS", avatar: "avatar-blue" },
+];
+
+export const BOOKINGS_DATA = [
+  { id: 1, icon: "🔧", name: "Rajesh Kumar", service: "Plumbing", date: "Today, 4:00 PM", amount: "₹760", status: "upcoming" },
+  { id: 2, icon: "📚", name: "Priya Sharma", service: "Tuition — Maths", date: "Yesterday, 5:30 PM", amount: "₹700", status: "done" },
+  { id: 3, icon: "🧹", name: "Cleaning Team", service: "Deep Cleaning", date: "2 days ago", amount: "₹1,200", status: "done" },
+  { id: 4, icon: "⚡", name: "Mohammed Salim", service: "Electrical Work", date: "Sep 8, 11:00 AM", amount: "₹540", status: "pending" },
+];

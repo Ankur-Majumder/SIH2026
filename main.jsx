@@ -2,6 +2,13 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import "./style.css";
 
+import { HomePage } from "./src/pages/HomePage";
+import { ServicesPage } from "./src/pages/ServicesPage";
+import { HowItWorksPage } from "./src/pages/HowItWorksPage";
+import { CooperativePage } from "./src/pages/CooperativePage";
+import { ProvidersPage } from "./src/pages/ProvidersPage";
+import { ImpactPage } from "./src/pages/ImpactPage";
+
 // =============================================
 // DATA
 // =============================================
@@ -1452,12 +1459,7 @@ function App() {
         return (
           <>
             <GovtTickerBar lang={lang} />
-            <div style={{ padding: "3rem 1.5rem 1rem", maxWidth: 1200, margin: "0 auto" }}>
-              <div className="section-label">Services Directory</div>
-              <div className="section-title">All 24 Cooperative Service Categories</div>
-              <div className="section-desc">Select any service to view verified cooperative providers in your city.</div>
-            </div>
-            <ServicesSection onSelectService={handleSelectService} />
+            <ServicesPage onSelectService={handleSelectService} onNav={handleNav} />
             <CtaSection />
           </>
         );
@@ -1465,13 +1467,7 @@ function App() {
         return (
           <>
             <GovtTickerBar lang={lang} />
-            <div style={{ padding: "3rem 1.5rem 1rem", maxWidth: 1200, margin: "0 auto" }}>
-              <div className="section-label">How SahayogSeva Works</div>
-              <div className="section-title">Transparent, Democratic & Fair</div>
-              <div className="section-desc">Built on cooperative principles to protect gig workers and serve households with trust.</div>
-            </div>
-            <HowItWorks />
-            <ImpactSection />
+            <HowItWorksPage onNav={handleNav} />
             <CtaSection />
           </>
         );
@@ -1479,13 +1475,7 @@ function App() {
         return (
           <>
             <GovtTickerBar lang={lang} />
-            <div style={{ padding: "3rem 1.5rem 1rem", maxWidth: 1200, margin: "0 auto" }}>
-              <div className="section-label">Ministry of Cooperation Initiative</div>
-              <div className="section-title">Multi-State Cooperative Model</div>
-              <div className="section-desc">Registered cooperative platform owned by workers and community members.</div>
-            </div>
-            <CooperativeSection />
-            <GovernanceSection />
+            <CooperativePage onNav={handleNav} />
             <CtaSection />
           </>
         );
@@ -1493,10 +1483,9 @@ function App() {
         return (
           <>
             <GovtTickerBar lang={lang} />
-            <ProvidersSection 
+            <ProvidersPage 
               onBook={handleBook} 
               selectedCategoryId={selectedCategoryId}
-              onSelectCategory={(catId) => setSelectedCategoryId(catId)}
             />
             <TestimonialsSection />
             <CtaSection />
@@ -1506,13 +1495,7 @@ function App() {
         return (
           <>
             <GovtTickerBar lang={lang} />
-            <div style={{ padding: "3rem 1.5rem 1rem", maxWidth: 1200, margin: "0 auto" }}>
-              <div className="section-label">Social Impact</div>
-              <div className="section-title">Real Numbers, Real Change Across Bharat</div>
-              <div className="section-desc">Empowering local communities and delivering fair wages.</div>
-            </div>
-            <ImpactSection />
-            <TestimonialsSection />
+            <ImpactPage onNav={handleNav} />
             <CtaSection />
           </>
         );
@@ -1521,20 +1504,11 @@ function App() {
         return (
           <>
             <GovtTickerBar lang={lang} />
-            <HeroSection onBook={handleBook} onNav={handleNav} />
-            <StatsStrip />
-            <ServicesSection onSelectService={handleSelectService} />
-            <HowItWorks />
-            <ProvidersSection 
+            <HomePage 
               onBook={handleBook} 
-              selectedCategoryId={selectedCategoryId}
-              onSelectCategory={(catId) => setSelectedCategoryId(catId)}
+              onNav={handleNav} 
+              onSelectService={handleSelectService} 
             />
-            <CooperativeSection />
-            <ImpactSection />
-            <GovernanceSection />
-            <TestimonialsSection />
-            <CtaSection />
           </>
         );
     }
