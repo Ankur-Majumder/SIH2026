@@ -202,15 +202,11 @@ function Navbar({ onNav, activeView, lang, setLang }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleNavClick = (e, sectionId) => {
+  const handleNavClick = (e, targetView) => {
     e.preventDefault();
-    onNav(sectionId);
+    onNav(targetView);
     setMenuOpen(false);
-    if (sectionId === "home") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -225,25 +221,16 @@ function Navbar({ onNav, activeView, lang, setLang }) {
           <ul className="nav-links">
             <li>
               <a 
-                href="#services" 
-                className={activeView === "services" ? "active nav-item-active" : ""}
+                href="#" 
+                className={activeView === "services" || activeView === "providers" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "services")}
               >
-                {lang === "hi" ? "सेवाएँ" : "Services"}
+                {lang === "hi" ? "सेवाएँ एवं प्रदाता" : "Services & Providers"}
               </a>
             </li>
             <li>
               <a 
-                href="#providers" 
-                className={activeView === "providers" ? "active nav-item-active" : ""}
-                onClick={(e) => handleNavClick(e, "providers")}
-              >
-                {lang === "hi" ? "सेवा प्रदाता" : "Providers"}
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#how" 
+                href="#" 
                 className={activeView === "how" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "how")}
               >
@@ -252,7 +239,7 @@ function Navbar({ onNav, activeView, lang, setLang }) {
             </li>
             <li>
               <a 
-                href="#cooperative" 
+                href="#" 
                 className={activeView === "cooperative" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "cooperative")}
               >
@@ -261,7 +248,7 @@ function Navbar({ onNav, activeView, lang, setLang }) {
             </li>
             <li>
               <a 
-                href="#impact" 
+                href="#" 
                 className={activeView === "impact" ? "active nav-item-active" : ""}
                 onClick={(e) => handleNavClick(e, "impact")}
               >
@@ -287,11 +274,10 @@ function Navbar({ onNav, activeView, lang, setLang }) {
         </div>
         {menuOpen && (
           <div className="mobile-menu">
-            <a href="#services" onClick={(e) => handleNavClick(e, "services")}>🔧 {lang === "hi" ? "सेवाएँ" : "Services"}</a>
-            <a href="#providers" onClick={(e) => handleNavClick(e, "providers")}>👥 {lang === "hi" ? "सेवा प्रदाता" : "Providers"}</a>
-            <a href="#how" onClick={(e) => handleNavClick(e, "how")}>📋 {lang === "hi" ? "प्रक्रिया" : "How It Works"}</a>
-            <a href="#cooperative" onClick={(e) => handleNavClick(e, "cooperative")}>🤝 {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}</a>
-            <a href="#impact" onClick={(e) => handleNavClick(e, "impact")}>📊 {lang === "hi" ? "प्रभाव" : "Impact"}</a>
+            <a href="#" onClick={(e) => handleNavClick(e, "services")}>🔧 {lang === "hi" ? "सेवाएँ एवं प्रदाता" : "Services & Providers"}</a>
+            <a href="#" onClick={(e) => handleNavClick(e, "how")}>📋 {lang === "hi" ? "प्रक्रिया" : "How It Works"}</a>
+            <a href="#" onClick={(e) => handleNavClick(e, "cooperative")}>🤝 {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}</a>
+            <a href="#" onClick={(e) => handleNavClick(e, "impact")}>📊 {lang === "hi" ? "प्रभाव" : "Impact"}</a>
             <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
               <button className="btn btn-ghost" style={{ flex: 1, justifyContent: "center" }} onClick={() => { setModalOpen("login"); setMenuOpen(false); }}>
                 {lang === "hi" ? "लॉग इन" : "Log in"}
@@ -1440,39 +1426,15 @@ function App() {
 
   const handleNav = useCallback((targetView) => {
     setView(targetView);
-    if (targetView === "home" || targetView === "dashboard") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      document.getElementById(targetView)?.scrollIntoView({ behavior: "smooth" });
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   const handleSelectService = useCallback((service) => {
     setSelectedCategoryId(service.id);
+    setView("services");
     showNotice(`${service.emoji} Showing verified ${service.title} near you.`);
-    document.getElementById("providers")?.scrollIntoView({ behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [showNotice]);
-
-  useEffect(() => {
-    if (view === "dashboard") return;
-    const handleScroll = () => {
-      const sections = ["services", "providers", "how", "cooperative", "impact"];
-      const scrollPos = window.scrollY + 220;
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setView(sectionId);
-            break;
-          }
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [view]);
 
   if (view === "dashboard") {
     return (
@@ -1481,6 +1443,35 @@ function App() {
       </div>
     );
   }
+
+  const renderPageContent = () => {
+    switch (view) {
+      case "services":
+      case "providers":
+        return (
+          <ServicesPage
+            onBook={handleBook}
+            selectedCategoryId={selectedCategoryId}
+            onSelectCategory={setSelectedCategoryId}
+          />
+        );
+      case "how":
+        return <HowItWorksPage onNav={handleNav} />;
+      case "cooperative":
+        return <CooperativePage onNav={handleNav} />;
+      case "impact":
+        return <ImpactPage onNav={handleNav} />;
+      case "home":
+      default:
+        return (
+          <HomePage
+            onBook={handleBook}
+            onNav={handleNav}
+            onSelectService={handleSelectService}
+          />
+        );
+    }
+  };
 
   return (
     <div className="app">
@@ -1491,17 +1482,7 @@ function App() {
 
       <main>
         <GovtTickerBar lang={lang} />
-        <HomePage 
-          onBook={handleBook} 
-          onNav={handleNav} 
-          onSelectService={handleSelectService} 
-        />
-        <HowItWorks />
-        <CooperativeSection />
-        <ImpactSection />
-        <GovernanceSection />
-        <TestimonialsSection />
-        <CtaSection />
+        {renderPageContent()}
       </main>
 
       <Footer />
@@ -1514,7 +1495,7 @@ function App() {
         <button className="bottom-nav-btn" onClick={() => handleNav("services")}>
           <span>🔍</span><span>Services</span>
         </button>
-        <button className="bottom-nav-btn" onClick={() => handleNav("providers")}>
+        <button className="bottom-nav-btn" onClick={() => handleNav("services")}>
           <span>👥</span><span>Providers</span>
         </button>
         <button className="bottom-nav-btn" onClick={() => handleNav("dashboard")}>
