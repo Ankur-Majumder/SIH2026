@@ -1015,24 +1015,6 @@ body {
   position: relative;
 }
 
-.steps-grid::before {
-  content: '';
-  position: absolute;
-  top: 40px; left: calc(33.33% + 1rem);
-  right: calc(33.33% + 1rem);
-  height: 2px;
-  background: linear-gradient(90deg, #f7c400, transparent);
-}
-
-.steps-grid::after {
-  content: '';
-  position: absolute;
-  top: 40px; left: calc(66.66% + 0.5rem);
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #f7c400, transparent);
-}
-
 .step-card {
   padding: 2rem 1.5rem;
   background: #f9fafb;
