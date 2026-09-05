@@ -1199,7 +1199,6 @@ function Footer() {
           <div className="govt-logos">
             <div className="govt-logo-chip">🇮🇳 Govt. of India</div>
             <div className="govt-logo-chip">🏛️ Ministry of Cooperation</div>
-            <div className="govt-logo-chip">🤝 SIH 2024</div>
           </div>
         </div>
       </div>

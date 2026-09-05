@@ -1603,7 +1603,12 @@ body {
   cursor: pointer;
 }
 
-.form-input option { background: #ffffff; color: #111827; }
+.form-input option,
+.form-select option,
+select option {
+  background: #ffffff !important;
+  color: #111827 !important;
+}
 
 .modal-footer {
   padding: 1rem 1.5rem 1.5rem;
@@ -1881,7 +1886,12 @@ body {
   cursor: pointer;
 }
 
-.form-input option { background: #0f1929; }
+.form-input option,
+.form-select option,
+select option {
+  background: #ffffff !important;
+  color: #111827 !important;
+}
 
 .modal-footer {
   padding: 1rem 1.5rem 1.5rem;

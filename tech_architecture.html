@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SahayogSeva — Technical Architecture</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0f172a;
+      color: #f1f5f9;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .download-btn {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .download-btn button {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      padding: 10px 32px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(16,185,129,0.4);
+      letter-spacing: 0.4px;
+    }
+    .download-btn button:hover { background: linear-gradient(135deg, #059669, #047857); }
+
+    .slide {
+      width: 1050px;
+      margin: 0 auto;
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 20px;
+      padding: 28px 32px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(16,185,129,0.12), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .slide::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(99,102,241,0.10), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .header-left h1 { font-size: 20px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.5px; }
+    .header-left p  { font-size: 11px; color: #64748b; margin-top: 3px; }
+    .badges { display: flex; gap: 8px; }
+    .badge { font-size: 10px; font-weight: 700; padding: 4px 12px; border-radius: 50px; letter-spacing: 0.3px; }
+    .badge-green  { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #10b981; }
+    .badge-orange { background: rgba(249,115,22,0.15);  border: 1px solid rgba(249,115,22,0.4);  color: #f97316; }
+
+    .section-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #475569; margin-bottom: 8px; }
+
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 10px 10px 8px; text-align: center; }
+    .card .icon { font-size: 22px; }
+    .card .label { font-size: 10px; font-weight: 700; color: #e2e8f0; margin-top: 4px; }
+    .card .sub   { font-size: 9px; color: #64748b; margin-top: 2px; }
+
+    .row { margin-bottom: 14px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .grid-6-4 { display: grid; grid-template-columns: 6fr 4fr; gap: 10px; }
+
+    .flow-wrap { display: flex; align-items: stretch; gap: 0; }
+    .step {
+      flex: 1;
+      background: #1e293b;
+      border-top: 3px solid;
+      border-radius: 10px;
+      padding: 10px 8px 8px;
+      text-align: center;
+    }
+    .step .num { width: 22px; height: 22px; border-radius: 50%; color: #fff; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 4px; }
+    .step .sicon { font-size: 18px; margin-bottom: 3px; }
+    .step .slabel { font-size: 10px; font-weight: 700; color: #e2e8f0; }
+    .step .sdesc  { font-size: 8.5px; color: #64748b; margin-top: 2px; }
+
+    .arrow { display: flex; align-items: center; padding: 0 4px; }
+
+    .s1 { border-color: #3b82f6; } .s1 .num { background: #3b82f6; }
+    .s2 { border-color: #8b5cf6; } .s2 .num { background: #8b5cf6; }
+    .s3 { border-color: #06b6d4; } .s3 .num { background: #06b6d4; }
+    .s4 { border-color: #f97316; } .s4 .num { background: #f97316; }
+    .s5 { border-color: #f59e0b; } .s5 .num { background: #f59e0b; }
+    .s6 { border-color: #10b981; background: rgba(16,185,129,0.08); }
+    .s6 .num { background: #10b981; }
+    .s6 .slabel { color: #10b981; }
+
+    .panel { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 12px; }
+
+    .pbar-wrap { margin-bottom: 8px; }
+    .pbar-header { display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; margin-bottom: 3px; }
+    .pbar-track { background: #0f172a; border-radius: 50px; height: 18px; overflow: hidden; }
+    .pbar-fill { height: 100%; border-radius: 50px; display: flex; align-items: center; padding-left: 8px; font-size: 9px; font-weight: 800; color: #fff; }
+    .pbar-green { background: linear-gradient(90deg, #10b981, #059669); }
+    .pbar-amber { background: linear-gradient(90deg, #f59e0b, #d97706); }
+
+    .pool-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
+    .pool-chip { border-radius: 8px; padding: 6px 4px; text-align: center; }
+    .pool-chip .p-icon  { font-size: 13px; }
+    .pool-chip .p-label { font-size: 9px; font-weight: 700; margin-top: 2px; }
+    .pool-chip .p-amt   { font-size: 9px; color: #94a3b8; }
+
+    .be-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+    .be-card { background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 8px; text-align: center; }
+    .be-card .bi { font-size: 17px; }
+    .be-card .bt { font-size: 9.5px; font-weight: 700; color: #e2e8f0; margin-top: 3px; }
+    .be-card .bs { font-size: 8.5px; color: #64748b; margin-top: 1px; }
+
+    .stack-impact { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stack-grid   { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; }
+    .s-chip { border-radius: 10px; padding: 7px 4px; text-align: center; border: 1px solid; }
+    .s-chip .si { font-size: 16px; }
+    .s-chip .sl { font-size: 9px; font-weight: 700; margin-top: 2px; }
+    .s-chip .ss { font-size: 8px; color: #64748b; }
+
+    .impact-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; }
+    .imp-chip { border-radius: 10px; padding: 7px 4px; text-align: center; border: 1px solid; }
+    .imp-chip .in { font-size: 13px; font-weight: 900; }
+    .imp-chip .il { font-size: 8px; color: #94a3b8; margin-top: 2px; }
+
+    .v-arrow { display: flex; justify-content: center; margin: 4px 0; }
+    .v-arrow span { font-size: 14px; color: #475569; }
+
+    @page { size: A4 landscape; margin: 10mm; }
+    @media print {
+      body { background: #0f172a !important; padding: 0; }
+      .download-btn { display: none !important; }
+      .slide { width: 100%; border-radius: 0; border: none; margin: 0; box-shadow: none; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="download-btn">
+    <button onclick="window.print()">⬇️ &nbsp;Save as PDF / Print</button>
+  </div>
+
+  <div class="slide">
+
+    <!-- ── Header ── -->
+    <div class="header">
+      <div class="header-left">
+        <h1>🤝 SahayogSeva — Technical Process Flow Architecture</h1>
+        <p>India's First Cooperative Gig Marketplace · Ministry of Cooperation, Govt. of India · SIH 2026</p>
+      </div>
+      <div class="badges">
+        <span class="badge badge-green">✅ SIH 2026</span>
+        <span class="badge badge-orange">🇮🇳 Built on India Stack</span>
+      </div>
+    </div>
+
+    <!-- ① Access Channels -->
+    <div class="row">
+      <div class="section-label">① Access Channels — How Users Enter the Platform</div>
+      <div class="grid-4">
+        <div class="card" style="border-top:2px solid #3b82f6">
+          <div class="icon">📱</div><div class="label">Mobile App</div><div class="sub">Android / iOS PWA</div>
+        </div>
+        <div class="card" style="border-top:2px solid #6366f1">
+          <div class="icon">💻</div><div class="label">Web App</div><div class="sub">React + Vite · Desktop</div>
+        </div>
+        <div class="card" style="border-top:2px solid #f97316">
+          <div class="icon">📞</div><div class="label">USSD / IVR</div><div class="sub">Feature phones · No internet</div>
+        </div>
+        <div class="card" style="border-top:2px solid #10b981">
+          <div class="icon">🗣️</div><div class="label">Voice Bot</div><div class="sub">Bhashini AI · 12+ languages</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="v-arrow"><span>▼</span></div>
+
+    <!-- ② 6-Step Flow -->
+    <div class="row">
+      <div class="section-label">② End-to-End Process Flow — 6 Steps</div>
+      <div class="flow-wrap">
+
+        <div class="step s1">
+          <div class="num">1</div><div class="sicon">🔍</div>
+          <div class="slabel">Customer Searches</div><div class="sdesc">Picks service &amp; location</div>
+        </div>
+        <div class="arrow">
+          <svg width="22" height="12"><path d="M0 6 H16 L10 1 M16 6 L10 11" stroke="#10b981" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
+
+        <div class="step s2">
+          <div class="num">2</div><div class="sicon">🪪</div>
+          <div class="slabel">Verify Identity</div><div class="sdesc">Aadhaar e-KYC + Co-op check</div>
+        </div>
+        <div class="arrow">
+          <svg width="22" height="12"><path d="M0 6 H16 L10 1 M16 6 L10 11" stroke="#10b981" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
+
+        <div class="step s3">
+          <div class="num">3</div><div class="sicon">🤖</div>
+          <div class="slabel">AI Matching</div><div class="sdesc">Distance + Rating + Skill score</div>
+        </div>
+        <div class="arrow">
+          <svg width="22" height="12"><path d="M0 6 H16 L10 1 M16 6 L10 11" stroke="#10b981" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
+
+        <div class="step s4">
+          <div class="num">4</div><div class="sicon">📅</div>
+          <div class="slabel">Book &amp; Pay</div><div class="sdesc">Fixed price · No surge</div>
+        </div>
+        <div class="arrow">
+          <svg width="22" height="12"><path d="M0 6 H16 L10 1 M16 6 L10 11" stroke="#10b981" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
+
+        <div class="step s5">
+          <div class="num">5</div><div class="sicon">🔧</div>
+          <div class="slabel">Job Completed</div><div class="sdesc">Worker serves customer</div>
+        </div>
+        <div class="arrow">
+          <svg width="22" height="12"><path d="M0 6 H16 L10 1 M16 6 L10 11" stroke="#10b981" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </div>
+
+        <div class="step s6">
+          <div class="num">6</div><div class="sicon">💸</div>
+          <div class="slabel">Auto Payout via UPI</div><div class="sdesc">92% to worker — instantly</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="v-arrow"><span>▼</span></div>
+
+    <!-- ③ Backend + ④ Payout -->
+    <div class="row">
+      <div class="grid-6-4">
+
+        <div>
+          <div class="section-label">③ Backend Services</div>
+          <div class="panel">
+            <div class="be-grid">
+              <div class="be-card"><div class="bi">🗺️</div><div class="bt">Geo Engine</div><div class="bs">PostGIS · Live proximity</div></div>
+              <div class="be-card"><div class="bi">🔒</div><div class="bt">Trust Engine</div><div class="bs">Ratings + Peer reviews</div></div>
+              <div class="be-card"><div class="bi">🗳️</div><div class="bt">e-Voting</div><div class="bs">Democratic governance</div></div>
+              <div class="be-card"><div class="bi">🔔</div><div class="bt">Notifications</div><div class="bs">Push · SMS · WhatsApp</div></div>
+              <div class="be-card"><div class="bi">🗄️</div><div class="bt">Database</div><div class="bs">PostgreSQL · Redis</div></div>
+              <div class="be-card"><div class="bi">📊</div><div class="bt">Analytics</div><div class="bs">Impact dashboards</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label">④ Cooperative Payout Split (per ₹1,000)</div>
+          <div class="panel">
+            <div class="pbar-wrap">
+              <div class="pbar-header"><span style="color:#10b981">👷 Worker Income</span><span style="color:#10b981">₹920 · 92%</span></div>
+              <div class="pbar-track"><div class="pbar-fill pbar-green" style="width:92%">92%</div></div>
+            </div>
+            <div class="pbar-wrap">
+              <div class="pbar-header"><span style="color:#f59e0b">🏛️ Co-op Welfare Pool</span><span style="color:#f59e0b">₹80 · 8%</span></div>
+              <div class="pbar-track"><div class="pbar-fill pbar-amber" style="width:100%; font-size:8px">8% → welfare</div></div>
+            </div>
+            <div class="pool-grid">
+              <div class="pool-chip" style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3)">
+                <div class="p-icon">❤️</div><div class="p-label" style="color:#ef4444">Health Insurance</div><div class="p-amt">₹40</div>
+              </div>
+              <div class="pool-chip" style="background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.3)">
+                <div class="p-icon">🎓</div><div class="p-label" style="color:#3b82f6">Skill Training</div><div class="p-amt">₹25</div>
+              </div>
+              <div class="pool-chip" style="background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.3)">
+                <div class="p-icon">⚙️</div><div class="p-label" style="color:#8b5cf6">Tech Ops</div><div class="p-amt">₹15</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="v-arrow"><span>▼</span></div>
+
+    <!-- ⑤ India Stack + ⑥ Impact -->
+    <div class="stack-impact">
+      <div>
+        <div class="section-label">⑤ India Digital Stack Integrations</div>
+        <div class="panel">
+          <div class="stack-grid">
+            <div class="s-chip" style="background:rgba(249,115,22,0.1); border-color:rgba(249,115,22,0.35)">
+              <div class="si">🪪</div><div class="sl" style="color:#f97316">Aadhaar e-KYC</div><div class="ss">Identity verification</div>
+            </div>
+            <div class="s-chip" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.35)">
+              <div class="si">💳</div><div class="sl" style="color:#10b981">UPI / AePS</div><div class="ss">Instant payouts</div>
+            </div>
+            <div class="s-chip" style="background:rgba(59,130,246,0.1); border-color:rgba(59,130,246,0.35)">
+              <div class="si">🗣️</div><div class="sl" style="color:#3b82f6">Bhashini AI</div><div class="ss">12+ Indian languages</div>
+            </div>
+            <div class="s-chip" style="background:rgba(245,158,11,0.1); border-color:rgba(245,158,11,0.35)">
+              <div class="si">📄</div><div class="sl" style="color:#f59e0b">DigiLocker</div><div class="ss">Skill certificates</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">⑥ Platform Impact &amp; UN SDG Alignment</div>
+        <div class="panel">
+          <div class="impact-grid">
+            <div class="imp-chip" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.35)">
+              <div class="in" style="color:#10b981">2,400+</div><div class="il">Co-op Members</div>
+            </div>
+            <div class="imp-chip" style="background:rgba(139,92,246,0.1); border-color:rgba(139,92,246,0.35)">
+              <div class="in" style="color:#8b5cf6">64</div><div class="il">Village Co-ops</div>
+            </div>
+            <div class="imp-chip" style="background:rgba(6,182,212,0.1); border-color:rgba(6,182,212,0.35)">
+              <div class="in" style="color:#06b6d4">SDG 8</div><div class="il">Decent Work</div>
+            </div>
+            <div class="imp-chip" style="background:rgba(20,184,166,0.1); border-color:rgba(20,184,166,0.35)">
+              <div class="in" style="color:#14b8a6">SDG 10</div><div class="il">Reduce Inequality</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="margin-top:18px; padding-top:12px; border-top:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-size:9px; color:#475569">🔗 sahayogseva.netlify.app · Built with India Stack · Registered under Multi-State Cooperative Societies Act</span>
+      <span style="font-size:9px; color:#475569">Smart India Hackathon 2026 · Ministry of Cooperation, Govt. of India</span>
+    </div>
+
+  </div>
+</body>
+</html>
