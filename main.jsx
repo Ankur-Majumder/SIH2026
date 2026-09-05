@@ -723,35 +723,21 @@ function HowItWorks() {
   );
 }
 
-function ProvidersSection({ onBook, selectedCategoryId, onSelectCategory }) {
+function ProvidersSection({ onBook, selectedCategoryId }) {
   const [filter, setFilter] = useState("all");
-
-  const CATEGORY_NAMES = {
-    plumber: { emoji: "🔧", label: "Plumbers" },
-    electrician: { emoji: "⚡", label: "Electricians" },
-    tutor: { emoji: "📚", label: "Tutors" },
-    caregiver: { emoji: "❤️", label: "Caregivers" },
-    cleaning: { emoji: "🧹", label: "Home Cleaning Specialists" },
-    tech: { emoji: "💻", label: "Tech Support" },
-    carpenter: { emoji: "🪚", label: "Carpenters" },
-    painter: { emoji: "🖌️", label: "Painters" },
-    driver: { emoji: "🚗", label: "Local Drivers" },
-  };
 
   const currentCatId = selectedCategoryId || "all";
 
   const filtered = PROVIDERS.filter(p => {
-    // 1. Category Filter (clicking service card at top sets currentCatId)
+    // Category Filter (set when user clicks any Service card near the top)
     if (currentCatId !== "all") {
       if (p.category !== currentCatId) return false;
     }
-    // 2. Status Filter
+    // Status Filter
     if (filter === "online") return p.online;
     if (filter === "top") return p.rating >= 4.8;
     return true;
   });
-
-  const activeCategoryObj = CATEGORY_NAMES[currentCatId];
 
   return (
     <section className="section" id="providers">
@@ -759,27 +745,15 @@ function ProvidersSection({ onBook, selectedCategoryId, onSelectCategory }) {
         <div className="section-header">
           <div>
             <div className="section-label">Featured Members</div>
-            <div className="section-title">
-              {currentCatId !== "all" && activeCategoryObj
-                ? `${activeCategoryObj.emoji} ${activeCategoryObj.label}`
-                : "Meet your community providers"}
-            </div>
-            <div className="section-desc">
-              {currentCatId !== "all"
-                ? `Showing verified ${activeCategoryObj?.label} available near you.`
-                : "Every professional is a co-op member with verified ID, skills & background check."}
-            </div>
+            <div className="section-title">Meet your community providers</div>
+            <div className="section-desc">Every one of these professionals is a co-op member with verified ID, skills & background check.</div>
           </div>
-          {currentCatId !== "all" && (
-            <button className="btn btn-outline" onClick={() => onSelectCategory("all")}>
-              Show All Providers ✕
-            </button>
-          )}
+          <button className="btn btn-outline">View all 2,400+ →</button>
         </div>
 
-        {/* Status filters: All, Online, Top Rated */}
+        {/* Status filters */}
         <div className="filter-tabs" style={{ marginBottom: "1.5rem" }}>
-          {[["all","All Statuses"],["online","🟢 Online Now"],["top","⭐ Top Rated (4.8+)"]].map(([key, label]) => (
+          {[["all","All Providers"],["online","🟢 Online Now"],["top","⭐ Top Rated"]].map(([key, label]) => (
             <button key={key} className={`filter-tab${filter === key ? " active" : ""}`} onClick={() => setFilter(key)}>
               {label}
             </button>
@@ -790,8 +764,7 @@ function ProvidersSection({ onBook, selectedCategoryId, onSelectCategory }) {
           <div style={{ textAlign: "center", padding: "3rem 1rem", background: "var(--bg-card)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
             <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🔎</div>
             <div style={{ fontWeight: 700, fontSize: "1.1rem" }}>No providers found in this category</div>
-            <div style={{ color: "var(--slate-400)", fontSize: "0.85rem", marginTop: "0.25rem" }}>Try resetting your category filter to view all verified members.</div>
-            <button className="btn btn-primary" style={{ marginTop: "1rem" }} onClick={() => onSelectCategory("all")}>Show All Categories</button>
+            <div style={{ color: "var(--slate-400)", fontSize: "0.85rem", marginTop: "0.25rem" }}>Try selecting another service category above.</div>
           </div>
         ) : (
           <div className="providers-grid">
