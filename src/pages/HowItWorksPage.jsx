@@ -32,16 +32,16 @@ export function HowItWorksPage({ onNav }) {
         </div>
 
         {/* Comparison section */}
-        <div style={{ marginTop: "3.5rem", padding: "2.5rem", background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius-lg)" }}>
-          <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-            <h3 style={{ fontSize: "1.5rem", fontWeight: 800 }}>Cooperative vs Corporate Platforms</h3>
-            <p style={{ color: "var(--slate-400)", fontSize: "0.9rem" }}>Why SahayogSeva is better for workers and households alike</p>
+        <div className="comparison-section">
+          <div className="comparison-header">
+            <h3 className="comparison-title">Cooperative vs Corporate Platforms</h3>
+            <p className="comparison-subtitle">Why SahayogSeva is better for workers and households alike</p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
-            <div style={{ padding: "1.5rem", background: "#0c831f10", border: "1.5px solid #0c831f", borderRadius: "var(--radius)" }}>
-              <div style={{ fontWeight: 800, color: "#0c831f", fontSize: "1.1rem", marginBottom: "0.75rem" }}>💚 SahayogSeva Cooperative</div>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.88rem" }}>
+          <div className="comparison-grid">
+            <div className="comparison-card coop">
+              <div className="comparison-card-title">💚 SahayogSeva Cooperative</div>
+              <ul className="comparison-list">
                 <li>✅ 92% earnings to the worker</li>
                 <li>✅ Democratic one member, one vote</li>
                 <li>✅ Free health insurance & pension pool</li>
@@ -49,9 +49,9 @@ export function HowItWorksPage({ onNav }) {
               </ul>
             </div>
 
-            <div style={{ padding: "1.5rem", background: "#ef444410", border: "1.5px solid #ef444450", borderRadius: "var(--radius)" }}>
-              <div style={{ fontWeight: 800, color: "#ef4444", fontSize: "1.1rem", marginBottom: "0.75rem" }}>❌ Corporate Gig Apps</div>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.88rem" }}>
+            <div className="comparison-card corp">
+              <div className="comparison-card-title">❌ Corporate Gig Apps</div>
+              <ul className="comparison-list">
                 <li>❌ 25% – 40% extracted in commissions</li>
                 <li>❌ Zero worker voting rights or say</li>
                 <li>❌ No health benefits or insurance</li>
