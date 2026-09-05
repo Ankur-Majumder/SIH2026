@@ -1538,22 +1538,6 @@ function App() {
       </main>
 
       <Footer />
-
-      {/* Mobile Bottom Nav */}
-      <div className="bottom-nav">
-        <button className="bottom-nav-btn" onClick={() => handleNav("home")}>
-          <span>🏠</span><span>Home</span>
-        </button>
-        <button className="bottom-nav-btn" onClick={() => handleNav("services")}>
-          <span>🔍</span><span>Services</span>
-        </button>
-        <button className="bottom-nav-btn" onClick={() => handleNav("services")}>
-          <span>👥</span><span>Providers</span>
-        </button>
-        <button className="bottom-nav-btn" onClick={() => handleNav("dashboard")}>
-          <span>⊞</span><span>Dashboard</span>
-        </button>
-      </div>
     </div>
   );
 }
