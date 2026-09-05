@@ -195,21 +195,68 @@ function Navbar({ onNav, activeView, lang, setLang }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleNavClick = (e, targetView) => {
+    e.preventDefault();
+    onNav(targetView);
+    setMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <>
       <GovtTopBar lang={lang} setLang={setLang} />
       <nav className={`navbar${scrolled ? " scrolled" : ""}`}>
         <div className="nav-inner">
-          <a className="brand" href="#" onClick={() => onNav("home")}>
+          <a className="brand" href="#" onClick={(e) => handleNavClick(e, "home")}>
             <Logo lang={lang} />
           </a>
 
           <ul className="nav-links">
-            <li><a href="#services">{lang === "hi" ? "सेवाएँ" : "Services"}</a></li>
-            <li><a href="#how">{lang === "hi" ? "प्रक्रिया" : "How it works"}</a></li>
-            <li><a href="#cooperative">{lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}</a></li>
-            <li><a href="#providers">{lang === "hi" ? "सेवा प्रदाता" : "Providers"}</a></li>
-            <li><a href="#impact">{lang === "hi" ? "प्रभाव" : "Impact"}</a></li>
+            <li>
+              <a 
+                href="#" 
+                style={{ color: activeView === "services" ? "#0c831f" : undefined, fontWeight: activeView === "services" ? 700 : undefined }}
+                onClick={(e) => handleNavClick(e, "services")}
+              >
+                {lang === "hi" ? "सेवाएँ" : "Services"}
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#" 
+                style={{ color: activeView === "how" ? "#0c831f" : undefined, fontWeight: activeView === "how" ? 700 : undefined }}
+                onClick={(e) => handleNavClick(e, "how")}
+              >
+                {lang === "hi" ? "प्रक्रिया" : "How it works"}
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#" 
+                style={{ color: activeView === "cooperative" ? "#0c831f" : undefined, fontWeight: activeView === "cooperative" ? 700 : undefined }}
+                onClick={(e) => handleNavClick(e, "cooperative")}
+              >
+                {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#" 
+                style={{ color: activeView === "providers" ? "#0c831f" : undefined, fontWeight: activeView === "providers" ? 700 : undefined }}
+                onClick={(e) => handleNavClick(e, "providers")}
+              >
+                {lang === "hi" ? "सेवा प्रदाता" : "Providers"}
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#" 
+                style={{ color: activeView === "impact" ? "#0c831f" : undefined, fontWeight: activeView === "impact" ? 700 : undefined }}
+                onClick={(e) => handleNavClick(e, "impact")}
+              >
+                {lang === "hi" ? "प्रभाव" : "Impact"}
+              </a>
+            </li>
           </ul>
 
           <div className="nav-actions">
@@ -229,11 +276,11 @@ function Navbar({ onNav, activeView, lang, setLang }) {
         </div>
         {menuOpen && (
           <div className="mobile-menu">
-            <a href="#services" onClick={() => setMenuOpen(false)}>🔧 {lang === "hi" ? "सेवाएँ" : "Services"}</a>
-            <a href="#how" onClick={() => setMenuOpen(false)}>📋 {lang === "hi" ? "प्रक्रिया" : "How It Works"}</a>
-            <a href="#cooperative" onClick={() => setMenuOpen(false)}>🤝 {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}</a>
-            <a href="#providers" onClick={() => setMenuOpen(false)}>👥 {lang === "hi" ? "सेवा प्रदाता" : "Providers"}</a>
-            <a href="#impact" onClick={() => setMenuOpen(false)}>📊 {lang === "hi" ? "प्रभाव" : "Impact"}</a>
+            <a href="#" onClick={(e) => handleNavClick(e, "services")}>🔧 {lang === "hi" ? "सेवाएँ" : "Services"}</a>
+            <a href="#" onClick={(e) => handleNavClick(e, "how")}>📋 {lang === "hi" ? "प्रक्रिया" : "How It Works"}</a>
+            <a href="#" onClick={(e) => handleNavClick(e, "cooperative")}>🤝 {lang === "hi" ? "सहकारी मॉडल" : "Cooperative"}</a>
+            <a href="#" onClick={(e) => handleNavClick(e, "providers")}>👥 {lang === "hi" ? "सेवा प्रदाता" : "Providers"}</a>
+            <a href="#" onClick={(e) => handleNavClick(e, "impact")}>📊 {lang === "hi" ? "प्रभाव" : "Impact"}</a>
             <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
               <button className="btn btn-ghost" style={{ flex: 1, justifyContent: "center" }} onClick={() => { setModalOpen("login"); setMenuOpen(false); }}>
                 {lang === "hi" ? "लॉग इन" : "Log in"}
@@ -427,7 +474,7 @@ function BookingModal({ provider, onClose }) {
 // =============================================
 // SECTIONS
 // =============================================
-function HeroSection({ onBook }) {
+function HeroSection({ onBook, onNav }) {
   const [query, setQuery] = useState("");
   const [stateLocation, setStateLocation] = useState("Select State");
   const [notice, setNotice] = useState("");
@@ -467,10 +514,10 @@ function HeroSection({ onBook }) {
           </p>
 
           <div className="hero-actions">
-            <button className="btn btn-primary btn-lg" onClick={() => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })}>
+            <button className="btn btn-primary btn-lg" onClick={() => onNav ? onNav("services") : document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })}>
               Find a Service →
             </button>
-            <button className="btn btn-outline btn-lg" onClick={() => document.getElementById("cooperative")?.scrollIntoView({ behavior: "smooth" })}>
+            <button className="btn btn-outline btn-lg" onClick={() => onNav ? onNav("cooperative") : document.getElementById("cooperative")?.scrollIntoView({ behavior: "smooth" })}>
               Learn the Model
             </button>
           </div>
@@ -1365,7 +1412,7 @@ function NoticeBanner({ message, onClose }) {
 // APP ROOT
 // =============================================
 function App() {
-  const [view, setView] = useState("home"); // home | dashboard
+  const [view, setView] = useState("home"); // home | services | how | cooperative | providers | impact | dashboard
   const [notice, setNotice] = useState("");
   const [bookingProvider, setBookingProvider] = useState(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState("all");
@@ -1380,59 +1427,144 @@ function App() {
     setBookingProvider(provider);
   }, []);
 
+  const handleNav = useCallback((targetView) => {
+    setView(targetView);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const handleSelectService = useCallback((service) => {
     setSelectedCategoryId(service.id);
     showNotice(`${service.emoji} Showing verified ${service.title} near you.`);
-    document.getElementById("providers")?.scrollIntoView({ behavior: "smooth" });
-  }, [showNotice]);
+    handleNav("providers");
+  }, [showNotice, handleNav]);
 
   if (view === "dashboard") {
     return (
       <div className="app">
-        <DashboardView onBack={(v) => setView(v || "home")} lang={lang} setLang={setLang} />
+        <DashboardView onBack={(v) => handleNav(v || "home")} lang={lang} setLang={setLang} />
       </div>
     );
   }
 
+  const renderPageContent = () => {
+    switch (view) {
+      case "services":
+        return (
+          <>
+            <GovtTickerBar lang={lang} />
+            <div style={{ padding: "3rem 1.5rem 1rem", maxWidth: 1200, margin: "0 auto" }}>
+              <div className="section-label">Services Directory</div>
+              <div className="section-title">All 24 Cooperative Service Categories</div>
+              <div className="section-desc">Select any service to view verified cooperative providers in your city.</div>
+            </div>
+            <ServicesSection onSelectService={handleSelectService} />
+            <CtaSection />
+          </>
+        );
+      case "how":
+        return (
+          <>
+            <GovtTickerBar lang={lang} />
+            <div style={{ padding: "3rem 1.5rem 1rem", maxWidth: 1200, margin: "0 auto" }}>
+              <div className="section-label">How SahayogSeva Works</div>
+              <div className="section-title">Transparent, Democratic & Fair</div>
+              <div className="section-desc">Built on cooperative principles to protect gig workers and serve households with trust.</div>
+            </div>
+            <HowItWorks />
+            <ImpactSection />
+            <CtaSection />
+          </>
+        );
+      case "cooperative":
+        return (
+          <>
+            <GovtTickerBar lang={lang} />
+            <div style={{ padding: "3rem 1.5rem 1rem", maxWidth: 1200, margin: "0 auto" }}>
+              <div className="section-label">Ministry of Cooperation Initiative</div>
+              <div className="section-title">Multi-State Cooperative Model</div>
+              <div className="section-desc">Registered cooperative platform owned by workers and community members.</div>
+            </div>
+            <CooperativeSection />
+            <GovernanceSection />
+            <CtaSection />
+          </>
+        );
+      case "providers":
+        return (
+          <>
+            <GovtTickerBar lang={lang} />
+            <ProvidersSection 
+              onBook={handleBook} 
+              selectedCategoryId={selectedCategoryId}
+              onSelectCategory={(catId) => setSelectedCategoryId(catId)}
+            />
+            <TestimonialsSection />
+            <CtaSection />
+          </>
+        );
+      case "impact":
+        return (
+          <>
+            <GovtTickerBar lang={lang} />
+            <div style={{ padding: "3rem 1.5rem 1rem", maxWidth: 1200, margin: "0 auto" }}>
+              <div className="section-label">Social Impact</div>
+              <div className="section-title">Real Numbers, Real Change Across Bharat</div>
+              <div className="section-desc">Empowering local communities and delivering fair wages.</div>
+            </div>
+            <ImpactSection />
+            <TestimonialsSection />
+            <CtaSection />
+          </>
+        );
+      case "home":
+      default:
+        return (
+          <>
+            <GovtTickerBar lang={lang} />
+            <HeroSection onBook={handleBook} onNav={handleNav} />
+            <StatsStrip />
+            <ServicesSection onSelectService={handleSelectService} />
+            <HowItWorks />
+            <ProvidersSection 
+              onBook={handleBook} 
+              selectedCategoryId={selectedCategoryId}
+              onSelectCategory={(catId) => setSelectedCategoryId(catId)}
+            />
+            <CooperativeSection />
+            <ImpactSection />
+            <GovernanceSection />
+            <TestimonialsSection />
+            <CtaSection />
+          </>
+        );
+    }
+  };
+
   return (
     <div className="app">
-      <Navbar onNav={(v) => setView(v)} activeView={view} lang={lang} setLang={setLang} />
+      <Navbar onNav={handleNav} activeView={view} lang={lang} setLang={setLang} />
 
       {notice && <NoticeBanner message={notice} onClose={() => setNotice("")} />}
       {bookingProvider && <BookingModal provider={bookingProvider} onClose={() => { setBookingProvider(null); showNotice(`✅ Booking confirmed with ${bookingProvider.name}! 92% goes to them.`); }} />}
 
       <main>
-        <GovtTickerBar lang={lang} />
-        <HeroSection onBook={handleBook} />
-        <StatsStrip />
-        <ServicesSection onSelectService={handleSelectService} />
-        <HowItWorks />
-        <ProvidersSection 
-          onBook={handleBook} 
-          selectedCategoryId={selectedCategoryId}
-          onSelectCategory={(catId) => setSelectedCategoryId(catId)}
-        />
-        <CooperativeSection />
-        <ImpactSection />
-        <GovernanceSection />
-        <TestimonialsSection />
-        <CtaSection />
+        {renderPageContent()}
       </main>
 
       <Footer />
 
       {/* Mobile Bottom Nav */}
       <div className="bottom-nav">
-        <button className="bottom-nav-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+        <button className="bottom-nav-btn" onClick={() => handleNav("home")}>
           <span>🏠</span><span>Home</span>
         </button>
-        <button className="bottom-nav-btn" onClick={() => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })}>
+        <button className="bottom-nav-btn" onClick={() => handleNav("services")}>
           <span>🔍</span><span>Services</span>
         </button>
-        <button className="bottom-nav-btn" onClick={() => document.getElementById("providers")?.scrollIntoView({ behavior: "smooth" })}>
+        <button className="bottom-nav-btn" onClick={() => handleNav("providers")}>
           <span>👥</span><span>Providers</span>
         </button>
-        <button className="bottom-nav-btn" onClick={() => setView("dashboard")}>
+        <button className="bottom-nav-btn" onClick={() => handleNav("dashboard")}>
           <span>⊞</span><span>Dashboard</span>
         </button>
       </div>
