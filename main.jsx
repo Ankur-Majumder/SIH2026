@@ -409,14 +409,14 @@ function AuthModal({ type, onClose, onSwitch }) {
           <button className="btn btn-primary btn-lg" style={{ width: "100%", justifyContent: "center" }} onClick={onClose}>
             {isLogin ? "Log in →" : "Create Account →"}
           </button>
-          <div style={{ textAlign: "center", fontSize: "0.82rem", color: "var(--slate-400)" }}>
+          <div style={{ textAlign: "center", fontSize: "0.82rem", color: "#4b5563" }}>
             {isLogin ? "New here?" : "Already a member?"}{" "}
-            <span style={{ color: "var(--emerald-400)", cursor: "pointer", fontWeight: 600 }} onClick={() => onSwitch(isLogin ? "signup" : "login")}>
+            <span style={{ color: "#0c831f", cursor: "pointer", fontWeight: 700 }} onClick={() => onSwitch(isLogin ? "signup" : "login")}>
               {isLogin ? "Join the cooperative" : "Log in"}
             </span>
           </div>
           {!isLogin && (
-            <p style={{ fontSize: "0.72rem", color: "var(--slate-500)", textAlign: "center", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "0.72rem", color: "#6b7280", textAlign: "center", lineHeight: 1.6 }}>
               By joining, you agree to our cooperative bylaws under the Ministry of Cooperation, Govt. of India.
             </p>
           )}
@@ -437,11 +437,11 @@ function BookingModal({ provider, onClose }) {
         <div className="india-bar" />
         <div style={{ padding: "3rem 2rem", textAlign: "center" }}>
           <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>🎉</div>
-          <div style={{ fontSize: "1.3rem", fontWeight: 800, marginBottom: "0.5rem" }}>Booking Confirmed!</div>
-          <div style={{ color: "var(--slate-400)", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
+          <div style={{ fontSize: "1.3rem", fontWeight: 800, color: "#111827", marginBottom: "0.5rem" }}>Booking Confirmed!</div>
+          <div style={{ color: "#4b5563", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
             {provider.name} will arrive at {slots[selectedSlot]}
           </div>
-          <div style={{ padding: "1rem", background: "rgba(16,185,129,0.07)", border: "1px solid rgba(16,185,129,0.2)", borderRadius: "var(--radius)", marginBottom: "1.5rem", fontSize: "0.82rem", color: "var(--slate-300)" }}>
+          <div style={{ padding: "1rem", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "var(--radius)", marginBottom: "1.5rem", fontSize: "0.85rem", color: "#1f2937", lineHeight: 1.6 }}>
             💚 92% of your payment goes directly to {provider.name}. The 8% co-op fee funds member welfare & training.
           </div>
           <button className="btn btn-primary btn-lg" style={{ width: "100%", justifyContent: "center" }} onClick={onClose}>
@@ -461,19 +461,19 @@ function BookingModal({ provider, onClose }) {
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
         <div className="modal-body">
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1rem", background: "var(--bg-card)", borderRadius: "var(--radius)", marginBottom: "1.25rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1rem", background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: "var(--radius)", marginBottom: "1.25rem" }}>
             <div className={`avatar ${provider.avatar}`} style={{ width: 48, height: 48, borderRadius: 12, fontSize: "1rem" }}>
               {provider.initials}
               <div className="verified-dot">✓</div>
             </div>
             <div>
-              <div style={{ fontWeight: 700 }}>{provider.name}</div>
-              <div style={{ fontSize: "0.78rem", color: "var(--emerald-400)", fontWeight: 600 }}>{provider.role}</div>
-              <div style={{ fontSize: "0.72rem", color: "var(--slate-400)" }}>{provider.location} · {provider.distance}</div>
+              <div style={{ fontWeight: 800, color: "#111827", fontSize: "1rem" }}>{provider.name}</div>
+              <div style={{ fontSize: "0.78rem", color: "#0c831f", fontWeight: 700 }}>{provider.role}</div>
+              <div style={{ fontSize: "0.75rem", color: "#4b5563" }}>{provider.location} · {provider.distance}</div>
             </div>
             <div style={{ marginLeft: "auto", textAlign: "right" }}>
-              <div style={{ fontWeight: 700, color: "var(--emerald-400)" }}>{provider.price}</div>
-              <div style={{ fontSize: "0.7rem", color: "var(--slate-400)" }}>Co-op verified</div>
+              <div style={{ fontWeight: 800, color: "#0c831f", fontSize: "1.1rem" }}>{provider.price}</div>
+              <div style={{ fontSize: "0.72rem", color: "#6b7280", fontWeight: 600 }}>Co-op verified</div>
             </div>
           </div>
 
@@ -493,10 +493,11 @@ function BookingModal({ provider, onClose }) {
               {slots.map((s, i) => (
                 <button key={i} onClick={() => setSelectedSlot(i)}
                   style={{
-                    padding: "10px 14px", borderRadius: "var(--radius)", border: `1.5px solid ${selectedSlot === i ? "var(--emerald-500)" : "var(--border)"}`,
-                    background: selectedSlot === i ? "rgba(16,185,129,0.1)" : "var(--bg-card)",
-                    color: selectedSlot === i ? "var(--emerald-400)" : "var(--slate-300)",
-                    fontWeight: 600, fontSize: "0.8rem", cursor: "pointer", transition: "all 0.2s"
+                    padding: "10px 14px", borderRadius: "var(--radius)", 
+                    border: `1.5px solid ${selectedSlot === i ? "#0c831f" : "#cbd5e1"}`,
+                    background: selectedSlot === i ? "#f0fdf4" : "#ffffff",
+                    color: selectedSlot === i ? "#0c831f" : "#111827",
+                    fontWeight: 700, fontSize: "0.82rem", cursor: "pointer", transition: "all 0.2s"
                   }}>
                   {s}
                 </button>
@@ -504,9 +505,9 @@ function BookingModal({ provider, onClose }) {
             </div>
           </div>
 
-          <div style={{ padding: "1rem", background: "rgba(16,185,129,0.07)", border: "1px solid rgba(16,185,129,0.2)", borderRadius: "var(--radius)", fontSize: "0.8rem" }}>
-            <div style={{ fontWeight: 700, marginBottom: "0.5rem", color: "var(--emerald-400)" }}>💡 Cooperative Transparency</div>
-            <div style={{ color: "var(--slate-300)" }}>92% goes to the worker. 8% flat cooperative fee supports member welfare & platform costs. No hidden charges.</div>
+          <div style={{ padding: "1rem", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "var(--radius)", fontSize: "0.82rem" }}>
+            <div style={{ fontWeight: 800, marginBottom: "0.4rem", color: "#0c831f" }}>💡 Cooperative Transparency</div>
+            <div style={{ color: "#1f2937", lineHeight: 1.5, fontWeight: 500 }}>92% goes to the worker. 8% flat cooperative fee supports member welfare & platform costs. No hidden charges.</div>
           </div>
         </div>
         <div className="modal-footer">

@@ -1586,19 +1586,19 @@ body {
 
 .form-label {
   display: block;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #374151;
+  font-size: 0.85rem;
+  font-weight: 800 !important;
+  color: #111827 !important;
   margin-bottom: 0.5rem;
 }
 
 .form-input {
   width: 100%;
   padding: 10px 14px;
-  background: #f9fafb;
-  border: 1.5px solid #e5e7eb;
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: var(--radius);
-  color: #111827;
+  color: #111827 !important;
   font-size: 0.9rem;
   font-family: var(--font-sans);
   transition: border-color var(--transition), box-shadow var(--transition);
@@ -1606,12 +1606,12 @@ body {
 }
 
 .form-input:focus {
-  border-color: #f7c400;
-  box-shadow: 0 0 0 3px rgba(247,196,0,0.25);
-  background: #ffffff;
+  border-color: #0c831f !important;
+  box-shadow: 0 0 0 3px rgba(12, 131, 31, 0.2) !important;
+  background: #ffffff !important;
 }
 
-.form-input::placeholder { color: #9ca3af; }
+.form-input::placeholder { color: #64748b !important; }
 
 .form-select {
   appearance: none;
@@ -1864,19 +1864,19 @@ body {
 
 .form-label {
   display: block;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--slate-300);
+  font-size: 0.85rem;
+  font-weight: 800 !important;
+  color: #111827 !important;
   margin-bottom: 0.5rem;
 }
 
 .form-input {
   width: 100%;
   padding: 10px 14px;
-  background: var(--bg-card);
-  border: 1.5px solid var(--border);
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: var(--radius);
-  color: var(--white);
+  color: #111827 !important;
   font-size: 0.9rem;
   font-family: var(--font-sans);
   transition: border-color var(--transition), box-shadow var(--transition);
@@ -1884,11 +1884,12 @@ body {
 }
 
 .form-input:focus {
-  border-color: var(--emerald-500);
-  box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+  border-color: #0c831f !important;
+  box-shadow: 0 0 0 3px rgba(12, 131, 31, 0.2) !important;
+  background: #ffffff !important;
 }
 
-.form-input::placeholder { color: var(--slate-500); }
+.form-input::placeholder { color: #64748b !important; }
 
 .form-select {
   appearance: none;
