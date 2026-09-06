@@ -3152,7 +3152,7 @@ select option {
   display: none;
 }
 
-/* Mobile UI Responsiveness (Screens <= 640px) */
+
 @media (max-width: 640px) {
   .modal-overlay {
     padding: 0.5rem;
@@ -3208,7 +3208,7 @@ select option {
   }
 
   .payment-methods-list {
-    display: none; /* Switch to horizontal pill chips on mobile */
+    display: none; 
   }
 
   .payment-mobile-chips-wrapper {
@@ -3264,9 +3264,7 @@ select option {
   }
 }
 
-/* =============================================
-   BOOKING MODAL & GENERAL MOBILE MODAL FIXES
-   ============================================= */
+
 .booking-modal {
   max-width: 540px;
   width: 95%;
