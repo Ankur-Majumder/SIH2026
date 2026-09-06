@@ -190,9 +190,7 @@ function Navbar({ onNav, activeView, lang, setLang, onOpenAuth }) {
   );
 }
 
-// =============================================
-// AUTH MODAL WITH ROLE SELECTOR
-// =============================================
+
 function AuthModal({ type, onClose, onSwitch, onOpenLabourReg }) {
   const isLogin = type === "login";
   const [role, setRole] = useState("household");
@@ -287,9 +285,7 @@ function AuthModal({ type, onClose, onSwitch, onOpenLabourReg }) {
   );
 }
 
-// =============================================
-// BOOKING PREPARATION MODAL (Slot & Address)
-// =============================================
+
 function BookingModal({ provider, onClose, onProceedToPayment }) {
   const slots = ["Today · 2:00 PM", "Today · 4:00 PM", "Tomorrow · 9:00 AM", "Tomorrow · 11:30 AM"];
   const [selectedSlot, setSelectedSlot] = useState(0);
