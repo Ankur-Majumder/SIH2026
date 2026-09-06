@@ -15,9 +15,7 @@ import { PaymentGatewayModal } from "./src/components/PaymentGatewayModal";
 import { ReceiptModal } from "./src/components/ReceiptModal";
 import { LabourIdCardModal } from "./src/components/LabourIdCardModal";
 
-// =============================================
-// GOVT HEADER TOP BAR & UTILITIES
-// =============================================
+
 function GovtTopBar({ lang, setLang }) {
   return (
     <div className="govt-top-bar">
@@ -419,9 +417,7 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
   );
 }
 
-// =============================================
-// DASHBOARD VIEW
-// =============================================
+
 function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard }) {
   const [activeTab, setActiveTab] = useState("overview");
   const [mode, setMode] = useState("household");
@@ -661,9 +657,6 @@ function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard }) {
   );
 }
 
-// =============================================
-// NOTICE SYSTEM
-// =============================================
 function NoticeBanner({ message, onClose }) {
   return (
     <div className="notice-banner">
@@ -676,9 +669,7 @@ function NoticeBanner({ message, onClose }) {
   );
 }
 
-// =============================================
-// FOOTER
-// =============================================
+
 function Footer({ onNav }) {
   return (
     <footer className="footer">
@@ -735,17 +726,15 @@ function Footer({ onNav }) {
   );
 }
 
-// =============================================
-// APP ROOT COMPONENT
-// =============================================
+
 function App() {
-  const [view, setView] = useState("home"); // home | services | how | cooperative | providers | impact | dashboard
+  const [view, setView] = useState("home"); 
   const [notice, setNotice] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState("all");
-  const [lang, setLang] = useState("en"); // en | hi
+  const [lang, setLang] = useState("en"); 
 
-  // Modals state
-  const [authModal, setAuthModal] = useState(null); // null | 'login' | 'signup'
+  
+  const [authModal, setAuthModal] = useState(null); 
   const [labourRegOpen, setLabourRegOpen] = useState(false);
   const [bookingProvider, setBookingProvider] = useState(null);
   const [paymentProvider, setPaymentProvider] = useState(null);
