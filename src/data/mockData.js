@@ -1,7 +1,3 @@
-// =============================================
-// SAHAYOGSEVA MOCK DATA
-// =============================================
-
 export const SERVICES = [
   { id: "plumber", emoji: "🔧", title: "Plumbers", text: "Leaks, fittings & emergency repairs", count: "340+ members", color: "#3b82f6" },
   { id: "tutor", emoji: "📚", title: "Tutors", text: "School, college & competitive exams", count: "520+ members", color: "#8b5cf6" },
