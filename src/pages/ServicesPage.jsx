@@ -6,7 +6,7 @@ export function ServicesPage({ onBook, selectedCategoryId, onSelectCategory }) {
 
   const currentCatId = selectedCategoryId || "all";
 
-  const filteredProviders = PROVIDERS.filter(p => {
+  const filteredProviders = PROVIDERS.filter((p) => {
     if (currentCatId !== "all") {
       if (p.category !== currentCatId) return false;
     }
@@ -30,7 +30,7 @@ export function ServicesPage({ onBook, selectedCategoryId, onSelectCategory }) {
           <div className="section-label">Services Directory</div>
           <div className="section-title">All Cooperative Service Categories</div>
           <div className="section-desc">
-            Select any service category to view verified cooperative providers near you.
+            Select any service category to view verified cooperative providers near you. All members are DigiLocker Aadhaar verified with protected escrow checkout.
           </div>
         </div>
       </div>
@@ -63,18 +63,18 @@ export function ServicesPage({ onBook, selectedCategoryId, onSelectCategory }) {
             <div>
               <div className="section-label">Featured Members</div>
               <div className="section-title">Meet your community providers</div>
-              <div className="section-desc">Every one of these professionals is a co-op member with verified ID, skills & background check.</div>
+              <div className="section-desc">Every one of these professionals is a co-op member with verified DigiLocker Aadhaar ID, skills & background check.</div>
             </div>
             {currentCatId !== "all" && (
               <button className="btn btn-outline" onClick={() => onSelectCategory("all")}>
-                Show All Providers ✕
+                Show All Categories →
               </button>
             )}
           </div>
 
           {/* Status filters */}
           <div className="filter-tabs" style={{ marginBottom: "1.5rem" }}>
-            {[["all","All Providers"],["online","🟢 Online Now"],["top","⭐ Top Rated"]].map(([key, label]) => (
+            {[["all", "All Providers"], ["online", "🟢 Online Now"], ["top", "⭐ Top Rated"]].map(([key, label]) => (
               <button key={key} className={`filter-tab${filter === key ? " active" : ""}`} onClick={() => setFilter(key)}>
                 {label}
               </button>
@@ -83,7 +83,7 @@ export function ServicesPage({ onBook, selectedCategoryId, onSelectCategory }) {
 
           {filteredProviders.length === 0 ? (
             <div style={{ textAlign: "center", padding: "3rem 1rem", background: "var(--bg-card)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
-              <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🔎</div>
+              <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🔍</div>
               <div style={{ fontWeight: 700, fontSize: "1.1rem" }}>No providers found in this category</div>
               <div style={{ color: "var(--slate-400)", fontSize: "0.85rem", marginTop: "0.25rem" }}>Try selecting another service category above.</div>
             </div>
@@ -100,7 +100,12 @@ export function ServicesPage({ onBook, selectedCategoryId, onSelectCategory }) {
                       {p.online && <div className="online-dot" title="Online Now" />}
                     </div>
                     <div>
-                      <div className="pcard-name">{p.name}</div>
+                      <div className="pcard-name" style={{ display: "flex", alignItems: "center", gap: "0.3rem", flexWrap: "wrap" }}>
+                        {p.name}
+                        <span style={{ fontSize: "0.6rem", background: "#e0f2fe", color: "#0369a1", padding: "1px 5px", borderRadius: "4px", fontWeight: 700 }}>
+                          DigiLocker Verified
+                        </span>
+                      </div>
                       <div className="pcard-role">{p.role}</div>
                       <div className="pcard-location">📍 {p.location} · {p.distance}</div>
                     </div>
@@ -121,14 +126,14 @@ export function ServicesPage({ onBook, selectedCategoryId, onSelectCategory }) {
                       </div>
                     </div>
                     <div className="pcard-tags">
-                      {p.tags.map(t => <span className="tag" key={t}>{t}</span>)}
+                      {p.tags.map((t) => <span className="tag" key={t}>{t}</span>)}
                     </div>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
                       <div style={{ flex: 1, textAlign: "center", padding: "6px 0", borderRadius: "var(--radius-sm)", background: "var(--bg-card)", fontSize: "0.8rem", fontWeight: 700, color: "var(--emerald-400)" }}>
                         {p.price}
                       </div>
                       <button className="btn btn-primary" style={{ flex: 2, justifyContent: "center", padding: "8px 16px", borderRadius: "var(--radius-sm)", fontSize: "0.82rem" }} onClick={() => onBook(p)}>
-                        Book Now →
+                        Book with Escrow →
                       </button>
                     </div>
                   </div>

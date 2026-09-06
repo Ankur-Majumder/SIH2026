@@ -2951,3 +2951,70 @@ select option {
     font-size: 0.82rem;
   }
 }
+
+/* =============================================
+   DIGILOCKER & PAYMENT GATEWAY STYLES
+   ============================================= */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.badge-digilocker {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  font-weight: 700;
+  border-radius: 100px;
+}
+
+.labour-id-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.labour-id-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(6, 78, 59, 0.35);
+}
+
+.payment-spinner {
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.modal.modal-lg {
+  max-width: 720px;
+  width: 95%;
+}
+
+.btn-saffron {
+  background: #f97316;
+  color: #ffffff;
+  border: 1px solid #ea580c;
+  font-weight: 700;
+}
+
+.btn-saffron:hover {
+  background: #ea580c;
+  color: #ffffff;
+}
+
+.nav-labour-btn {
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1.5px solid #fed7aa;
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-labour-btn:hover {
+  background: #ffedd5;
+  border-color: #f97316;
+}

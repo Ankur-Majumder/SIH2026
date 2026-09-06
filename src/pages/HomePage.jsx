@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { PROVIDERS } from "../data/mockData";
+import { PROVIDERS, SERVICES } from "../data/mockData";
 
-export function HomePage({ onBook, onNav }) {
+export function HomePage({ onBook, onNav, onSelectService }) {
   const [query, setQuery] = useState("");
   const [stateLocation, setStateLocation] = useState("Select State");
 
   const handleSearch = () => {
-    if (query.trim() && onNav) {
+    if (onNav) {
       onNav("services");
     }
   };
@@ -33,7 +33,7 @@ export function HomePage({ onBook, onNav }) {
 
             <p className="hero-desc">
               SahayogSeva is India's first cooperative gig marketplace — connecting households with trusted
-              local plumbers, tutors, caregivers & more, where every worker earns fairly and every community
+              local plumbers, tutors, caregivers & more, where every worker earns fairly (92% payout) and every community
               has a stake.
             </p>
 
@@ -47,9 +47,10 @@ export function HomePage({ onBook, onNav }) {
             </div>
 
             <div className="hero-trust">
-              <div className="trust-chip"><span className="chip-icon">✅</span> Government Registered</div>
-              <div className="trust-chip"><span className="chip-icon">🔒</span> ID & Skill Verified</div>
-              <div className="trust-chip"><span className="chip-icon">💚</span> 92% to Workers</div>
+              <div className="trust-chip"><span className="chip-icon">✅</span> Govt. Registered (MSCS Act)</div>
+              <div className="trust-chip"><span className="chip-icon">🔒</span> DigiLocker Aadhaar Verified</div>
+              <div className="trust-chip"><span className="chip-icon">💚</span> 92% Direct to Workers</div>
+              <div className="trust-chip"><span className="chip-icon">💳</span> Protected Bharat Escrow</div>
             </div>
 
             {/* Search bar */}
@@ -58,15 +59,15 @@ export function HomePage({ onBook, onNav }) {
                 <span className="search-bar-icon">⌕</span>
                 <input
                   value={query}
-                  onChange={e => setQuery(e.target.value)}
-                  onKeyDown={e => e.key === "Enter" && handleSearch()}
-                  placeholder="Search for a service... e.g. Plumber, Tutor"
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                  placeholder="Search for a service... e.g. Plumber, Electrician, Tutor"
                 />
                 <div className="search-divider" />
                 <select
                   className="search-location-select"
                   value={stateLocation}
-                  onChange={e => setStateLocation(e.target.value)}
+                  onChange={(e) => setStateLocation(e.target.value)}
                 >
                   <option value="Select State">📍 Select State</option>
                   <option value="Delhi NCR">📍 Delhi NCR</option>
@@ -82,7 +83,7 @@ export function HomePage({ onBook, onNav }) {
                   <option value="Haryana">📍 Haryana</option>
                   <option value="Madhya Pradesh">📍 Madhya Pradesh</option>
                 </select>
-                <button className="btn btn-primary" style={{ borderRadius: "var(--radius-full)", padding: "8px 20px" }} onClick={() => onNav && onNav("services")}>
+                <button className="btn btn-primary" style={{ borderRadius: "var(--radius-full)", padding: "8px 20px" }} onClick={handleSearch}>
                   Search
                 </button>
               </div>
@@ -107,7 +108,12 @@ export function HomePage({ onBook, onNav }) {
                         <div className="verified-dot">✓</div>
                       </div>
                       <div className="provider-info">
-                        <div className="provider-name">{p.name}</div>
+                        <div className="provider-name" style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                          {p.name}
+                          <span style={{ fontSize: "0.6rem", background: "#e0f2fe", color: "#0369a1", padding: "1px 5px", borderRadius: "4px", fontWeight: 700 }}>
+                            DigiLocker
+                          </span>
+                        </div>
                         <div className="provider-meta">{p.location} · {p.distance}</div>
                       </div>
                       <div className="provider-right">
@@ -122,22 +128,22 @@ export function HomePage({ onBook, onNav }) {
                     <small>📅 Next slot</small>
                     <strong>Today · 4:00 PM</strong>
                   </div>
-                  <button className="slot-btn" onClick={() => onBook && onBook(PROVIDERS[0])}>Book Now</button>
+                  <button className="slot-btn" onClick={() => onBook && onBook(PROVIDERS[0])}>Book with Escrow →</button>
                 </div>
               </div>
 
               <div className="float-badge float-badge-1">
                 <span className="fb-icon">💚</span>
                 <div className="fb-text">
-                  <strong>92%</strong>
-                  <small>to the worker</small>
+                  <strong>92% Payout</strong>
+                  <small>Direct to worker bank</small>
                 </div>
               </div>
               <div className="float-badge float-badge-2">
                 <span className="fb-icon">🏛️</span>
                 <div className="fb-text">
-                  <strong>Govt. Backed</strong>
-                  <small>Ministry of Cooperation</small>
+                  <strong>DigiLocker e-KYC</strong>
+                  <small>100% Aadhaar Verified</small>
                 </div>
               </div>
               <div className="float-badge float-badge-3">
@@ -180,11 +186,45 @@ export function HomePage({ onBook, onNav }) {
             <div className="stat-icon-box icon-purple">💚</div>
             <div>
               <div className="stat-num">92%</div>
-              <div className="stat-label">Fair Wage to Workers</div>
+              <div className="stat-label">Direct Wage to Workers</div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Services Preview */}
+      <section className="section" id="services">
+        <div className="section-inner">
+          <div className="section-header">
+            <div>
+              <div className="section-label">Popular Services</div>
+              <div className="section-title">Every service your community needs</div>
+              <div className="section-desc">All providers are cooperative members — DigiLocker ID verified, skill-tested and community-rated.</div>
+            </div>
+            <button className="btn btn-ghost" onClick={() => onNav && onNav("services")}>View all categories →</button>
+          </div>
+
+          <div className="services-grid">
+            {SERVICES.slice(0, 6).map((s) => (
+              <button
+                className="service-card"
+                key={s.id}
+                onClick={() => onSelectService ? onSelectService(s) : onNav && onNav("services")}
+              >
+                <div className="service-emoji-box" style={{ background: `${s.color}18` }}>
+                  {s.emoji}
+                </div>
+                <div className="service-content">
+                  <div className="service-title">{s.title}</div>
+                  <div className="service-text">{s.text}</div>
+                  <div className="service-count">{s.count}</div>
+                </div>
+                <div className="service-arrow">›</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
