@@ -36,7 +36,7 @@ export function ReceiptModal({ txn, onClose }) {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", fontSize: "0.78rem", marginBottom: "1rem" }}>
               <div>
                 <span style={{ color: "#64748b" }}>Receipt No:</span>
-                <div style={{ fontWeight: 800, color: "#0f172a", fontFamily: "monospace" }}>{txn.txnId}</div>
+                <div style={{ fontWeight: 800, color: "#0f172a", fontFamily: "monospace", wordBreak: "break-all", fontSize: "0.72rem" }}>{txn.txnId}</div>
               </div>
               <div style={{ textAlign: "right" }}>
                 <span style={{ color: "#64748b" }}>Date & Time:</span>

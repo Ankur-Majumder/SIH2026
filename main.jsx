@@ -302,76 +302,74 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: "560px" }}>
+      <div className="modal booking-modal" onClick={(e) => e.stopPropagation()}>
         <div className="india-bar" />
-        <div className="modal-header">
-          <div className="modal-title">Book Cooperative Service</div>
+        <div className="modal-header" style={{ padding: "0.85rem 1.1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span style={{ fontSize: "1.2rem" }}>📅</span>
+            <div>
+              <div className="modal-title" style={{ fontSize: "1rem", fontWeight: 800 }}>Book Cooperative Service</div>
+              <div style={{ fontSize: "0.68rem", color: "#64748b" }}>100% Escrow Protected · 0% Middleman</div>
+            </div>
+          </div>
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
-        <div className="modal-body">
+        <div className="modal-body booking-modal-body">
           {/* Provider Card Header */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1rem", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "var(--radius)", marginBottom: "1.25rem" }}>
-            <div className={`avatar ${provider.avatar}`} style={{ width: 48, height: 48, borderRadius: 12, fontSize: "1rem" }}>
+          <div className="booking-provider-card">
+            <div className={`avatar ${provider.avatar}`} style={{ width: 44, height: 44, minWidth: 44, borderRadius: 10, fontSize: "0.95rem" }}>
               {provider.initials}
               <div className="verified-dot">✓</div>
             </div>
-            <div>
-              <div style={{ fontWeight: 800, color: "#111827", fontSize: "1rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                {provider.name}
-                <span style={{ fontSize: "0.6rem", background: "#e0f2fe", color: "#0369a1", padding: "1px 5px", borderRadius: "4px", fontWeight: 700 }}>
-                  DigiLocker Verified
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontWeight: 800, color: "#111827", fontSize: "0.92rem", display: "flex", alignItems: "center", gap: "0.35rem", flexWrap: "wrap" }}>
+                <span>{provider.name}</span>
+                <span style={{ fontSize: "0.58rem", background: "#e0f2fe", color: "#0369a1", padding: "1px 5px", borderRadius: "4px", fontWeight: 700 }}>
+                  DigiLocker
                 </span>
               </div>
-              <div style={{ fontSize: "0.78rem", color: "#0c831f", fontWeight: 700 }}>{provider.role}</div>
-              <div style={{ fontSize: "0.75rem", color: "#4b5563" }}>{provider.location} · {provider.distance}</div>
+              <div style={{ fontSize: "0.75rem", color: "#0c831f", fontWeight: 700 }}>{provider.role}</div>
+              <div style={{ fontSize: "0.7rem", color: "#4b5563" }}>{provider.location} · {provider.distance}</div>
             </div>
-            <div style={{ marginLeft: "auto", textAlign: "right" }}>
-              <div style={{ fontWeight: 800, color: "#0c831f", fontSize: "1.1rem" }}>{provider.price}</div>
-              <div style={{ fontSize: "0.7rem", color: "#6b7280" }}>Reg: {provider.labourRegNo || "SS-DL-2026"}</div>
+            <div style={{ textAlign: "right", flexShrink: 0 }}>
+              <div style={{ fontWeight: 800, color: "#0c831f", fontSize: "1.05rem" }}>{provider.price}</div>
+              <div style={{ fontSize: "0.62rem", color: "#6b7280" }}>Reg: {provider.labourRegNo || "SS-DL-2026"}</div>
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Service Address</label>
+          <div className="form-group" style={{ marginBottom: "0.85rem" }}>
+            <label className="form-label" style={{ fontSize: "0.78rem" }}>Service Address</label>
             <input
               type="text"
               className="form-input"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="House / Flat no., Street, Landmark, Area"
+              style={{ fontSize: "0.85rem", padding: "8px 12px" }}
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Describe the work</label>
+          <div className="form-group" style={{ marginBottom: "0.85rem" }}>
+            <label className="form-label" style={{ fontSize: "0.78rem" }}>Describe the work</label>
             <textarea
               className="form-input"
               rows="2"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. Kitchen tap leaking, need urgent fix..."
-              style={{ resize: "vertical" }}
+              style={{ resize: "vertical", fontSize: "0.85rem", padding: "8px 12px" }}
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Choose Arrival Time Slot</label>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
+          <div className="form-group" style={{ marginBottom: "0.85rem" }}>
+            <label className="form-label" style={{ fontSize: "0.78rem" }}>Choose Arrival Time Slot</label>
+            <div className="booking-slots-grid">
               {slots.map((s, i) => (
                 <button
                   key={i}
+                  type="button"
                   onClick={() => setSelectedSlot(i)}
-                  style={{
-                    padding: "10px 14px",
-                    borderRadius: "var(--radius)",
-                    border: `1.5px solid ${selectedSlot === i ? "#0c831f" : "#cbd5e1"}`,
-                    background: selectedSlot === i ? "#f0fdf4" : "#ffffff",
-                    color: selectedSlot === i ? "#0c831f" : "#111827",
-                    fontWeight: 700,
-                    fontSize: "0.82rem",
-                    cursor: "pointer",
-                    transition: "all 0.2s",
-                  }}
+                  className={`booking-slot-btn ${selectedSlot === i ? "active" : ""}`}
                 >
                   {s}
                 </button>
@@ -380,26 +378,25 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
           </div>
 
           {/* Transparent Split Preview */}
-          <div style={{ padding: "0.85rem 1rem", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "var(--radius)", fontSize: "0.78rem" }}>
-            <div style={{ fontWeight: 800, marginBottom: "0.3rem", color: "#0c831f", display: "flex", justifyContent: "space-between" }}>
+          <div className="booking-split-card">
+            <div style={{ fontWeight: 800, marginBottom: "0.25rem", color: "#0c831f", display: "flex", justifyContent: "space-between" }}>
               <span>🤝 Cooperative Pricing Split</span>
               <span>Total: ₹{priceRaw}</span>
             </div>
-            <div style={{ color: "#166534", lineHeight: 1.5 }}>
+            <div style={{ color: "#166534", lineHeight: 1.4, fontSize: "0.73rem" }}>
               • <strong>₹{workerShare} (92%)</strong> goes directly to {provider.name}'s verified bank account.
               <br />
-              • <strong>₹{coopFee} (8%)</strong> flat co-op welfare fee funds member insurance & platform upkeep.
+              • <strong>₹{coopFee} (8%)</strong> flat co-op welfare fee funds insurance & upkeep.
             </div>
           </div>
         </div>
 
-        <div className="modal-footer">
-          <button className="btn btn-ghost" style={{ flex: 1 }} onClick={onClose}>
+        <div className="booking-modal-footer">
+          <button className="btn btn-ghost booking-cancel-btn" onClick={onClose}>
             Cancel
           </button>
           <button
-            className="btn btn-primary"
-            style={{ flex: 2, justifyContent: "center" }}
+            className="btn btn-primary booking-proceed-btn"
             onClick={() => {
               onProceedToPayment({
                 slot: slots[selectedSlot],
