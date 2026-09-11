@@ -14,6 +14,8 @@ import { LabourRegistrationModal } from "./src/components/LabourRegistrationModa
 import { PaymentGatewayModal } from "./src/components/PaymentGatewayModal";
 import { ReceiptModal } from "./src/components/ReceiptModal";
 import { LabourIdCardModal } from "./src/components/LabourIdCardModal";
+import { LiveTrackingModal } from "./src/components/LiveTrackingModal";
+import { FloatingTrackerPill } from "./src/components/FloatingTrackerPill";
 
 
 function GovtTopBar({ lang, setLang }) {
@@ -411,7 +413,7 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
 }
 
 
-function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard }) {
+function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard, onOpenTracking }) {
   const [activeTab, setActiveTab] = useState("overview");
   const [mode, setMode] = useState("household");
 
@@ -497,25 +499,39 @@ function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard }) {
                       <div className="booking-amount">{b.amount}</div>
                       <div className="booking-date">{b.date}</div>
                     </div>
-                    <button
-                      className="btn btn-ghost"
-                      style={{ padding: "4px 8px", fontSize: "0.75rem", border: "1px solid #cbd5e1" }}
-                      onClick={() =>
-                        onOpenReceipt({
-                          txnId: b.txnId,
-                          providerName: b.name,
-                          providerRole: b.service,
-                          amount: parseInt(b.amount.replace(/\D/g, "")),
-                          workerShare: parseInt(b.workerShare.replace(/\D/g, "")),
-                          coopFee: parseInt(b.coopFee.replace(/\D/g, "")),
-                          paymentMethod: b.paymentMethod,
-                          timestamp: b.date,
-                          rrn: "891240192841",
-                        })
-                      }
-                    >
-                      🧾 Invoice
-                    </button>
+                    <div style={{ display: "flex", gap: "0.35rem", alignItems: "center" }}>
+                      {b.status === "upcoming" && (
+                        <button
+                          className="btn btn-primary"
+                          style={{ padding: "4px 9px", fontSize: "0.74rem", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "3px" }}
+                          onClick={() => {
+                            const prov = PROVIDERS.find((p) => p.id === b.providerId) || PROVIDERS[0];
+                            if (onOpenTracking) onOpenTracking(b, prov);
+                          }}
+                        >
+                          🗺️ Track Route
+                        </button>
+                      )}
+                      <button
+                        className="btn btn-ghost"
+                        style={{ padding: "4px 8px", fontSize: "0.75rem", border: "1px solid #cbd5e1" }}
+                        onClick={() =>
+                          onOpenReceipt({
+                            txnId: b.txnId,
+                            providerName: b.name,
+                            providerRole: b.service,
+                            amount: parseInt(b.amount.replace(/\D/g, "")),
+                            workerShare: parseInt(b.workerShare.replace(/\D/g, "")),
+                            coopFee: parseInt(b.coopFee.replace(/\D/g, "")),
+                            paymentMethod: b.paymentMethod,
+                            timestamp: b.date,
+                            rrn: "891240192841",
+                          })
+                        }
+                      >
+                        🧾 Invoice
+                      </button>
+                    </div>
                     <span className={`status-pill status-${b.status}`}>{b.status}</span>
                   </div>
                 ))}
@@ -726,7 +742,6 @@ function App() {
   const [selectedCategoryId, setSelectedCategoryId] = useState("all");
   const [lang, setLang] = useState("en"); 
 
-  
   const [authModal, setAuthModal] = useState(null); 
   const [labourRegOpen, setLabourRegOpen] = useState(false);
   const [bookingProvider, setBookingProvider] = useState(null);
@@ -734,6 +749,10 @@ function App() {
   const [bookingDetails, setBookingDetails] = useState(null);
   const [activeReceipt, setActiveReceipt] = useState(null);
   const [activeLabourCard, setActiveLabourCard] = useState(null);
+  
+  // Geolocation & Live Route Tracking state
+  const [activeTracking, setActiveTracking] = useState(null); // { booking, provider }
+  const [activeTransitBooking, setActiveTransitBooking] = useState(BOOKINGS_DATA[0]); // default active booking for quick demo
 
   const showNotice = useCallback((msg) => {
     setNotice(msg);
@@ -742,6 +761,21 @@ function App() {
 
   const handleBook = useCallback((provider) => {
     setBookingProvider(provider);
+  }, []);
+
+  const handleOpenTracking = useCallback((booking, provider) => {
+    const prov = provider || PROVIDERS.find((p) => p.id === booking?.providerId) || PROVIDERS[0];
+    const b = booking || {
+      txnId: `TXN_SS_2026_${Math.floor(10000000 + Math.random() * 90000000)}`,
+      name: prov.name,
+      service: prov.role,
+      amount: parseInt(prov.price.replace(/\D/g, "") || "380"),
+      workerShare: Math.round(parseInt(prov.price.replace(/\D/g, "") || "380") * 0.92),
+      pin: "4821",
+      address: "H.No 14, Pusa Road, Karol Bagh, Central Delhi",
+    };
+    setActiveTracking({ booking: b, provider: prov });
+    setActiveTransitBooking(b);
   }, []);
 
   const handleProceedToPayment = (details) => {
@@ -794,11 +828,30 @@ function App() {
             onOpenLabourReg={() => setLabourRegOpen(true)}
           />
         )}
+        {activeTracking && (
+          <LiveTrackingModal
+            booking={activeTracking.booking}
+            provider={activeTracking.provider}
+            onClose={() => setActiveTracking(null)}
+            onFinishJob={(b) => {
+              showNotice(`🎉 Service completed! Payment of ₹${b.workerShare || 350} successfully released to ${b.name || "worker"}.`);
+              setActiveTracking(null);
+            }}
+          />
+        )}
         <DashboardView
           onBack={(v) => handleNav(v || "home")}
           onOpenReceipt={(txn) => setActiveReceipt(txn)}
           onOpenLabourCard={(card) => setActiveLabourCard(card)}
+          onOpenTracking={handleOpenTracking}
         />
+        {!activeTracking && activeTransitBooking && (
+          <FloatingTrackerPill
+            booking={activeTransitBooking}
+            onOpenTracker={() => handleOpenTracking(activeTransitBooking, null)}
+            onDismiss={() => setActiveTransitBooking(null)}
+          />
+        )}
         <Footer onNav={handleNav} />
       </div>
     );
@@ -806,11 +859,13 @@ function App() {
 
   const renderPageContent = () => {
     switch (view) {
+      case "live-map":
       case "services":
       case "providers":
         return (
           <ServicesPage
             onBook={handleBook}
+            onTrackProvider={(p) => handleOpenTracking(null, p)}
             selectedCategoryId={selectedCategoryId}
             onSelectCategory={setSelectedCategoryId}
           />
@@ -828,6 +883,7 @@ function App() {
             onBook={handleBook}
             onNav={handleNav}
             onSelectService={handleSelectService}
+            onTrackProvider={(p) => handleOpenTracking(null, p)}
           />
         );
     }
@@ -861,6 +917,29 @@ function App() {
           bookingDetails={bookingDetails}
           onClose={() => setPaymentProvider(null)}
           onPaymentSuccess={handlePaymentSuccess}
+          onOpenTracking={(txn, prov) => handleOpenTracking(txn, prov)}
+        />
+      )}
+
+      {/* Live Route & Geolocation Tracking Modal */}
+      {activeTracking && (
+        <LiveTrackingModal
+          booking={activeTracking.booking}
+          provider={activeTracking.provider}
+          onClose={() => setActiveTracking(null)}
+          onFinishJob={(b) => {
+            showNotice(`🎉 Service completed! Payment of ₹${b.workerShare || 350} successfully released to ${b.name || "worker"}.`);
+            setActiveTracking(null);
+          }}
+        />
+      )}
+
+      {/* Floating Active Order Tracker Pill */}
+      {!activeTracking && activeTransitBooking && (
+        <FloatingTrackerPill
+          booking={activeTransitBooking}
+          onOpenTracker={() => handleOpenTracking(activeTransitBooking, null)}
+          onDismiss={() => setActiveTransitBooking(null)}
         />
       )}
 

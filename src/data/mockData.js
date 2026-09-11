@@ -1,3 +1,14 @@
+// =============================================
+// SAHAYOGSEVA MOCK DATA & GEOLOCATION UTILITIES
+// =============================================
+
+export const DEFAULT_USER_LOCATION = {
+  lat: 28.6507,
+  lng: 77.1950,
+  address: "H.No 14, Pusa Road, Karol Bagh, Central Delhi",
+  locality: "Karol Bagh, Delhi",
+};
+
 export const SERVICES = [
   { id: "plumber", emoji: "🔧", title: "Plumbers", text: "Leaks, fittings & emergency repairs", count: "340+ members", color: "#3b82f6" },
   { id: "tutor", emoji: "📚", title: "Tutors", text: "School, college & competitive exams", count: "520+ members", color: "#8b5cf6" },
@@ -19,7 +30,9 @@ export const PROVIDERS = [
     initials: "RK",
     role: "Master Plumber",
     location: "Karol Bagh, Delhi",
-    distance: "2.1 km",
+    lat: 28.6612,
+    lng: 77.1850,
+    distance: "1.6 km",
     rating: 4.9,
     reviews: 142,
     jobs: 340,
@@ -32,6 +45,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-8421",
     eshramNumber: "UAN-9921-4821-0021",
     experience: "8 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 04 AB 8492",
+    phone: "+91 98101 23456",
   },
   {
     id: 8,
@@ -40,7 +56,9 @@ export const PROVIDERS = [
     initials: "DV",
     role: "Plumber & Sanitary Specialist",
     location: "Paharganj, Delhi",
-    distance: "3.5 km",
+    lat: 28.6430,
+    lng: 77.2140,
+    distance: "2.8 km",
     rating: 4.7,
     reviews: 64,
     jobs: 195,
@@ -53,6 +71,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-1932",
     eshramNumber: "UAN-8832-1920-4491",
     experience: "6 years",
+    vehicleType: "bike",
+    vehicleNumber: "DL 07 CZ 7193",
+    phone: "+91 98202 34567",
   },
   {
     id: 16,
@@ -61,6 +82,8 @@ export const PROVIDERS = [
     initials: "SP",
     role: "Emergency Plumber",
     location: "Rohini, Delhi",
+    lat: 28.7040,
+    lng: 77.1120,
     distance: "4.1 km",
     rating: 4.8,
     reviews: 89,
@@ -74,6 +97,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-3810",
     eshramNumber: "UAN-7719-2041-9923",
     experience: "10 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 08 EF 4491",
+    phone: "+91 98303 45678",
   },
 
   // Tutors
@@ -84,6 +110,8 @@ export const PROVIDERS = [
     initials: "PS",
     role: "Home Tutor",
     location: "Lajpat Nagar, Delhi",
+    lat: 28.5670,
+    lng: 77.2430,
     distance: "3.4 km",
     rating: 4.8,
     reviews: 88,
@@ -97,6 +125,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-9921",
     eshramNumber: "UAN-6631-9021-1182",
     experience: "5 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 03 JK 5591",
+    phone: "+91 98404 56789",
   },
   {
     id: 12,
@@ -105,6 +136,8 @@ export const PROVIDERS = [
     initials: "AB",
     role: "Physics & Chemistry Tutor",
     location: "CR Park, Delhi",
+    lat: 28.5350,
+    lng: 77.2510,
     distance: "4.9 km",
     rating: 4.9,
     reviews: 94,
@@ -118,6 +151,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-5521",
     eshramNumber: "UAN-3312-8812-4019",
     experience: "9 years",
+    vehicleType: "car",
+    vehicleNumber: "DL 01 MN 8812",
+    phone: "+91 98505 67890",
   },
   {
     id: 17,
@@ -126,6 +162,8 @@ export const PROVIDERS = [
     initials: "NG",
     role: "English & Primary Tutor",
     location: "Dwarka, Delhi",
+    lat: 28.5820,
+    lng: 77.0500,
     distance: "2.8 km",
     rating: 4.9,
     reviews: 110,
@@ -139,6 +177,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-7712",
     eshramNumber: "UAN-5512-4019-3381",
     experience: "4 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 09 PQ 1294",
+    phone: "+91 98606 78901",
   },
 
   // Electricians
@@ -149,7 +190,9 @@ export const PROVIDERS = [
     initials: "MS",
     role: "Electrician",
     location: "Chandni Chowk, Delhi",
-    distance: "4.0 km",
+    lat: 28.6560,
+    lng: 77.2300,
+    distance: "3.2 km",
     rating: 4.7,
     reviews: 96,
     jobs: 280,
@@ -162,6 +205,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-1102",
     eshramNumber: "UAN-1102-9934-5512",
     experience: "7 years",
+    vehicleType: "bike",
+    vehicleNumber: "DL 02 RT 3819",
+    phone: "+91 98707 89012",
   },
   {
     id: 7,
@@ -170,6 +216,8 @@ export const PROVIDERS = [
     initials: "VM",
     role: "Master Electrician",
     location: "Connaught Place, Delhi",
+    lat: 28.6328,
+    lng: 77.2197,
     distance: "1.8 km",
     rating: 4.9,
     reviews: 112,
@@ -183,6 +231,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-6612",
     eshramNumber: "UAN-4491-0021-3312",
     experience: "12 years",
+    vehicleType: "bike",
+    vehicleNumber: "DL 06 VW 6619",
+    phone: "+91 98808 90123",
   },
   {
     id: 18,
@@ -191,6 +242,8 @@ export const PROVIDERS = [
     initials: "RS",
     role: "Commercial & Home Electrician",
     location: "Preet Vihar, Delhi",
+    lat: 28.6370,
+    lng: 77.2950,
     distance: "3.2 km",
     rating: 4.8,
     reviews: 74,
@@ -204,6 +257,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-4491",
     eshramNumber: "UAN-7712-4412-9901",
     experience: "6 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 05 XY 9921",
+    phone: "+91 98909 01234",
   },
 
   // Caregivers
@@ -214,6 +270,8 @@ export const PROVIDERS = [
     initials: "SD",
     role: "Caregiver & Cook",
     location: "Rohini, Delhi",
+    lat: 28.7150,
+    lng: 77.1210,
     distance: "5.2 km",
     rating: 5.0,
     reviews: 67,
@@ -227,6 +285,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-3319",
     eshramNumber: "UAN-8891-2201-4412",
     experience: "8 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 10 ZA 3319",
+    phone: "+91 98010 12345",
   },
   {
     id: 13,
@@ -235,6 +296,8 @@ export const PROVIDERS = [
     initials: "RS",
     role: "Senior Caregiver & Nurse",
     location: "Pitampura, Delhi",
+    lat: 28.6980,
+    lng: 77.1420,
     distance: "4.2 km",
     rating: 5.0,
     reviews: 82,
@@ -248,6 +311,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-2219",
     eshramNumber: "UAN-9912-3341-5582",
     experience: "9 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 07 BC 2219",
+    phone: "+91 98111 23456",
   },
 
   // Cleaning
@@ -258,6 +324,8 @@ export const PROVIDERS = [
     initials: "MK",
     role: "Home Cleaning Specialist",
     location: "Mayur Vihar, Delhi",
+    lat: 28.6080,
+    lng: 77.2980,
     distance: "4.5 km",
     rating: 4.9,
     reviews: 130,
@@ -271,6 +339,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-1109",
     eshramNumber: "UAN-5519-3381-9920",
     experience: "6 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 05 DE 1109",
+    phone: "+91 98222 34567",
   },
   {
     id: 19,
@@ -279,6 +350,8 @@ export const PROVIDERS = [
     initials: "AR",
     role: "Housekeeping & Deep Cleaner",
     location: "Saket, Delhi",
+    lat: 28.5245,
+    lng: 77.2140,
     distance: "3.1 km",
     rating: 4.8,
     reviews: 92,
@@ -292,6 +365,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-7741",
     eshramNumber: "UAN-6612-4491-0023",
     experience: "5 years",
+    vehicleType: "van",
+    vehicleNumber: "DL 01 FG 7741",
+    phone: "+91 98333 45678",
   },
 
   // Tech Support
@@ -302,6 +378,8 @@ export const PROVIDERS = [
     initials: "KR",
     role: "Tech Support",
     location: "Saket, Delhi",
+    lat: 28.5280,
+    lng: 77.2060,
     distance: "3.8 km",
     rating: 4.8,
     reviews: 71,
@@ -315,6 +393,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-8831",
     eshramNumber: "UAN-2219-4401-8891",
     experience: "4 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 03 HI 8831",
+    phone: "+91 98444 56789",
   },
   {
     id: 15,
@@ -323,6 +404,8 @@ export const PROVIDERS = [
     initials: "AG",
     role: "IT & Network Tech Support",
     location: "Noida Sec 18, NCR",
+    lat: 28.5700,
+    lng: 77.3200,
     distance: "6.8 km",
     rating: 4.9,
     reviews: 115,
@@ -336,6 +419,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-6620",
     eshramNumber: "UAN-1182-4412-9903",
     experience: "7 years",
+    vehicleType: "bike",
+    vehicleNumber: "UP 16 JK 6620",
+    phone: "+91 98555 67890",
   },
 
   // Carpenters
@@ -346,6 +432,8 @@ export const PROVIDERS = [
     initials: "AM",
     role: "Carpenter",
     location: "Dwarka, Delhi",
+    lat: 28.5920,
+    lng: 77.0600,
     distance: "6.1 km",
     rating: 4.6,
     reviews: 54,
@@ -359,6 +447,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-9941",
     eshramNumber: "UAN-7712-9901-2219",
     experience: "11 years",
+    vehicleType: "van",
+    vehicleNumber: "DL 08 LM 9941",
+    phone: "+91 98666 78901",
   },
   {
     id: 14,
@@ -367,7 +458,9 @@ export const PROVIDERS = [
     initials: "HS",
     role: "Custom Carpenter",
     location: "Tilak Nagar, Delhi",
-    distance: "5.5 km",
+    lat: 28.6360,
+    lng: 77.0980,
+    distance: "3.5 km",
     rating: 4.7,
     reviews: 49,
     jobs: 160,
@@ -380,6 +473,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-5510",
     eshramNumber: "UAN-4419-0021-8891",
     experience: "8 years",
+    vehicleType: "van",
+    vehicleNumber: "DL 04 NO 5510",
+    phone: "+91 98777 89012",
   },
 
   // Painters
@@ -390,7 +486,9 @@ export const PROVIDERS = [
     initials: "RC",
     role: "Interior Painter",
     location: "Janakpuri, Delhi",
-    distance: "5.0 km",
+    lat: 28.6210,
+    lng: 77.0870,
+    distance: "4.0 km",
     rating: 4.8,
     reviews: 79,
     jobs: 220,
@@ -403,6 +501,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-3391",
     eshramNumber: "UAN-3381-5512-9901",
     experience: "13 years",
+    vehicleType: "van",
+    vehicleNumber: "DL 02 PQ 3391",
+    phone: "+91 98888 90123",
   },
   {
     id: 20,
@@ -411,6 +512,8 @@ export const PROVIDERS = [
     initials: "AP",
     role: "Exterior & Waterproof Painter",
     location: "Uttam Nagar, Delhi",
+    lat: 28.6250,
+    lng: 77.0580,
     distance: "4.7 km",
     rating: 4.7,
     reviews: 63,
@@ -424,6 +527,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-4481",
     eshramNumber: "UAN-9920-1182-3341",
     experience: "6 years",
+    vehicleType: "scooter",
+    vehicleNumber: "DL 09 RS 4481",
+    phone: "+91 98999 01234",
   },
 
   // Drivers
@@ -434,6 +540,8 @@ export const PROVIDERS = [
     initials: "SY",
     role: "Local Driver & Chauffeur",
     location: "Vasant Kunj, Delhi",
+    lat: 28.5280,
+    lng: 77.1560,
     distance: "2.9 km",
     rating: 4.8,
     reviews: 105,
@@ -447,6 +555,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-8810",
     eshramNumber: "UAN-6619-3381-0021",
     experience: "10 years",
+    vehicleType: "car",
+    vehicleNumber: "DL 01 TU 8810",
+    phone: "+91 98123 45678",
   },
   {
     id: 21,
@@ -455,7 +566,9 @@ export const PROVIDERS = [
     initials: "GS",
     role: "Personal & Commercial Driver",
     location: "Rajouri Garden, Delhi",
-    distance: "3.8 km",
+    lat: 28.6470,
+    lng: 77.1230,
+    distance: "2.4 km",
     rating: 4.9,
     reviews: 128,
     jobs: 350,
@@ -468,6 +581,9 @@ export const PROVIDERS = [
     aadhaarMasked: "XXXX-XXXX-2291",
     eshramNumber: "UAN-8812-4491-3312",
     experience: "12 years",
+    vehicleType: "car",
+    vehicleNumber: "DL 03 VW 2291",
+    phone: "+91 98234 56789",
   },
 ];
 
@@ -484,8 +600,154 @@ export const TESTIMONIALS = [
 ];
 
 export const BOOKINGS_DATA = [
-  { id: 1, txnId: "TXN_SS_2026_94810214", icon: "🔧", name: "Rajesh Kumar", service: "Plumbing", date: "Today, 4:00 PM", amount: "₹760", workerShare: "₹699", coopFee: "₹61", status: "upcoming", paymentMethod: "UPI (Google Pay)" },
-  { id: 2, txnId: "TXN_SS_2026_88129041", icon: "📚", name: "Priya Sharma", service: "Tuition — Maths", date: "Yesterday, 5:30 PM", amount: "₹700", workerShare: "₹644", coopFee: "₹56", status: "done", paymentMethod: "RuPay Debit Card" },
-  { id: 3, txnId: "TXN_SS_2026_77192034", icon: "🧹", name: "Cleaning Team", service: "Deep Cleaning", date: "2 days ago", amount: "₹1,200", workerShare: "₹1,104", coopFee: "₹96", status: "done", paymentMethod: "Sahayog Escrow" },
-  { id: 4, txnId: "TXN_SS_2026_66201948", icon: "⚡", name: "Mohammed Salim", service: "Electrical Work", date: "Sep 8, 11:00 AM", amount: "₹540", workerShare: "₹497", coopFee: "₹43", status: "pending", paymentMethod: "Net Banking (SBI)" },
+  {
+    id: 1,
+    txnId: "TXN_SS_2026_94810214",
+    icon: "🔧",
+    name: "Rajesh Kumar",
+    service: "Plumbing",
+    date: "Today, 4:00 PM",
+    amount: "₹760",
+    workerShare: "₹699",
+    coopFee: "₹61",
+    status: "upcoming",
+    paymentMethod: "UPI (Google Pay)",
+    providerId: 1,
+    address: "H.No 14, Karol Bagh, Central Delhi",
+    pin: "4821",
+    liveTrackingAvailable: true,
+  },
+  {
+    id: 2,
+    txnId: "TXN_SS_2026_88129041",
+    icon: "📚",
+    name: "Priya Sharma",
+    service: "Tuition — Maths",
+    date: "Yesterday, 5:30 PM",
+    amount: "₹700",
+    workerShare: "₹644",
+    coopFee: "₹56",
+    status: "done",
+    paymentMethod: "RuPay Debit Card",
+    providerId: 2,
+    address: "Lajpat Nagar IV, South Delhi",
+    pin: "9102",
+    liveTrackingAvailable: false,
+  },
+  {
+    id: 3,
+    txnId: "TXN_SS_2026_77192034",
+    icon: "🧹",
+    name: "Cleaning Team",
+    service: "Deep Cleaning",
+    date: "2 days ago",
+    amount: "₹1,200",
+    workerShare: "₹1,104",
+    coopFee: "₹96",
+    status: "done",
+    paymentMethod: "Sahayog Escrow",
+    providerId: 9,
+    address: "Mayur Vihar Phase 1, East Delhi",
+    pin: "7741",
+    liveTrackingAvailable: false,
+  },
+  {
+    id: 4,
+    txnId: "TXN_SS_2026_66201948",
+    icon: "⚡",
+    name: "Mohammed Salim",
+    service: "Electrical Work",
+    date: "Sep 8, 11:00 AM",
+    amount: "₹540",
+    workerShare: "₹497",
+    coopFee: "₹43",
+    status: "pending",
+    paymentMethod: "Net Banking (SBI)",
+    providerId: 3,
+    address: "Chandni Chowk, Central Delhi",
+    pin: "3819",
+    liveTrackingAvailable: false,
+  },
 ];
+
+// =============================================
+// GEOLOCATION CALCULATION UTILITIES
+// =============================================
+
+/**
+ * Calculates Great-Circle distance using Haversine formula in kilometers
+ */
+export function calculateDistance(lat1, lon1, lat2, lon2) {
+  if (!lat1 || !lon1 || !lat2 || !lon2) return 2.1;
+  const R = 6371; // Earth radius in km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c;
+  return parseFloat(d.toFixed(1));
+}
+
+/**
+ * Calculates Estimated Time of Arrival (ETA) in minutes
+ */
+export function calculateETA(distanceKm, speedKmh = 24) {
+  if (distanceKm <= 0.05) return 1;
+  // Add 2 min buffer for city traffic and signals
+  const travelMins = Math.round((distanceKm / speedKmh) * 60) + 2;
+  return Math.max(1, travelMins);
+}
+
+/**
+ * Format distance nicely (e.g. 850 m or 2.4 km)
+ */
+export function formatDistance(distanceKm) {
+  if (distanceKm < 1) {
+    return `${Math.round(distanceKm * 1000)} m`;
+  }
+  return `${distanceKm.toFixed(1)} km`;
+}
+
+/**
+ * Generates realistic route waypoints between two coordinates
+ * Creates natural-looking turns simulating city road grid
+ */
+export function generateRouteWaypoints(start, end, steps = 30) {
+  const points = [];
+  if (!start || !end) return points;
+
+  // Create intermediate street corner bends
+  const mid1 = {
+    lat: start.lat + (end.lat - start.lat) * 0.35 + (Math.random() * 0.003 - 0.0015),
+    lng: start.lng + (end.lng - start.lng) * 0.15 + (Math.random() * 0.003 - 0.0015),
+  };
+
+  const mid2 = {
+    lat: start.lat + (end.lat - start.lat) * 0.7 + (Math.random() * 0.003 - 0.0015),
+    lng: start.lng + (end.lng - start.lng) * 0.65 + (Math.random() * 0.003 - 0.0015),
+  };
+
+  const corners = [start, mid1, mid2, end];
+  const totalSegments = corners.length - 1;
+  const pointsPerSegment = Math.floor(steps / totalSegments);
+
+  for (let s = 0; s < totalSegments; s++) {
+    const pA = corners[s];
+    const pB = corners[s + 1];
+    for (let i = 0; i < pointsPerSegment; i++) {
+      const t = i / pointsPerSegment;
+      points.push([
+        pA.lat + (pB.lat - pA.lat) * t,
+        pA.lng + (pB.lng - pA.lng) * t,
+      ]);
+    }
+  }
+  points.push([end.lat, end.lng]);
+  return points;
+}
+

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export function PaymentGatewayModal({ provider, bookingDetails, onClose, onPaymentSuccess }) {
+export function PaymentGatewayModal({ provider, bookingDetails, onClose, onPaymentSuccess, onOpenTracking }) {
   const [method, setMethod] = useState("upi"); // upi | card | netbanking | escrow | cash
   const [upiMode, setUpiMode] = useState("app"); // app | qr | id
   const [upiId, setUpiId] = useState("");
@@ -390,21 +390,43 @@ export function PaymentGatewayModal({ provider, bookingDetails, onClose, onPayme
                 </div>
               </div>
 
-              <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", flexWrap: "wrap" }}>
-                <button
-                  className="btn btn-outline"
-                  onClick={() => alert(`Receipt #${txnResult.txnId} downloaded successfully!`)}
-                  style={{ padding: "8px 14px", fontSize: "0.8rem", flex: 1, minWidth: "140px", justifyContent: "center" }}
-                >
-                  🧾 Tax Invoice
-                </button>
-                <button
-                  className="btn btn-primary"
-                  onClick={onClose}
-                  style={{ padding: "8px 18px", fontSize: "0.8rem", flex: 1, minWidth: "120px", justifyContent: "center" }}
-                >
-                  Done ✓
-                </button>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", maxWidth: "460px", margin: "0 auto" }}>
+                {onOpenTracking && (
+                  <button
+                    className="btn btn-primary btn-lg"
+                    onClick={() => {
+                      onClose();
+                      onOpenTracking(txnResult, provider);
+                    }}
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      padding: "12px 18px",
+                      fontSize: "0.95rem",
+                      fontWeight: 800,
+                      background: "linear-gradient(135deg, #0c831f, #047857)",
+                      boxShadow: "0 4px 14px rgba(12, 131, 31, 0.35)",
+                    }}
+                  >
+                    🛵 Track Provider Live on Map ➔
+                  </button>
+                )}
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <button
+                    className="btn btn-outline"
+                    onClick={() => alert(`Receipt #${txnResult.txnId} downloaded successfully!`)}
+                    style={{ padding: "8px 14px", fontSize: "0.8rem", flex: 1, justifyContent: "center" }}
+                  >
+                    🧾 Tax Invoice
+                  </button>
+                  <button
+                    className="btn btn-ghost"
+                    onClick={onClose}
+                    style={{ padding: "8px 18px", fontSize: "0.8rem", flex: 1, justifyContent: "center", border: "1px solid #cbd5e1" }}
+                  >
+                    Done ✓
+                  </button>
+                </div>
               </div>
             </div>
           )}
