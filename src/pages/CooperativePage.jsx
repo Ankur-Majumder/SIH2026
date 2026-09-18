@@ -3,7 +3,7 @@ import React from "react";
 export function CooperativePage({ onNav }) {
   const principles = [
     { n: 1, title: "Democratic Member Control", desc: "One member, one vote. Every registered cooperative member participates in decisions about platform policies, welfare fees, and regional leadership." },
-    { n: 2, title: "Fair Wage Distribution (92%)", desc: "Only a flat 8% cooperative fee is deducted per booking. 92% is paid directly to the worker — far above the 25-40% extracted by corporate aggregators." },
+    { n: 2, title: "Fair Wage Distribution (85%)", desc: "A flat 15% website maintenance & upkeep fee is allocated. 85% is paid directly to the worker — far above the 25-40% cuts extracted by corporate aggregators." },
     { n: 3, title: "DigiLocker Trust & Accountability", desc: "Workers and household members are officially verified via DigiLocker Aadhaar e-KYC, providing safety, transparency, and government-grade trust." },
     { n: 4, title: "Government Regulatory Backing", desc: "Registered under the Multi-State Cooperative Societies Act and guided by the Ministry of Cooperation, ensuring full compliance and community asset protection." },
   ];
@@ -44,8 +44,8 @@ export function CooperativePage({ onNav }) {
 
           <div className="coop-visual">
             <div className="coop-highlight">
-              <div className="coop-percent">92%</div>
-              <div className="coop-percent-label">of every booking payment goes directly to the worker</div>
+              <div className="coop-percent">85%</div>
+              <div className="coop-percent-label">of every booking payment goes directly to the worker (15% maintenance)</div>
             </div>
             {[
               { icon: "🏛️", iconClass: "icon-saffron", title: "Ministry of Cooperation", desc: "Registered & supported under MSCS Act, Govt. of India" },

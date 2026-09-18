@@ -221,7 +221,7 @@ export function NearbyRadarMap({ onBook, onTrackProvider, selectedCategoryId, on
                 <div style={{ fontSize: "1.15rem", fontWeight: 900, color: "#0c831f" }}>
                   {selectedProvider.price}
                 </div>
-                <div style={{ fontSize: "0.62rem", color: "#64748b" }}>92% direct payout</div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b" }}>85% direct payout</div>
               </div>
             </div>
 

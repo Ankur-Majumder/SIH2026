@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PROVIDERS } from "../data/mockData";
 
-export function ProvidersPage({ onBook }) {
+export function ProvidersPage({ onBook, onTrackProvider }) {
   const [filter, setFilter] = useState("all");
 
   const filtered = PROVIDERS.filter((p) => {
@@ -73,12 +73,21 @@ export function ProvidersPage({ onBook }) {
                 <div className="pcard-tags">
                   {p.tags.map((t) => <span className="tag" key={t}>{t}</span>)}
                 </div>
-                <div style={{ display: "flex", gap: "0.5rem" }}>
-                  <div style={{ flex: 1, textAlign: "center", padding: "6px 0", borderRadius: "var(--radius-sm)", background: "var(--bg-card)", fontSize: "0.8rem", fontWeight: 700, color: "var(--emerald-400)" }}>
-                    {p.price}
-                  </div>
-                  <button className="btn btn-primary" style={{ flex: 2, justifyContent: "center", padding: "8px 16px", borderRadius: "var(--radius-sm)", fontSize: "0.82rem" }} onClick={() => onBook(p)}>
-                    Book with Escrow →
+                <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+                  <button
+                    className="btn btn-outline"
+                    style={{ flex: 1, justifyContent: "center", padding: "8px 10px", borderRadius: "var(--radius-sm)", fontSize: "0.78rem" }}
+                    onClick={() => onTrackProvider && onTrackProvider(p)}
+                    title="View worker's exact current location on map"
+                  >
+                    🗺️ Track on Map
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    style={{ flex: 1.5, justifyContent: "center", padding: "8px 12px", borderRadius: "var(--radius-sm)", fontSize: "0.82rem" }}
+                    onClick={() => onBook(p)}
+                  >
+                    Book ({p.price}) →
                   </button>
                 </div>
               </div>

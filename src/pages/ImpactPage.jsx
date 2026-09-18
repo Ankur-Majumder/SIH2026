@@ -16,20 +16,20 @@ export function ImpactPage({ onNav, onOpenLabourReg }) {
       <div className="section-inner" style={{ padding: "2rem 1.5rem 4rem" }}>
         <div className="impact-grid">
           <div className="impact-card-highlight">
-            <div className="impact-big">92%</div>
+            <div className="impact-big">85%</div>
             <div className="impact-label">Worker Earnings Share</div>
-            <div className="impact-sub">vs ~60-65% on corporate apps</div>
+            <div className="impact-sub">vs ~60-65% on corporate apps · 15% platform maintenance fee</div>
             <div className="impact-bar-wrap" style={{ marginTop: "1.5rem" }}>
               <div className="impact-bar-row-label">
                 <span>SahayogSeva</span>
-                <span style={{ color: "var(--emerald-500)", fontWeight: 800 }}>92%</span>
+                <span style={{ color: "var(--emerald-500)", fontWeight: 800 }}>85% (Direct to Worker)</span>
               </div>
               <div className="impact-bar">
-                <div className="impact-bar-fill" style={{ width: "92%", background: "#0c831f" }} />
+                <div className="impact-bar-fill" style={{ width: "85%", background: "#0c831f" }} />
               </div>
               <div className="impact-bar-row-label" style={{ marginTop: "0.75rem" }}>
                 <span>Corporate platforms</span>
-                <span style={{ color: "#ef4444", fontWeight: 800 }}>~65%</span>
+                <span style={{ color: "#ef4444", fontWeight: 800 }}>~60-65%</span>
               </div>
               <div className="impact-bar">
                 <div className="impact-bar-fill" style={{ width: "65%", background: "#ef4444" }} />

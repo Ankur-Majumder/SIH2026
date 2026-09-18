@@ -16,6 +16,9 @@ import { ReceiptModal } from "./src/components/ReceiptModal";
 import { LabourIdCardModal } from "./src/components/LabourIdCardModal";
 import { LiveTrackingModal } from "./src/components/LiveTrackingModal";
 import { FloatingTrackerPill } from "./src/components/FloatingTrackerPill";
+import { VoiceRecorderWidget } from "./src/components/VoiceRecorderWidget";
+import { JobVerificationModal } from "./src/components/JobVerificationModal";
+import { WorkerLocationModal } from "./src/components/WorkerLocationModal";
 
 
 function GovtTopBar({ lang, setLang }) {
@@ -23,22 +26,36 @@ function GovtTopBar({ lang, setLang }) {
     <div className="govt-top-bar">
       <div className="india-top-stripe" />
       <div className="govt-top-inner">
-        <div className="govt-top-left">
-          <span className="ashoka-emblem">🏛️</span>
-          <div className="govt-title-text">
-            <strong>भारत सरकार | GOVERNMENT OF INDIA</strong>
-            <span>सहकारिता मंत्रालय | MINISTRY OF COOPERATION</span>
-          </div>
-        </div>
-        <div className="govt-top-right">
+        <div className="govt-top-right" style={{ marginLeft: "auto" }}>
           <span className="top-helpline">📞 Helpline: 1800-11-2025</span>
           <div className="govt-acc-btn">Screen Reader</div>
           <div className="govt-acc-btn">A-</div>
           <div className="govt-acc-btn active">A</div>
           <div className="govt-acc-btn">A+</div>
-          <button className="lang-toggle-btn" onClick={() => setLang(lang === "hi" ? "en" : "hi")}>
-            🌐 {lang === "hi" ? "English" : "हिंदी"}
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+            <span style={{ fontSize: "0.78rem" }}>🌐</span>
+            <select
+              className="top-lang-select"
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              style={{
+                background: "#ffffff",
+                color: "#0f172a",
+                border: "1px solid #cbd5e1",
+                borderRadius: "6px",
+                fontSize: "0.76rem",
+                padding: "2px 6px",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              <option value="en">English (Default)</option>
+              <option value="hi">हिन्दी (Hindi)</option>
+              <option value="bn">বাংলা (Bengali)</option>
+              <option value="mr">मराठी (Marathi)</option>
+              <option value="ta">தமிழ் (Tamil)</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -51,24 +68,93 @@ function GovtTickerBar({ lang }) {
       <div className="ticker-badge">📢 Notice</div>
       <div className="ticker-text">
         {lang === "hi"
-          ? "सहकारिता मंत्रालय, भारत सरकार द्वारा पंजीकृत राष्ट्रीय बहु-राज्य सहकारी मंच। डिजीलॉकर आधार प्रमाणीकरण एवं 92% सीधा श्रमिक भुगतान।"
-          : "Registered National Multi-State Cooperative Platform under Ministry of Cooperation, Govt. of India. DigiLocker Aadhaar e-KYC Enabled & 92% Direct Worker Payout."}
+          ? "सहकारिता मंत्रालय, भारत सरकार द्वारा पंजीकृत राष्ट्रीय बहु-राज्य सहकारी मंच। डिजीलॉकर आधार प्रमाणीकरण एवं 85% सीधा श्रमिक भुगतान।"
+          : "Registered National Multi-State Cooperative Platform under Ministry of Cooperation, Govt. of India. DigiLocker Aadhaar e-KYC Enabled & 85% Direct Worker Payout."}
       </div>
     </div>
   );
 }
 
-function Logo({ lang }) {
+function SahayogCrestSvg({ size = 42 }) {
   return (
-    <div className="logo">
-      <div className="logo-emblem">
-        <span className="logo-icon">स</span>
-        <span className="emblem-sub">सत्यमेव जयते</span>
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+      <defs>
+        <linearGradient id="govCrestGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#064e3b" />
+          <stop offset="50%" stopColor="#047857" />
+          <stop offset="100%" stopColor="#0c831f" />
+        </linearGradient>
+        <linearGradient id="govRingGrad" x1="0" y1="0" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#f59e0b" />
+          <stop offset="50%" stopColor="#d97706" />
+          <stop offset="100%" stopColor="#f59e0b" />
+        </linearGradient>
+      </defs>
+      {/* Outer Golden Notched Border */}
+      <circle cx="50" cy="50" r="48" stroke="url(#govRingGrad)" strokeWidth="2.8" strokeDasharray="4 2" />
+      <circle cx="50" cy="50" r="44" fill="url(#govCrestGrad)" />
+      <circle cx="50" cy="50" r="39" stroke="#6ee7b7" strokeWidth="1" strokeOpacity="0.5" strokeDasharray="2 2" />
+      
+      {/* White Inner Disc */}
+      <circle cx="50" cy="50" r="28.5" fill="#ffffff" />
+      <circle cx="50" cy="50" r="28.5" stroke="#fef3c7" strokeWidth="1" />
+
+      {/* Compass/Emblem Points */}
+      <path d="M50 15V20" stroke="#fcd34d" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M50 80V85" stroke="#fcd34d" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M15 50H20" stroke="#fcd34d" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M80 50H85" stroke="#fcd34d" strokeWidth="2.5" strokeLinecap="round" />
+
+      {/* English 'S' Monogram */}
+      <text
+        x="50"
+        y="60"
+        textAnchor="middle"
+        fontSize="28"
+        fontWeight="900"
+        fill="#064e3b"
+        fontFamily="'Outfit', 'Inter', sans-serif"
+      >
+        S
+      </text>
+
+      {/* Tricolor Accents */}
+      <circle cx="34" cy="50" r="3" fill="#ea580c" />
+      <circle cx="66" cy="50" r="3" fill="#16a34a" />
+      <circle cx="50" cy="27.5" r="2.8" fill="#1d4ed8" />
+
+      {/* Cooperative Wheat Laurel Wreath Arch */}
+      <path
+        d="M23 60C26 73 37 81 50 81C63 81 74 73 77 60"
+        stroke="#f59e0b"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+function Logo({ lang, inverted = false }) {
+  return (
+    <div className={`govt-master-logo ${inverted ? "govt-logo-inverted" : ""}`}>
+      {/* Cooperative Official Portal Seal */}
+      <div className="govt-crest-container" title="SahayogSeva - Ministry of Cooperation, Govt. of India">
+        <SahayogCrestSvg size={42} />
       </div>
-      <div>
-        <div className="logo-text">Sahayog<span>Seva</span></div>
-        <div className="logo-subtext">
-          {lang === "hi" ? "राष्ट्रीय सहकारिता डिजिटल पोर्टल" : "National Cooperative Platform"}
+
+      {/* Official Government Department Hierarchy & Title */}
+      <div className="govt-brand-details">
+        <div className="govt-hierarchy-top">
+          <span className="gov-txt-en">GOVERNMENT OF INDIA</span>
+        </div>
+
+        <div className="govt-brand-main-title">
+          <span className="brand-english">Sahayog<span className="brand-english-green">Seva</span></span>
+        </div>
+
+        <div className="govt-hierarchy-bottom">
+          <span className="dept-tag">Ministry of Cooperation</span>
         </div>
       </div>
     </div>
@@ -288,31 +374,54 @@ function AuthModal({ type, onClose, onSwitch, onOpenLabourReg }) {
 }
 
 
-function BookingModal({ provider, onClose, onProceedToPayment }) {
+function BookingModal({ provider, onClose, onProceedToPayment, lang = "en" }) {
   const slots = ["Today · 2:00 PM", "Today · 4:00 PM", "Tomorrow · 9:00 AM", "Tomorrow · 11:30 AM"];
   const [selectedSlot, setSelectedSlot] = useState(0);
   const [address, setAddress] = useState("H.No 14, Karol Bagh, Central Delhi");
   const [notes, setNotes] = useState("");
+  
+  // Safety & Privacy Media Upload State
+  const defaultProblemImg = "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&auto=format&fit=crop&q=60";
+  const [problemImage, setProblemImage] = useState(defaultProblemImg);
+  const [mediaType, setMediaType] = useState("image"); // 'image' | 'video'
+  const [voiceData, setVoiceData] = useState({
+    transcript: "",
+    hasAudio: false,
+    duration: "0:00",
+  });
+  const [useVoiceMode, setUseVoiceMode] = useState(true);
 
-  const priceRaw = parseInt(provider?.price?.replace(/\D/g, "") || "380", 10);
-  const workerShare = Math.round(priceRaw * 0.92);
+  const priceRaw = parseInt(provider?.price?.toString().replace(/\D/g, "") || "450", 10);
+  const workerShare = Math.round(priceRaw * 0.85);
   const coopFee = priceRaw - workerShare;
+
+  const handleVoiceRecorded = (res) => {
+    setVoiceData(res);
+    if (res.transcript) {
+      setNotes((prev) => (prev ? `${prev} (Voice: ${res.transcript})` : res.transcript));
+    }
+  };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal booking-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="modal booking-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: "640px" }}>
         <div className="india-bar" />
         <div className="modal-header" style={{ padding: "0.85rem 1.1rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ fontSize: "1.2rem" }}>📅</span>
+            <span style={{ fontSize: "1.2rem" }}>🛡️</span>
             <div>
-              <div className="modal-title" style={{ fontSize: "1rem", fontWeight: 800 }}>Book Cooperative Service</div>
-              <div style={{ fontSize: "0.68rem", color: "#64748b" }}>100% Escrow Protected · 0% Middleman</div>
+              <div className="modal-title" style={{ fontSize: "1rem", fontWeight: 800 }}>
+                Cooperative Safety Booking & Problem Diagnosis
+              </div>
+              <div style={{ fontSize: "0.68rem", color: "#64748b" }}>
+                100% Escrow Protected · Media & Voice Verification Included
+              </div>
             </div>
           </div>
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
-        <div className="modal-body booking-modal-body">
+
+        <div className="modal-body booking-modal-body" style={{ maxHeight: "80vh", overflowY: "auto" }}>
           {/* Provider Card Header */}
           <div className="booking-provider-card">
             <div className={`avatar ${provider.avatar}`} style={{ width: 44, height: 44, minWidth: 44, borderRadius: 10, fontSize: "0.95rem" }}>
@@ -323,7 +432,7 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
               <div style={{ fontWeight: 800, color: "#111827", fontSize: "0.92rem", display: "flex", alignItems: "center", gap: "0.35rem", flexWrap: "wrap" }}>
                 <span>{provider.name}</span>
                 <span style={{ fontSize: "0.58rem", background: "#e0f2fe", color: "#0369a1", padding: "1px 5px", borderRadius: "4px", fontWeight: 700 }}>
-                  DigiLocker
+                  DigiLocker Verified
                 </span>
               </div>
               <div style={{ fontSize: "0.75rem", color: "#0c831f", fontWeight: 700 }}>{provider.role}</div>
@@ -331,12 +440,99 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
             </div>
             <div style={{ textAlign: "right", flexShrink: 0 }}>
               <div style={{ fontWeight: 800, color: "#0c831f", fontSize: "1.05rem" }}>{provider.price}</div>
-              <div style={{ fontSize: "0.62rem", color: "#6b7280" }}>Reg: {provider.labourRegNo || "SS-DL-2026"}</div>
+              <div style={{ fontSize: "0.62rem", color: "#6b7280" }}>
+                Full Day Charge
+              </div>
             </div>
           </div>
 
+          {/* STEP 1: SAFETY PROBLEM MEDIA ATTACHMENT */}
+          <div className="booking-section-box">
+            <div className="booking-section-title">
+              <span>📷 Step 1: Upload Photo or Video of the Problem</span>
+              <span className="required-badge">*Required for Safety</span>
+            </div>
+            <p style={{ fontSize: "0.74rem", color: "#475569", margin: "0 0 0.6rem 0", lineHeight: 1.4 }}>
+              Take a clear picture or video of the issue. The worker will verify this on-site before starting work to prevent fraud and ensure exact tools are brought.
+            </p>
+
+            <div className="problem-upload-container">
+              <div className="problem-preview-card">
+                <img src={problemImage} alt="Problem preview" className="problem-preview-img" />
+                <div className="problem-preview-badge">Attached Issue Media</div>
+              </div>
+
+              <div className="problem-upload-actions">
+                <label className="btn btn-outline problem-file-btn">
+                  📸 Take / Upload Photo
+                  <input
+                    type="file"
+                    accept="image/*,video/*"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      if (e.target.files?.[0]) {
+                        const file = e.target.files[0];
+                        setProblemImage(URL.createObjectURL(file));
+                        if (file.type.startsWith("video")) setMediaType("video");
+                        else setMediaType("image");
+                      }
+                    }}
+                  />
+                </label>
+
+                <div style={{ fontSize: "0.7rem", color: "#64748b", margin: "0.2rem 0" }}>Or select sample issue:</div>
+                <div style={{ display: "flex", gap: "0.3rem", flexWrap: "wrap" }}>
+                  {[
+                    { label: "💧 Pipe Leakage", url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&auto=format&fit=crop&q=60" },
+                    { label: "🌿 Garden Trimming", url: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=500&auto=format&fit=crop&q=60" },
+                    { label: "⚡ Switchboard Defect", url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&auto=format&fit=crop&q=60" },
+                    { label: "🧹 Deep Clean Area", url: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&auto=format&fit=crop&q=60" },
+                  ].map((preset) => (
+                    <button
+                      key={preset.label}
+                      type="button"
+                      className="preset-chip-btn"
+                      onClick={() => setProblemImage(preset.url)}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 2: VOICE FIRST ACCESSIBLE EXPLANATION */}
+          <div className="booking-section-box">
+            <div className="booking-section-title">
+              <span>🎙️ Step 2: Explain Problem via Voice or Text</span>
+              <span className="voice-inclusive-pill">♿ Voice-First Accessibility</span>
+            </div>
+
+            <VoiceRecorderWidget
+              onVoiceRecorded={handleVoiceRecorded}
+              initialTranscript={notes}
+              lang={lang}
+            />
+
+            <div className="form-group" style={{ marginTop: "0.75rem", marginBottom: "0" }}>
+              <label className="form-label" style={{ fontSize: "0.75rem" }}>
+                Problem Notes (Auto-filled by voice, or type manually):
+              </label>
+              <textarea
+                className="form-input"
+                rows="2"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="e.g. Kitchen tap leaking, need urgent fix and pipe joint replacement..."
+                style={{ resize: "vertical", fontSize: "0.82rem", padding: "8px 10px" }}
+              />
+            </div>
+          </div>
+
+          {/* STEP 3: ADDRESS & ARRIVAL SLOT */}
           <div className="form-group" style={{ marginBottom: "0.85rem" }}>
-            <label className="form-label" style={{ fontSize: "0.78rem" }}>Service Address</label>
+            <label className="form-label" style={{ fontSize: "0.78rem" }}>Service Destination Address</label>
             <input
               type="text"
               className="form-input"
@@ -344,18 +540,6 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
               onChange={(e) => setAddress(e.target.value)}
               placeholder="House / Flat no., Street, Landmark, Area"
               style={{ fontSize: "0.85rem", padding: "8px 12px" }}
-            />
-          </div>
-
-          <div className="form-group" style={{ marginBottom: "0.85rem" }}>
-            <label className="form-label" style={{ fontSize: "0.78rem" }}>Describe the work</label>
-            <textarea
-              className="form-input"
-              rows="2"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="e.g. Kitchen tap leaking, need urgent fix..."
-              style={{ resize: "vertical", fontSize: "0.85rem", padding: "8px 12px" }}
             />
           </div>
 
@@ -378,13 +562,13 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
           {/* Transparent Split Preview */}
           <div className="booking-split-card">
             <div style={{ fontWeight: 800, marginBottom: "0.25rem", color: "#0c831f", display: "flex", justifyContent: "space-between" }}>
-              <span>🤝 Cooperative Pricing Split</span>
+              <span>🤝 Cooperative Pricing Split (Per Full Day)</span>
               <span>Total: ₹{priceRaw}</span>
             </div>
             <div style={{ color: "#166534", lineHeight: 1.4, fontSize: "0.73rem" }}>
-              • <strong>₹{workerShare} (92%)</strong> goes directly to {provider.name}'s verified bank account.
+              • <strong>₹{workerShare} (85%)</strong> goes directly to {provider.name}'s verified bank account.
               <br />
-              • <strong>₹{coopFee} (8%)</strong> flat co-op welfare fee funds insurance & upkeep.
+              • <strong>₹{coopFee} (15%)</strong> flat website maintenance fee funds platform upkeep.
             </div>
           </div>
         </div>
@@ -399,8 +583,16 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
               onProceedToPayment({
                 slot: slots[selectedSlot],
                 address,
-                notes,
+                notes: notes || "Water leakage / household repair requested.",
                 amount: priceRaw,
+                customerProblem: {
+                  type: mediaType,
+                  photoUrl: problemImage,
+                  description: notes || "Kitchen pipeline repair",
+                  hasVoiceNote: voiceData.hasAudio,
+                  voiceDuration: voiceData.duration,
+                  voiceTranscript: voiceData.transcript,
+                },
               });
             }}
           >
@@ -413,7 +605,8 @@ function BookingModal({ provider, onClose, onProceedToPayment }) {
 }
 
 
-function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard, onOpenTracking }) {
+
+function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard, onOpenTracking, onOpenVerification }) {
   const [activeTab, setActiveTab] = useState("overview");
   const [mode, setMode] = useState("household");
 
@@ -486,7 +679,7 @@ function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard, onOpenTracking
               <div className="dash-panel">
                 <div className="dash-panel-header">
                   <div className="dash-panel-title">Recent Transactions & Invoices</div>
-                  <span style={{ fontSize: "0.75rem", color: "#0c831f", fontWeight: 700 }}>92% Direct Worker Share</span>
+                  <span style={{ fontSize: "0.75rem", color: "#0c831f", fontWeight: 700 }}>85% Direct Worker Share</span>
                 </div>
                 {BOOKINGS_DATA.map((b) => (
                   <div className="booking-row" key={b.id}>
@@ -564,7 +757,7 @@ function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard, onOpenTracking
           <>
             <div className="dash-grid">
               {[
-                { icon: "💰", iconClass: "icon-green", val: "₹13,400", key: "Direct Earnings (Sep)", trend: "92% direct payout", trendClass: "trend-up" },
+                { icon: "💰", iconClass: "icon-green", val: "₹13,400", key: "Direct Earnings (Sep)", trend: "85% direct payout", trendClass: "trend-up" },
                 { icon: "📋", iconClass: "icon-blue", val: "36", key: "Jobs This Month", trend: "+8 vs Aug", trendClass: "trend-up" },
                 { icon: "🪪", iconClass: "icon-saffron", val: "Verified", key: "DigiLocker Aadhaar e-KYC", trend: "Reg: SS-DL-2026", trendClass: "trend-up" },
                 { icon: "🏅", iconClass: "icon-purple", val: "Grade A", key: "Co-op Rank", trend: "Karol Bagh Chapter", trendClass: "trend-up" },
@@ -613,8 +806,8 @@ function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard, onOpenTracking
                     <span className="status-pill status-upcoming">2 scheduled</span>
                   </div>
                   {[
-                    { icon: "🔧", client: "Ananya Singh", service: "Kitchen pipe repair", time: "Today, 4:00 PM", addr: "Karol Bagh", amt: "₹760", share: "₹699.20 (92%)" },
-                    { icon: "🔧", client: "Ramesh Gupta", service: "Bathroom leakage", time: "Tomorrow, 10:00 AM", addr: "Paharganj", amt: "₹380", share: "₹349.60 (92%)" },
+                    { icon: "🔧", client: "Ananya Singh", service: "Kitchen pipe repair", time: "Today, 4:00 PM", addr: "Karol Bagh", amt: "₹760", share: "₹646 (85%)" },
+                    { icon: "🔧", client: "Ramesh Gupta", service: "Bathroom leakage", time: "Tomorrow, 10:00 AM", addr: "Paharganj", amt: "₹380", share: "₹323 (85%)" },
                   ].map((j, i) => (
                     <div className="booking-row" key={i}>
                       <div className="booking-service-icon">{j.icon}</div>
@@ -626,8 +819,31 @@ function DashboardView({ onBack, onOpenReceipt, onOpenLabourCard, onOpenTracking
                         <div className="booking-amount" style={{ color: "#0c831f" }}>Payout: {j.share}</div>
                         <div className="booking-date">{j.time}</div>
                       </div>
-                      <button className="btn btn-primary" style={{ padding: "4px 12px", fontSize: "0.72rem", borderRadius: "6px" }}>
-                        Ask PIN & Complete
+                      <button
+                        className="btn btn-primary"
+                        style={{ padding: "4px 12px", fontSize: "0.72rem", borderRadius: "6px" }}
+                        onClick={() => {
+                          if (onOpenVerification) {
+                            onOpenVerification({
+                              id: 1,
+                              txnId: "TXN_SS_2026_94810214",
+                              name: j.client,
+                              service: j.service,
+                              amount: j.amt,
+                              workerShare: j.share,
+                              address: `${j.addr}, Delhi`,
+                              customerProblem: {
+                                type: "image",
+                                photoUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&auto=format&fit=crop&q=60",
+                                description: j.service,
+                                hasVoiceNote: true,
+                                voiceTranscript: "नमस्ते, मुख्य पानी की पाइप में लीकेज है, कृपया नया जॉइंट साथ लाएं।",
+                              },
+                            });
+                          }
+                        }}
+                      >
+                        📸 Upload Photos & Verify
                       </button>
                     </div>
                   ))}
@@ -688,7 +904,7 @@ function Footer({ onNav }) {
             <Logo />
             <p>
               India's first government-backed cooperative gig platform under the Ministry of Cooperation.
-              Fair 92% wages, DigiLocker Aadhaar e-KYC verification, and transparent community governance.
+              Fair 85% wages, DigiLocker Aadhaar e-KYC verification, and transparent community governance.
             </p>
             <div className="govt-badge">
               🏛️ Ministry of Cooperation · Govt. of India
@@ -752,7 +968,9 @@ function App() {
   
   // Geolocation & Live Route Tracking state
   const [activeTracking, setActiveTracking] = useState(null); // { booking, provider }
-  const [activeTransitBooking, setActiveTransitBooking] = useState(BOOKINGS_DATA[0]); // default active booking for quick demo
+  const [activeTransitBooking, setActiveTransitBooking] = useState(null); // set only after payment is completed
+  const [activeWorkerLocation, setActiveWorkerLocation] = useState(null); // Worker standby location modal state
+  const [activeVerification, setActiveVerification] = useState(null); // Worker on-site / completion photo modal
 
   const showNotice = useCallback((msg) => {
     setNotice(msg);
@@ -769,8 +987,8 @@ function App() {
       txnId: `TXN_SS_2026_${Math.floor(10000000 + Math.random() * 90000000)}`,
       name: prov.name,
       service: prov.role,
-      amount: parseInt(prov.price.replace(/\D/g, "") || "380"),
-      workerShare: Math.round(parseInt(prov.price.replace(/\D/g, "") || "380") * 0.92),
+      amount: parseInt(prov.price.replace(/\D/g, "") || "450"),
+      workerShare: Math.round(parseInt(prov.price.replace(/\D/g, "") || "450") * 0.85),
       pin: "4821",
       address: "H.No 14, Pusa Road, Karol Bagh, Central Delhi",
     };
@@ -786,7 +1004,7 @@ function App() {
   };
 
   const handlePaymentSuccess = (txn) => {
-    showNotice(`✅ Payment of ₹${txn.amount} successful! ₹${txn.workerShare} (92%) allocated to ${txn.providerName}.`);
+    showNotice(`✅ Payment of ₹${txn.amount} successful! ₹${txn.workerShare} (85%) allocated to ${txn.providerName}.`);
   };
 
   const handleLabourRegSuccess = (card) => {
@@ -820,6 +1038,30 @@ function App() {
         {activeReceipt && <ReceiptModal txn={activeReceipt} onClose={() => setActiveReceipt(null)} />}
         {activeLabourCard && <LabourIdCardModal card={activeLabourCard} onClose={() => setActiveLabourCard(null)} />}
         {labourRegOpen && <LabourRegistrationModal onClose={() => setLabourRegOpen(false)} onSuccess={handleLabourRegSuccess} />}
+        {activeWorkerLocation && (
+          <WorkerLocationModal
+            provider={activeWorkerLocation}
+            onClose={() => setActiveWorkerLocation(null)}
+            onBookNow={(p) => {
+              setActiveWorkerLocation(null);
+              handleBook(p);
+            }}
+          />
+        )}
+        {activeVerification && (
+          <JobVerificationModal
+            booking={activeVerification}
+            provider={PROVIDERS.find((p) => p.name === activeVerification.name) || PROVIDERS[0]}
+            onClose={() => setActiveVerification(null)}
+            onApproved={() => {
+              showNotice("✅ Initial problem photo verified and work authorized!");
+            }}
+            onCompleteJob={(b) => {
+              showNotice(`🎉 Work approved! Payout of ₹${b.workerShare} released.`);
+              setActiveVerification(null);
+            }}
+          />
+        )}
         {authModal && (
           <AuthModal
             type={authModal}
@@ -836,6 +1078,7 @@ function App() {
             onFinishJob={(b) => {
               showNotice(`🎉 Service completed! Payment of ₹${b.workerShare || 350} successfully released to ${b.name || "worker"}.`);
               setActiveTracking(null);
+              setActiveTransitBooking(null);
             }}
           />
         )}
@@ -844,6 +1087,7 @@ function App() {
           onOpenReceipt={(txn) => setActiveReceipt(txn)}
           onOpenLabourCard={(card) => setActiveLabourCard(card)}
           onOpenTracking={handleOpenTracking}
+          onOpenVerification={(booking) => setActiveVerification(booking)}
         />
         {!activeTracking && activeTransitBooking && (
           <FloatingTrackerPill
@@ -865,7 +1109,7 @@ function App() {
         return (
           <ServicesPage
             onBook={handleBook}
-            onTrackProvider={(p) => handleOpenTracking(null, p)}
+            onTrackProvider={(p) => setActiveWorkerLocation(p)}
             selectedCategoryId={selectedCategoryId}
             onSelectCategory={setSelectedCategoryId}
           />
@@ -883,7 +1127,7 @@ function App() {
             onBook={handleBook}
             onNav={handleNav}
             onSelectService={handleSelectService}
-            onTrackProvider={(p) => handleOpenTracking(null, p)}
+            onTrackProvider={(p) => setActiveWorkerLocation(p)}
           />
         );
     }
@@ -901,12 +1145,25 @@ function App() {
 
       {notice && <NoticeBanner message={notice} onClose={() => setNotice("")} />}
 
+      {/* Pre-Booking Worker Exact Location Standby Modal */}
+      {activeWorkerLocation && (
+        <WorkerLocationModal
+          provider={activeWorkerLocation}
+          onClose={() => setActiveWorkerLocation(null)}
+          onBookNow={(p) => {
+            setActiveWorkerLocation(null);
+            handleBook(p);
+          }}
+        />
+      )}
+
       {/* Booking Slot Selection Modal */}
       {bookingProvider && (
         <BookingModal
           provider={bookingProvider}
           onClose={() => setBookingProvider(null)}
           onProceedToPayment={handleProceedToPayment}
+          lang={lang}
         />
       )}
 
@@ -930,6 +1187,7 @@ function App() {
           onFinishJob={(b) => {
             showNotice(`🎉 Service completed! Payment of ₹${b.workerShare || 350} successfully released to ${b.name || "worker"}.`);
             setActiveTracking(null);
+            setActiveTransitBooking(null);
           }}
         />
       )}

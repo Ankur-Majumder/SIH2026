@@ -83,26 +83,26 @@ export function ServicesPage({ onBook, onTrackProvider, selectedCategoryId, onSe
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
             <div>
               <div className="section-label">Services Directory</div>
-              <div className="section-title">All Cooperative Service Categories</div>
+              <div className="section-title">Cooperative Skilled Workforce Near You</div>
               <div className="section-desc">
-                Select any service category to view verified cooperative providers near you. All members are DigiLocker Aadhaar verified with real-time distance and ETA calculated from your location.
+                View verified local professionals with affordable daily rates. All workers are DigiLocker Aadhaar verified with real-time GPS distance calculation and 85% direct wage payout.
               </div>
             </div>
 
-            <button
-              className={`btn btn-outline unified-gps-btn ${userLocation.isGps ? "gps-on" : ""}`}
-              onClick={handleUseRealGps}
-              title="Detect and update live distances from your device GPS"
-            >
-              {gpsLoading ? "⌛" : "🎯"} {userLocation.isGps ? "Real GPS Active" : "Use My Live GPS"}
-            </button>
+              <button
+                className={`btn btn-outline unified-gps-btn ${userLocation.isGps ? "gps-on" : ""}`}
+                onClick={handleUseRealGps}
+                title="Detect and update live distances from your device GPS"
+              >
+                {gpsLoading ? "⌛" : "🎯"} {userLocation.isGps ? "Real GPS Active" : "Locate Me"}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
       {/* Services Grid */}
       <div className="section-inner">
-        <div className="services-grid" style={{ marginTop: "1rem" }}>
+        <div className="services-grid" style={{ marginTop: "1.5rem" }}>
           {SERVICES.map((s) => (
             <button
               className={`service-card ${currentCatId === s.id ? "active" : ""}`}
@@ -115,7 +115,9 @@ export function ServicesPage({ onBook, onTrackProvider, selectedCategoryId, onSe
               <div className="service-content">
                 <div className="service-title">{s.title}</div>
                 <div className="service-text">{s.text}</div>
-                <div className="service-count">{s.count}</div>
+                <div className="service-count" style={{ color: "#0c831f", fontWeight: 700 }}>
+                  {s.defaultRate} · {s.count}
+                </div>
               </div>
               <div className="service-arrow">›</div>
             </button>
@@ -123,13 +125,13 @@ export function ServicesPage({ onBook, onTrackProvider, selectedCategoryId, onSe
         </div>
 
         {/* Providers Section on Same Page */}
-        <div id="providers-section" style={{ paddingTop: "3.5rem", marginTop: "2rem", borderTop: "1px solid var(--border)" }}>
+        <div id="providers-section" style={{ paddingTop: "3rem", marginTop: "2rem", borderTop: "1px solid var(--border)" }}>
           <div className="section-header">
             <div>
               <div className="section-label">Verified Local Workforce</div>
               <div className="section-title">Meet your community providers</div>
               <div className="section-desc">
-                Every professional is a co-op member with verified DigiLocker Aadhaar ID, live GPS map distance, and 92% direct wage payout.
+                Every professional is a co-op member with verified DigiLocker Aadhaar ID, live GPS map distance, and 85% direct wage payout.
               </div>
             </div>
 

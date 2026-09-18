@@ -7,6 +7,7 @@ import {
   formatDistance,
   generateRouteWaypoints,
 } from "../data/mockData";
+import { JobVerificationModal } from "./JobVerificationModal";
 
 export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
   // Co-op Worker info
@@ -14,7 +15,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
     id: 1,
     name: "Rajesh Kumar",
     role: "Master Plumber",
-    price: "₹380/hr",
+    price: "₹850/day",
     avatar: "avatar-blue",
     initials: "RK",
     lat: 28.6612,
@@ -26,6 +27,9 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
     rating: 4.9,
     reviews: 142,
   };
+
+  const bookingAmountRaw = parseInt(booking?.amount?.toString().replace(/\D/g, "") || targetProvider.price?.replace(/\D/g, "") || "850", 10);
+  const workerPayout = Math.round(bookingAmountRaw * 0.85);
 
   // User destination location state
   const [userLoc, setUserLoc] = useState({
@@ -41,18 +45,30 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
   const [simSpeed, setSimSpeed] = useState(1); // 1x, 2x, 5x
   const [currentDistance, setCurrentDistance] = useState(1.6);
   const [etaMins, setEtaMins] = useState(6);
-  const [activeTab, setActiveTab] = useState("tracking"); // tracking | chat | details
+  const [activeTab, setActiveTab] = useState("tracking"); // tracking | verification | chat | details
   const [showCallModal, setShowCallModal] = useState(false);
   const [showSosModal, setShowSosModal] = useState(false);
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [verificationModalStage, setVerificationModalStage] = useState("initial");
   const [gpsLoading, setGpsLoading] = useState(false);
   const [gpsError, setGpsError] = useState("");
   const [pinEntered, setPinEntered] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
 
+  // Verification State
+  const [initialIssueVerified, setInitialIssueVerified] = useState(false);
+  const [workerArrivalPhoto, setWorkerArrivalPhoto] = useState(booking?.workerArrivalPhoto || "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&auto=format&fit=crop&q=60");
+  const [workerFinalPhoto, setWorkerFinalPhoto] = useState(booking?.workerFinalPhoto || "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=500&auto=format&fit=crop&q=60");
+  const [jobInProgress, setJobInProgress] = useState(false);
+  const [finalWorkSubmitted, setFinalWorkSubmitted] = useState(false);
+
+  const customerPhoto = booking?.customerProblem?.photoUrl || "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&auto=format&fit=crop&q=60";
+  const customerVoiceTranscript = booking?.customerProblem?.voiceTranscript || "रसोई के सिंक के नीचे मुख्य पानी का पाइप काफी तेज़ी से टपक रहा है।";
+
   // Chat messages
   const [chatMessages, setChatMessages] = useState([
     { sender: "worker", text: "Namaste! I have accepted your cooperative service request and I am heading over.", time: "Just now" },
-    { sender: "system", text: "🔒 Escrow ₹" + (booking?.amount || 380) + " safely locked. Release 4-digit PIN only after service satisfaction.", time: "Just now" },
+    { sender: "system", text: `🔒 Escrow ₹${bookingAmountRaw} safely locked. Release funds only after inspecting final work.`, time: "Just now" },
   ]);
   const [inputMsg, setInputMsg] = useState("");
 
@@ -93,13 +109,11 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
 
     L.control.zoom({ position: "bottomright" }).addTo(map);
 
-    // OpenStreetMap CartoDB Positron / OSM tiles for clean modern UI
     L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
       attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',
       maxZoom: 19,
     }).addTo(map);
 
-    // Custom HTML Icons
     const createWorkerIcon = (vehicleType) => {
       const emoji = vehicleType === "car" ? "🚗" : vehicleType === "van" ? "🚐" : "🛵";
       return L.divIcon({
@@ -131,11 +145,9 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
       });
     };
 
-    // Add Markers
     const workerMarker = L.marker(start, { icon: createWorkerIcon(targetProvider.vehicleType) }).addTo(map);
     const userMarker = L.marker(end, { icon: createUserIcon() }).addTo(map);
 
-    // Route Polyline (Full path)
     const polyline = L.polyline(waypointsRef.current, {
       color: "#0c831f",
       weight: 5,
@@ -144,7 +156,6 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
       lineCap: "round",
     }).addTo(map);
 
-    // Travelled Polyline (Completed portion in gray/muted)
     const travelledPolyline = L.polyline([], {
       color: "#94a3b8",
       weight: 4,
@@ -191,7 +202,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
       lastTime = currentTime;
 
       if (isPlaying && progress < 1) {
-        const stepRate = 0.02 * simSpeed; // Speed of progression
+        const stepRate = 0.02 * simSpeed;
         setProgress((prev) => {
           const next = Math.min(1, prev + stepRate * delta);
           return next;
@@ -216,13 +227,11 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
     if (currentPoint && workerMarkerRef.current) {
       workerMarkerRef.current.setLatLng(currentPoint);
 
-      // Update travelled polyline
       if (travelledPolylineRef.current) {
         const travelled = waypoints.slice(0, currentIndex + 1);
         travelledPolylineRef.current.setLatLngs(travelled);
       }
 
-      // Calculate remaining distance
       const remainingDist = calculateDistance(currentPoint[0], currentPoint[1], userLoc.lat, userLoc.lng);
       setCurrentDistance(remainingDist);
       setEtaMins(calculateETA(remainingDist));
@@ -248,7 +257,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
           address: `Live GPS: ${latitude.toFixed(4)}° N, ${longitude.toFixed(4)}° E`,
           isGps: true,
         });
-        setProgress(0.05); // reset tracker to start from provider to user's real GPS
+        setProgress(0.05);
       },
       (err) => {
         setGpsLoading(false);
@@ -258,14 +267,12 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
     );
   };
 
-  // Recenter Map
   const handleRecenter = () => {
     if (mapInstanceRef.current && polylineRef.current) {
       mapInstanceRef.current.fitBounds(polylineRef.current.getBounds(), { padding: [50, 50] });
     }
   };
 
-  // Focus on Moving Worker
   const handleFocusWorker = () => {
     if (mapInstanceRef.current && workerMarkerRef.current) {
       const latlng = workerMarkerRef.current.getLatLng();
@@ -273,7 +280,6 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
     }
   };
 
-  // Send Chat Message
   const handleSendMessage = (e) => {
     e?.preventDefault();
     if (!inputMsg.trim()) return;
@@ -281,33 +287,37 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
     setChatMessages((prev) => [...prev, newMsg]);
     setInputMsg("");
 
-    // Worker auto-reply after 1.5s
     setTimeout(() => {
       const replies = [
         "Received! I am following the map route on my scooter.",
         "Got it, almost reaching your gate!",
-        "Yes, I have all the plumbing tools and spare parts ready.",
+        "Yes, I have all the tools and spare parts ready.",
       ];
       const randomReply = replies[Math.floor(Math.random() * replies.length)];
       setChatMessages((prev) => [...prev, { sender: "worker", text: randomReply, time: "Now" }]);
     }, 1500);
   };
 
-  // Status computation based on progress
-  let statusStage = 1;
+  // Status computation based on progress & verification stages
   let statusBadge = "On the way";
   let statusDesc = `${targetProvider.name} is navigating towards your address.`;
 
-  if (progress >= 0.98) {
-    statusStage = 4;
-    statusBadge = "Arrived at Doorstep";
-    statusDesc = `${targetProvider.name} has arrived at your address. Share the 4-digit PIN when job is completed.`;
+  if (isCompleted) {
+    statusBadge = "Work Completed & Paid";
+    statusDesc = `Service 100% finished. ₹${workerPayout} released to ${targetProvider.name}.`;
+  } else if (finalWorkSubmitted) {
+    statusBadge = "Work Done — Awaiting Sign-off";
+    statusDesc = `${targetProvider.name} has submitted final work proof. Please review and release escrow.`;
+  } else if (jobInProgress || initialIssueVerified) {
+    statusBadge = "Work In Progress";
+    statusDesc = `Initial problem verified by AI & Customer. ${targetProvider.name} is working now.`;
+  } else if (progress >= 0.98) {
+    statusBadge = "Arrived — Verification Required";
+    statusDesc = `${targetProvider.name} is at your doorstep. Compare problem photos to authorize work.`;
   } else if (progress >= 0.75) {
-    statusStage = 3;
     statusBadge = "Nearby (< 300m)";
     statusDesc = `${targetProvider.name} is just around the corner on Pusa Road.`;
   } else if (progress >= 0.25) {
-    statusStage = 2;
     statusBadge = "In Transit";
     statusDesc = `${targetProvider.name} is riding at ~24 km/h via Main Patel Road.`;
   }
@@ -334,8 +344,8 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
             <span className="live-pulse-dot" />
             <div>
               <div className="live-track-title">
-                <span>Live Cooperative Tracking</span>
-                <span className="live-tag-pill">Live GPS 📍</span>
+                <span>Live Cooperative Route & Verification</span>
+                <span className="live-tag-pill">GPS Live 📍</span>
               </div>
               <div className="live-track-sub">
                 Booking ID: <strong>{booking?.txnId || "TXN_SS_2026_94810214"}</strong> · 100% Escrow Protected
@@ -349,14 +359,14 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
           </div>
         </div>
 
-        {/* Swiggy Timeline Bar */}
+        {/* 5-Step Security Verification Timeline Bar */}
         <div className="swiggy-timeline">
           {[
-            { num: 1, title: "Order Placed", done: true },
-            { num: 2, title: "Escrow Locked", done: true },
-            { num: 3, title: "On The Way", done: progress >= 0.15, active: progress < 0.98 },
-            { num: 4, title: "Arrived", done: progress >= 0.98 },
-            { num: 5, title: "PIN Release", done: isCompleted },
+            { num: 1, title: "Booked", done: true },
+            { num: 2, title: "On The Way", done: progress >= 0.15, active: progress < 0.98 },
+            { num: 3, title: "Arrival & Photo Match", done: initialIssueVerified || progress >= 0.98, active: progress >= 0.98 && !initialIssueVerified },
+            { num: 4, title: "Work in Progress", done: finalWorkSubmitted || isCompleted, active: initialIssueVerified && !finalWorkSubmitted },
+            { num: 5, title: "Final Proof & Payout", done: isCompleted, active: finalWorkSubmitted && !isCompleted },
           ].map((s, idx) => (
             <div key={idx} className={`timeline-step ${s.done ? "done" : ""} ${s.active ? "active" : ""}`}>
               <div className="timeline-bullet">{s.done ? "✓" : s.num}</div>
@@ -367,7 +377,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
 
         {/* Main Body */}
         <div className="live-track-body">
-          {/* MAP WRAPPER (Left / Top) */}
+          {/* MAP WRAPPER */}
           <div className="live-map-container">
             <div ref={mapContainerRef} className="leaflet-map-root" />
 
@@ -377,7 +387,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                 <div className="hud-icon">⏱️</div>
                 <div>
                   <div className="hud-val">{progress >= 0.98 ? "Arrived" : `${etaMins} mins`}</div>
-                  <div className="hud-label">Estimated Time</div>
+                  <div className="hud-label">Estimated Arrival</div>
                 </div>
               </div>
 
@@ -453,6 +463,8 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                   setProgress(0.05);
                   setIsPlaying(true);
                   setIsCompleted(false);
+                  setInitialIssueVerified(false);
+                  setFinalWorkSubmitted(false);
                 }}
               >
                 🔄 Restart
@@ -468,7 +480,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
             {gpsError && <div className="gps-error-toast">⚠️ {gpsError}</div>}
           </div>
 
-          {/* RIGHT / BOTTOM DRAWER: DETAILS, CHAT & ACTIONS */}
+          {/* RIGHT / BOTTOM DRAWER: DETAILS, VERIFICATION & ACTIONS */}
           <div className="live-sidebar">
             {/* Tab navigation */}
             <div className="live-sidebar-tabs">
@@ -477,6 +489,12 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                 onClick={() => setActiveTab("tracking")}
               >
                 🛵 Live Status
+              </button>
+              <button
+                className={`live-tab ${activeTab === "verification" ? "active" : ""}`}
+                onClick={() => setActiveTab("verification")}
+              >
+                🛡️ Photo Verification {progress >= 0.98 && !isCompleted ? "🔴" : "✓"}
               </button>
               <button
                 className={`live-tab ${activeTab === "chat" ? "active" : ""}`}
@@ -488,7 +506,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                 className={`live-tab ${activeTab === "details" ? "active" : ""}`}
                 onClick={() => setActiveTab("details")}
               >
-                📋 Job & Escrow
+                📋 Bill & Split
               </button>
             </div>
 
@@ -511,7 +529,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                       </span>
                     </div>
                     <div style={{ fontSize: "0.75rem", color: "#0c831f", fontWeight: 700 }}>
-                      {targetProvider.role} · ⭐ {targetProvider.rating} ({targetProvider.reviews})
+                      {targetProvider.role} · {targetProvider.price}
                     </div>
                     <div style={{ fontSize: "0.7rem", color: "#64748b" }}>
                       Vehicle: <strong>{targetProvider.vehicleNumber}</strong> ({targetProvider.vehicleType})
@@ -538,11 +556,86 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                   <div className="status-banner-desc">{statusDesc}</div>
                 </div>
 
+                {/* SAFETY PHOTO VERIFICATION ACTION BANNER */}
+                {progress >= 0.98 && !initialIssueVerified && (
+                  <div className="on-site-prompt-banner">
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
+                      <span style={{ fontSize: "1.2rem" }}>📸</span>
+                      <strong style={{ fontSize: "0.85rem", color: "#1e3a8a" }}>
+                        Step 2: Dual Problem Photo Verification Required
+                      </strong>
+                    </div>
+                    <p style={{ fontSize: "0.75rem", color: "#334155", margin: "0 0 0.6rem" }}>
+                      {targetProvider.name} is on-site. Compare customer & worker photos to authorize the job.
+                    </p>
+                    <button
+                      className="btn btn-primary"
+                      style={{ width: "100%", justifyContent: "center", fontSize: "0.82rem", padding: "8px" }}
+                      onClick={() => {
+                        setVerificationModalStage("initial");
+                        setShowVerificationModal(true);
+                      }}
+                    >
+                      🛡️ Open Dual Photo Verification Handshake →
+                    </button>
+                  </div>
+                )}
+
+                {/* WORK COMPLETED BANNER */}
+                {initialIssueVerified && !finalWorkSubmitted && (
+                  <div className="on-site-prompt-banner" style={{ background: "#f0fdf4", borderColor: "#86efac" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
+                      <span style={{ fontSize: "1.2rem" }}>⚙️</span>
+                      <strong style={{ fontSize: "0.85rem", color: "#166534" }}>
+                        Work in Progress (Authorized)
+                      </strong>
+                    </div>
+                    <p style={{ fontSize: "0.75rem", color: "#14532d", margin: "0 0 0.6rem" }}>
+                      {targetProvider.name} is performing the repairs. When finished, submit final work proof.
+                    </p>
+                    <button
+                      className="btn btn-outline"
+                      style={{ width: "100%", justifyContent: "center", fontSize: "0.82rem", padding: "8px" }}
+                      onClick={() => {
+                        setFinalWorkSubmitted(true);
+                        setVerificationModalStage("final_review");
+                        setShowVerificationModal(true);
+                      }}
+                    >
+                      📸 Worker Finished Job: Submit Final Work Photo →
+                    </button>
+                  </div>
+                )}
+
+                {finalWorkSubmitted && !isCompleted && (
+                  <div className="on-site-prompt-banner" style={{ background: "#fef3c7", borderColor: "#fde047" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
+                      <span style={{ fontSize: "1.2rem" }}>🔍</span>
+                      <strong style={{ fontSize: "0.85rem", color: "#92400e" }}>
+                        Final Work Proof Submitted: Customer Approval Pending
+                      </strong>
+                    </div>
+                    <p style={{ fontSize: "0.75rem", color: "#78350f", margin: "0 0 0.6rem" }}>
+                      Inspect Before & After photos to release the 85% direct wage (₹{workerPayout}).
+                    </p>
+                    <button
+                      className="btn btn-primary"
+                      style={{ width: "100%", justifyContent: "center", fontSize: "0.82rem", padding: "8px", background: "#0c831f" }}
+                      onClick={() => {
+                        setVerificationModalStage("final_review");
+                        setShowVerificationModal(true);
+                      }}
+                    >
+                      ✅ Review Before/After & Release Escrow →
+                    </button>
+                  </div>
+                )}
+
                 {/* Escrow Release 4-Digit PIN Card */}
                 <div className="escrow-pin-card">
                   <div className="pin-card-header">
                     <span>🔒 Escrow Release PIN (Security Code)</span>
-                    <span className="escrow-badge">Do Not Share Early</span>
+                    <span className="escrow-badge">Share After Sign-Off</span>
                   </div>
                   <div className="pin-digits-wrapper">
                     {escrowPin.split("").map((digit, i) => (
@@ -552,7 +645,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                     ))}
                   </div>
                   <p className="pin-instruction">
-                    Give this 4-digit code to {targetProvider.name.split(" ")[0]} <strong>only after</strong> the job is completed to your full satisfaction. This releases the 92% payment safely.
+                    Give this 4-digit code to {targetProvider.name.split(" ")[0]} <strong>only after</strong> the job is completed and approved on the app.
                   </p>
                 </div>
 
@@ -578,7 +671,51 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
               </div>
             )}
 
-            {/* TAB 2: IN-APP LIVE CHAT */}
+            {/* TAB 2: INLINE PHOTO VERIFICATION */}
+            {activeTab === "verification" && (
+              <div className="live-tab-content">
+                <div style={{ fontWeight: 800, fontSize: "0.92rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                  Safety & Privacy Problem Comparison
+                </div>
+
+                {/* Customer submission details */}
+                <div className="dash-panel" style={{ padding: "0.75rem", marginBottom: "0.75rem" }}>
+                  <div style={{ fontSize: "0.75rem", fontWeight: 800, color: "#1e3a8a", marginBottom: "0.3rem" }}>
+                    🏠 1. Customer Problem Media
+                  </div>
+                  <img src={customerPhoto} alt="Customer reported problem" style={{ width: "100%", height: 110, objectFit: "cover", borderRadius: 8, marginBottom: "0.4rem" }} />
+                  {customerVoiceTranscript && (
+                    <div style={{ background: "#f0fdf4", padding: "6px 8px", borderRadius: 6, fontSize: "0.72rem", color: "#166534" }}>
+                      🎙️ <em>"{customerVoiceTranscript}"</em>
+                    </div>
+                  )}
+                </div>
+
+                {/* Worker on-site submission */}
+                <div className="dash-panel" style={{ padding: "0.75rem", marginBottom: "0.75rem" }}>
+                  <div style={{ fontSize: "0.75rem", fontWeight: 800, color: "#15803d", marginBottom: "0.3rem" }}>
+                    🛠️ 2. Worker On-Site Verification Photo
+                  </div>
+                  <img src={workerArrivalPhoto} alt="Worker on-site photo" style={{ width: "100%", height: 110, objectFit: "cover", borderRadius: 8, marginBottom: "0.4rem" }} />
+                  <div style={{ fontSize: "0.7rem", color: "#0c831f", fontWeight: 700 }}>
+                    ✓ Match Score: 96% · GPS Proximity Verified
+                  </div>
+                </div>
+
+                <button
+                  className="btn btn-primary"
+                  style={{ width: "100%", justifyContent: "center", fontSize: "0.82rem" }}
+                  onClick={() => {
+                    setVerificationModalStage(finalWorkSubmitted ? "final_review" : "initial");
+                    setShowVerificationModal(true);
+                  }}
+                >
+                  🛡️ Open Full-Screen Verification Flow →
+                </button>
+              </div>
+            )}
+
+            {/* TAB 3: IN-APP LIVE CHAT */}
             {activeTab === "chat" && (
               <div className="live-chat-tab">
                 <div className="chat-messages-scroll">
@@ -592,7 +729,6 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                   ))}
                 </div>
 
-                {/* Quick replies */}
                 <div className="chat-quick-replies">
                   {[
                     "I am at Gate No. 2",
@@ -612,7 +748,6 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                   ))}
                 </div>
 
-                {/* Chat Input */}
                 <form className="chat-input-bar" onSubmit={handleSendMessage}>
                   <input
                     type="text"
@@ -629,7 +764,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
               </div>
             )}
 
-            {/* TAB 3: JOB DETAILS & ESCROW RELEASE */}
+            {/* TAB 4: JOB DETAILS & ESCROW RELEASE */}
             {activeTab === "details" && (
               <div className="live-tab-content">
                 <div className="job-summary-card">
@@ -637,42 +772,24 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                     Cooperative Escrow Breakdown
                   </div>
                   <div className="split-row">
-                    <span>Total Amount Paid:</span>
-                    <strong>₹{booking?.amount || 380}</strong>
-                  </div>
-                  <div className="split-row" style={{ color: "#0c831f" }}>
-                    <span>Worker Payout (92% direct):</span>
-                    <strong>₹{booking?.workerShare || Math.round((booking?.amount || 380) * 0.92)}</strong>
+                    <span>Rate Structure:</span>
+                    <strong>{targetProvider.price}</strong>
                   </div>
                   <div className="split-row">
-                    <span>Co-op Welfare & Insurance Fee (8%):</span>
-                    <span>₹{booking?.coopFee || Math.round((booking?.amount || 380) * 0.08)}</span>
+                    <span>Total Amount Paid:</span>
+                    <strong>₹{bookingAmountRaw}</strong>
+                  </div>
+                  <div className="split-row" style={{ color: "#0c831f" }}>
+                    <span>Worker Payout (85% direct):</span>
+                    <strong>₹{workerPayout}</strong>
+                  </div>
+                  <div className="split-row">
+                    <span>Website Maintenance Fee (15%):</span>
+                    <span>₹{bookingAmountRaw - workerPayout}</span>
                   </div>
                   <div className="split-row" style={{ color: "#64748b" }}>
                     <span>Middleman Commission:</span>
                     <span>₹0.00 (Zero)</span>
-                  </div>
-                </div>
-
-                <div className="job-summary-card" style={{ marginTop: "0.75rem" }}>
-                  <div style={{ fontWeight: 800, fontSize: "0.85rem", color: "#0f172a", marginBottom: "0.4rem" }}>
-                    Worker Verification & Credentials
-                  </div>
-                  <div className="cred-row">
-                    <span>Labour Registration:</span>
-                    <strong>{targetProvider.labourRegNo || "SS-DL-2026-LAB-84920"}</strong>
-                  </div>
-                  <div className="cred-row">
-                    <span>Aadhaar e-KYC:</span>
-                    <span style={{ color: "#0c831f", fontWeight: 700 }}>✓ Verified via DigiLocker</span>
-                  </div>
-                  <div className="cred-row">
-                    <span>e-Shram UAN:</span>
-                    <span>UAN-9921-4821-0021</span>
-                  </div>
-                  <div className="cred-row">
-                    <span>Safety Background Check:</span>
-                    <span style={{ color: "#0c831f", fontWeight: 700 }}>Passed (Central Co-op DB)</span>
                   </div>
                 </div>
 
@@ -682,7 +799,7 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                     Release Escrow on Service Completion
                   </div>
                   <p style={{ fontSize: "0.72rem", color: "#64748b", margin: "0 0 0.5rem 0" }}>
-                    Once {targetProvider.name} finishes the work, enter or approve the 4-digit PIN below:
+                    Once {targetProvider.name} finishes the work and you inspect the result, enter or approve the 4-digit PIN:
                   </p>
                   <div style={{ display: "flex", gap: "0.4rem" }}>
                     <input
@@ -695,12 +812,12 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
                       style={{ textAlign: "center", fontWeight: 800, letterSpacing: "4px" }}
                     />
                     <button className="btn btn-primary" onClick={handleVerifyEscrowPin} style={{ whiteSpace: "nowrap" }}>
-                      Release ₹{booking?.workerShare || 350} →
+                      Release ₹{workerPayout} →
                     </button>
                   </div>
                   {isCompleted && (
                     <div style={{ marginTop: "0.5rem", padding: "6px", background: "#dcfce7", color: "#166534", borderRadius: "6px", fontSize: "0.75rem", fontWeight: 700, textAlign: "center" }}>
-                      🎉 Job Completed & ₹{booking?.workerShare || 350} released instantly!
+                      🎉 Job Completed & ₹{workerPayout} released instantly!
                     </div>
                   )}
                 </div>
@@ -708,6 +825,27 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
             )}
           </div>
         </div>
+
+        {/* FULL SCREEN SAFETY DUAL-HANDSHAKE VERIFICATION MODAL */}
+        {showVerificationModal && (
+          <JobVerificationModal
+            booking={booking}
+            provider={targetProvider}
+            stage={verificationModalStage}
+            onClose={() => setShowVerificationModal(false)}
+            onApproved={(data) => {
+              setInitialIssueVerified(true);
+              setJobInProgress(true);
+              setWorkerArrivalPhoto(data.workerArrivalPhoto);
+              setShowVerificationModal(false);
+            }}
+            onCompleteJob={(data) => {
+              setIsCompleted(true);
+              setShowVerificationModal(false);
+              if (onFinishJob) onFinishJob(data);
+            }}
+          />
+        )}
 
         {/* CALL SIMULATION MODAL */}
         {showCallModal && (
@@ -774,3 +912,4 @@ export function LiveTrackingModal({ booking, provider, onClose, onFinishJob }) {
     </div>
   );
 }
+

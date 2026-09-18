@@ -4,29 +4,30 @@ export function HowItWorksPage({ onNav }) {
   const steps = [
     {
       n: "01",
-      icon: "🪪",
-      title: "DigiLocker Aadhaar e-KYC Verification",
-      text: "Every worker connects their UIDAI Aadhaar via DigiLocker. Instant digital verification prevents fake profiles, assures safety for households, and mints an official National Labour ID Card.",
+      icon: "🎙️",
+      title: "Problem Media & Voice-First Explanation",
+      text: "Customers upload a photo or video of their issue and describe it by text or Voice Recording with real-time speech translation — designed especially for users who cannot type or are uneducated.",
     },
     {
       n: "02",
-      icon: "📅",
-      title: "Direct Community Booking & Slots",
-      text: "Households select verified local plumbers, tutors, electricians, or caregivers. Choose preferred arrival time slots with transparent upfront pricing and no surge fees.",
+      icon: "📍",
+      title: "Worker Standby Location & Live Route Tracking",
+      text: "Explore verified cooperative workers near you with transparent daily charges. View their exact current location on map, and upon payment, watch the worker's live transit movement navigating to your doorstep.",
     },
     {
       n: "03",
-      icon: "💳",
-      title: "Protected Bharat Escrow Payment",
-      text: "Pay securely via UPI (GPay/PhonePe/Paytm), RuPay Cards, or Net Banking. Funds are held in safe Cooperative Escrow and released to the worker only when you provide the 4-digit completion code.",
+      icon: "🛡️",
+      title: "On-Site Dual Photo Verification Handshake",
+      text: "Upon arrival, the worker takes an on-site verification photo. The platform AI matches both customer and worker data for visual similarity & GPS accuracy before authorizing work.",
     },
     {
       n: "04",
-      icon: "🤝",
-      title: "92% Direct Payout to Worker",
-      text: "The worker keeps 92% of the payment directly in their bank account or UPI. The 8% flat co-op fee funds member healthcare, life insurance, and free vocational upskilling.",
+      icon: "✅",
+      title: "Final Work Proof & Customer Sign-Off",
+      text: "When repairs are complete, the worker submits final work proof. The customer reviews the side-by-side Before/After comparison and approves completion to release 85% escrow payment safely.",
     },
   ];
+
 
   return (
     <div className="page-view how-it-works-page">

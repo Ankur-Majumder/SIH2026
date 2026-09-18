@@ -71,11 +71,11 @@ export function ReceiptModal({ txn, onClose }) {
             <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "8px", padding: "0.85rem", fontSize: "0.78rem", color: "#166534", marginBottom: "1rem" }}>
               <div style={{ fontWeight: 800, marginBottom: "0.3rem" }}>🤝 Cooperative Settlement Breakdown:</div>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "2px" }}>
-                <span>92% Directly Credited to Worker Bank:</span>
+                <span>85% Directly Credited to Worker Bank:</span>
                 <strong>₹{txn.workerShare}</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "2px" }}>
-                <span>8% Member Welfare & Healthcare Pool:</span>
+                <span>15% Website Maintenance & Upkeep Fee:</span>
                 <strong>₹{txn.coopFee}</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", borderTop: "1px dashed #86efac", paddingTop: "4px", marginTop: "4px", fontWeight: 800, fontSize: "0.85rem" }}>

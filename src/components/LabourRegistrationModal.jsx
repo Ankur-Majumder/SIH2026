@@ -200,7 +200,7 @@ export function LabourRegistrationModal({ onClose, onSuccess, initialRole = "pro
                 <div style={{ fontSize: "0.8rem", color: "#1e3a8a", lineHeight: 1.5 }}>
                   <strong>Join SahayogSeva as an Empowered Worker Member!</strong>
                   <br />
-                  Keep 92% of your earnings with direct instant bank transfers, ₹1 Lakh free health insurance cover, and democratic voting rights.
+                  Keep 85% of your earnings with direct instant bank transfers, ₹1 Lakh free health insurance cover, and democratic voting rights.
                 </div>
               </div>
 
@@ -492,9 +492,9 @@ export function LabourRegistrationModal({ onClose, onSuccess, initialRole = "pro
               <div style={{ padding: "0.85rem 1rem", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "10px", marginBottom: "1.25rem", display: "flex", gap: "0.75rem" }}>
                 <span style={{ fontSize: "1.3rem" }}>💰</span>
                 <div style={{ fontSize: "0.8rem", color: "#166534", lineHeight: 1.5 }}>
-                  <strong>Direct 92% Worker Payout Configuration</strong>
+                  <strong>Direct 85% Worker Payout Configuration</strong>
                   <br />
-                  Customer payments go directly to this bank account or UPI ID with 0 platform deduction beyond the flat 8% co-op welfare fee.
+                  Customer payments go directly to this bank account or UPI ID with 0 platform deduction beyond the flat 15% website maintenance fee.
                 </div>
               </div>
 

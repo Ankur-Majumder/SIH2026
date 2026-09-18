@@ -33,7 +33,7 @@ export function HomePage({ onBook, onNav, onSelectService }) {
 
             <p className="hero-desc">
               SahayogSeva is India's first cooperative gig marketplace — connecting households with trusted
-              local plumbers, tutors, caregivers & more, where every worker earns fairly (92% payout) and every community
+              local plumbers, gardeners, electricians, caregivers & more, where every worker earns fairly (85% payout) and every community
               has a stake.
             </p>
 
@@ -49,7 +49,7 @@ export function HomePage({ onBook, onNav, onSelectService }) {
             <div className="hero-trust">
               <div className="trust-chip"><span className="chip-icon">✅</span> Govt. Registered (MSCS Act)</div>
               <div className="trust-chip"><span className="chip-icon">🔒</span> DigiLocker Aadhaar Verified</div>
-              <div className="trust-chip"><span className="chip-icon">💚</span> 92% Direct to Workers</div>
+              <div className="trust-chip"><span className="chip-icon">💚</span> 85% Direct to Workers</div>
               <div className="trust-chip"><span className="chip-icon">💳</span> Protected Bharat Escrow</div>
             </div>
 
@@ -61,7 +61,7 @@ export function HomePage({ onBook, onNav, onSelectService }) {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  placeholder="Search for a service... e.g. Plumber, Electrician, Tutor"
+                  placeholder="Search for a service... e.g. Plumber, Gardener, Electrician"
                 />
                 <div className="search-divider" />
                 <select
@@ -135,7 +135,7 @@ export function HomePage({ onBook, onNav, onSelectService }) {
               <div className="float-badge float-badge-1">
                 <span className="fb-icon">💚</span>
                 <div className="fb-text">
-                  <strong>92% Payout</strong>
+                  <strong>85% Payout</strong>
                   <small>Direct to worker bank</small>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export function HomePage({ onBook, onNav, onSelectService }) {
           <div className="stat-item">
             <div className="stat-icon-box icon-purple">💚</div>
             <div>
-              <div className="stat-num">92%</div>
+              <div className="stat-num">85%</div>
               <div className="stat-label">Direct Wage to Workers</div>
             </div>
           </div>

@@ -17,9 +17,9 @@ export function PaymentGatewayModal({ provider, bookingDetails, onClose, onPayme
   const [txnResult, setTxnResult] = useState(null);
 
   // Price calculations based on provider or booking details
-  const priceRaw = parseInt(provider?.price?.replace(/\D/g, "") || "400", 10);
+  const priceRaw = bookingDetails?.amount ? parseInt(bookingDetails.amount, 10) : parseInt(provider?.price?.toString().replace(/\D/g, "") || "450", 10);
   const baseAmount = priceRaw;
-  const workerShare = Math.round(baseAmount * 0.92);
+  const workerShare = Math.round(baseAmount * 0.85);
   const coopWelfareFee = baseAmount - workerShare;
   const totalPayable = baseAmount;
 
@@ -97,7 +97,15 @@ export function PaymentGatewayModal({ provider, bookingDetails, onClose, onPayme
       status: "SUCCESS",
       slot: bookingDetails?.slot || "Today · 4:00 PM",
       address: bookingDetails?.address || "Karol Bagh, New Delhi",
+      customerProblem: bookingDetails?.customerProblem || {
+        type: "image",
+        photoUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&auto=format&fit=crop&q=60",
+        description: bookingDetails?.notes || "Kitchen pipe leak repair",
+        hasVoiceNote: false,
+      },
+      pin: "4821",
     };
+
 
     setTxnResult(txn);
     setPaymentState("success");
@@ -361,15 +369,15 @@ export function PaymentGatewayModal({ provider, bookingDetails, onClose, onPayme
                     <span>100% Accounted</span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "2px" }}>
-                    <span>Worker Payout (92% direct):</span>
+                    <span>Worker Payout (85% direct):</span>
                     <strong style={{ color: "#0c831f" }}>₹{txnResult.workerShare}</strong>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "2px" }}>
-                    <span>Co-op Welfare Fund (8%):</span>
+                    <span>Website Maintenance Fee (15%):</span>
                     <strong>₹{txnResult.coopFee}</strong>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <span>Platform Commission / Middleman:</span>
+                    <span>Middleman / Broker Commission:</span>
                     <strong style={{ color: "#0c831f" }}>₹0.00 (Zero)</strong>
                   </div>
                 </div>
@@ -905,11 +913,11 @@ export function PaymentGatewayModal({ provider, bookingDetails, onClose, onPayme
                     }}
                   >
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "2px", color: "#475569" }}>
-                      <span>Worker Direct (92%):</span>
+                      <span>Worker Direct (85%):</span>
                       <strong style={{ color: "#0c831f" }}>₹{workerShare}</strong>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "2px", color: "#475569" }}>
-                      <span>Co-op Welfare Fee (8%):</span>
+                      <span>Website Maintenance Fee (15%):</span>
                       <span>₹{coopWelfareFee}</span>
                     </div>
                     <div
